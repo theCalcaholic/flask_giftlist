@@ -1,4 +1,5 @@
 Flask==0.10.1
+Flask-Login==0.2.11
 Flask-SQLAlchemy==2.0
 #Flask-Testing==0.4.2
 -e git://github.com/FelixLoether/flask-uploads@9e1266fcc09b344caf3b8f4859304813d17448d0#egg=Flask_Uploads-master
@@ -6,3 +7,4 @@ Flask-WTF==0.11
 #selenium==2.45.0
 SQLAlchemy==1.0.4
 WTForms==2.0.2
+pbkdf2==1.3

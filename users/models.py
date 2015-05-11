@@ -1,44 +1,12 @@
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import UserMixin
-from sqlalchemy.ext.hybrid import hybrid_property
+from random import SystemRandom
 import pbkdf2
 import hashlib
+from flask.ext.login import UserMixin
+from sqlalchemy.ext.hybrid import hybrid_property
+from flask_giftlist.data import db
+#from flask.ext.sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
-
-class Gift(db.Model):
-    __tablename__ = 'gift'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    description = db.Column(db.String)
-    url = db.Column(db.String)
-    mail_text = db.Column(db.String)
-    gifter = db.relationship('Gifter', backref='gift', lazy='select')
-    gift_list = db.Column(db.Integer, db.ForeignKey('giftlist.id'))
-
-    def __repr__(self):
-        return '<Gift %r>' % (self.name)
-
-    def __str__(self):
-        return self.name + '(' + self.url + '):' + self.description
-
-
-class GiftList(db.Model):
-    __tablename__ = 'giftlist'
-
-    id = db.Column(db.Integer, primary_key=True)
-    gifts = db.relationship('Gift', backref='gift_list', lazy='select')
-
-
-class Gifter(db.Model):
-    __tablename__ = 'gifter'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    surname = db.Column(db.String)
-    email = db.Column(db.String)
-
+#db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
