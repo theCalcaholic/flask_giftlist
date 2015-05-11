@@ -1,0 +1,25 @@
+{% from "_formhelpers.htm" import render_field %}
+
+{% extends 'master.htm' %}
+{% block content %}
+    <form id='registration-form' method='post' action='{{ url_for('.register') }}'>
+        {{ form.csrf_token }}
+        {{ render_field(form.login) }}
+        {{ render_field(form.email) }}
+        {{ render_field(form.email_confirm) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.password_confirm) }}
+        
+        {#{ form.recaptcha() }#}
+
+        <p>
+            {#% for error in form.recaptcha.errors %}
+                {{ error }}
+            {% endfor %#}
+        </p>
+        <p>
+            <input type="SUBMIT" value='Registrieren'>
+        </p>
+    </form>
+{% endblock %}
+

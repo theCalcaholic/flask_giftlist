@@ -1,0 +1,22 @@
+{% from "_formhelpers.htm" import render_field %}
+
+<div id='claim-form_container'>
+    <form id='claim-form' method='post' action='{{ url_for('.claim_gift') }}'>
+        {{ claim_form.csrf_token }}
+        {{ render_field(claim_form.surname) }}
+        {{ render_field(claim_form.name) }}
+        {{ render_field(claim_form.email) }}
+        {{ render_field(claim_form.email_confirm) }}
+
+        <p>
+            {% for error in claim_form.recaptcha.errors %}
+                {{ error }}
+            {% endfor %}
+        </p>
+        <p>
+            <input type="SUBMIT" value='Geschenk reservieren'>
+        </p>
+    </form>
+</div>
+
+

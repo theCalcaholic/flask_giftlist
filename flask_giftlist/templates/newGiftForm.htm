@@ -1,0 +1,26 @@
+{% from "_formhelpers.htm" import render_field %}
+
+<div id='newgift-form_container'>
+    <form id='newgift-form' method='post' action='{{ url_for('.add_gift') }}'>
+        {{ form.csrf_token }}
+        {% set f = form.list_id.process_data( gift_list.id ) %}
+        {{ form.list_id }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.prize) }}
+        {{ render_field(form.url) }}
+        {{ render_field(form.image) }}
+        {{ render_field(form.description) }}
+        {{ render_field(form.mail_text) }}
+
+        <p>
+            {% for error in form.recaptcha.errors %}
+                {{ error }}
+            {% endfor %}
+        </p>
+        <p>
+            <input type="SUBMIT" value='Geschenk speichern'>
+        </p>
+    </form>
+</div>
+
+

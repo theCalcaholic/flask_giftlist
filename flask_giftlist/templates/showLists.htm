@@ -1,0 +1,35 @@
+{% extends 'master.htm' %}
+
+{% block content %}
+<ul id='giftlists'>
+{% for list in lists %}
+    {% set preview = list.gifts[0:4] %}
+    <li class='giftlist' id='list-{{ list.id }}'>
+        <div class='gift-count'>{{ loop.index }}</div>
+        <div class='list-preview'>
+            {% for gift in preview %}
+                <div class='gift'>
+                    <div class='gift-count'>{{ loop.index }}</div>
+                    <div class='gift-name'>{{ gift.name }}</div>
+                </div>
+            {% endfor %}
+            <div class='gift'>
+            {% if preview==None %}
+                Diese Liste ist leer.
+            {% else %}
+                ...
+            {% endif %}
+            </div>
+        </div>
+    </li>
+{% endfor %}
+{% if lists is defined %}
+    <li class='giftlist'>
+        Keine Listen vorhanden.
+    </li>
+{% endif %}
+</ul>
+<form action='{{ url_for(".add_list") }}' method='POST'>
+    <input type='submit' id='newList-button' value='Neue Liste anlegen' />
+</form>
+{% endblock %}

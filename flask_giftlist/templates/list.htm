@@ -1,0 +1,33 @@
+{% extends 'master.htm' %}
+
+{% block content %}
+<dl class='giftlist'>
+{% if giftlist %}
+{% for gift in gift_list.gifts %}
+    <dt class='gift' id='gift-{{ gift.id }}'>
+        <div class='gift-count'>{{ loop.index }}</div>
+        <div class='gift-name'>{{ gift.name }}</div>
+    </dt>
+    <dd>
+        <p class='gift_url'>
+            <div class='label'>URL:</div>
+            <div class='value'>{{ gift.url }}</div>
+        </p>
+        <p class='gift_description'>
+            <div class='label'>Beschreibung:</div>
+            <div class='value'>{{ gift.description }}</div>
+        </p>
+        <p class='gif_mail-text'>
+            <div class='label'>Email-Text:</div>
+            <div class='value'>{{ gift.mail_text }}</div>
+        </p>
+    </dd>
+{% endfor %}
+{% else %}
+    <dt class='gift' id='gift-placeholder'>
+        Es sind noch keine Geschenke in der Liste
+    </dt>
+{% endif %}
+{% include 'newGiftForm.htm' %}
+</dl>
+{% endblock %}
