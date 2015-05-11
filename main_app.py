@@ -1,15 +1,31 @@
 from flask import Flask, render_template, request
+from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug.contrib.fixers import ProxyFix
+import models
+from models import db
+import forms
 import os
+import config
 
 app = Flask(__name__)
+app.config.from_object(config.BaseConfiguration)
+
+db.init_app(app)
 
 @app.route('/')
 def index():
-	#with os.open('count.txt', os.O_) as count_file:
-	#	current_number = count_file.readlines()[0].strip()
-	        
-	return render_template('preliminary.htm')
+	#gifts = models.Gift.
+        claim_form = forms.ClaimGiftForm()
+	return render_template('index.htm', claim_form=claim_form)
+
+@app.route('/claim/')
+def claim_gift():
+        return 'claim!'
+
+@app.route('/login/')
+def show_login_form():
+    pass
+
 	
 """@app.route('/set/')
 def set_progress():
@@ -43,4 +59,6 @@ def page_not_found(e):
 app.wsgi_app = ProxyFix(app.wsgi_app)
 	
 if __name__=='__main__':
-	app.run(debug=False)
+        with app.app_context():
+            db.create_all()
+	app.run(debug=True)
