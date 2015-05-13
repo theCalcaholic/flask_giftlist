@@ -31,6 +31,7 @@ class GiftList(db.Model, CRUDMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     gifts = db.relationship('Gift', backref='gift_list', lazy='select')
+    show = db.Column(db.Boolean)
 
 
 class Gifter(db.Model, CRUDMixin):

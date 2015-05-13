@@ -2,15 +2,15 @@
 
 <div id='newgift-form_container'>
     <form id='newgift-form' method='post' action='{{ url_for('.add_gift') }}'>
-        {{ form.csrf_token }}
-        {% set f = form.gift_list_id.process_data( gift_list.id ) %}
-        {{ form.gift_list_id() }}
-        {{ render_field(form.name) }}
-        {{ render_field(form.prize) }}
-        {{ render_field(form.url) }}
-        {{ render_field(form.image) }}
-        {{ render_field(form.description) }}
-        {{ render_field(form.mail_text) }}
+        {{ edit_gift_form.csrf_token }}
+        {% set f = edit_gift_form.gift_list_id.process_data( gift_list.id ) %}
+        {{ edit_gift_form.gift_list_id() }}
+        {{ render_field(edit_gift_form.name) }}
+        {{ render_field(edit_gift_form.prize) }}
+        {{ render_field(edit_gift_form.url) }}
+        {{ render_field(edit_gift_form.image) }}
+        {{ render_field(edit_gift_form.description) }}
+        {{ render_field(edit_gift_form.mail_text) }}
 
         {#<p>
             {% for error in form.recaptcha.errors %}

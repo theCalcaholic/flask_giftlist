@@ -1,5 +1,10 @@
 {% extends 'master.htm' %}
 {% block content %}
+    {% if logged_in %}
+        <div class='navlink'>
+            <a href='{{ url_for('.show_lists') }}'>Geschenklisten bearbeiten</a>
+        </div>
+    {% endif %}
     {% include 'gifts.htm' %}
     {% include 'claimForm.htm' %}
 {% endblock %}

@@ -1,7 +1,8 @@
 #from flask.ext.uploads import UploadSet, IMAGES
 from flask_wtf import Form, RecaptchaField
 from flask_wtf.file import FileRequired, FileAllowed, FileField
-from wtforms import TextField, HiddenField, TextAreaField, IntegerField, validators
+from wtforms import TextField, HiddenField, TextAreaField, \
+        IntegerField, BooleanField, validators
 from wtforms.fields.html5 import URLField, DecimalField, EmailField
 from wtforms.validators import DataRequired, url, email
 from wtforms.widgets import HiddenInput
@@ -44,3 +45,6 @@ class ClaimGiftForm(Form):
                 validators.EqualTo('email_confirm', message='Die E-Mail-Adressen m&uuml;ssen &uuml;bereinstimmen!')])
     #recaptcha = RecaptchaField()
 
+class EnableListForm(Form):
+    show = BooleanField(
+            validators=[validators.Required()])
