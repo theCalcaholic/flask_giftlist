@@ -15,6 +15,8 @@ def index():
     for gift_list in lists:
         gifts.extend(gift_list.gifts)
 
+    gifts = filter(lambda g: g.gifter, gifts)
+
     claim_form = ClaimGiftForm()
     return render_template(
             'index.htm', 
@@ -43,7 +45,7 @@ def add_list():
     gift_list = GiftList.create(**d)
     return redirect(url_for('.edit_list', gift_list_id=gift_list.id))
 
-@giftlist.route('/list/<int:gift_list_id>/')
+@giftlist.route('/list/<int:gift_list_id>/', methods=['POST', 'GET'])
 @login_required
 def edit_list(gift_list_id):
     gift_list = GiftList.query.filter(GiftList.id == gift_list_id).first()
@@ -52,7 +54,8 @@ def edit_list(gift_list_id):
         if enable_form.validate_on_submit():
             gift_list.update(**enable_form.data)
         gift_form = GiftForm()
-        return render_template('list.htm', gift_list=gift_list, edit_gift_form=gift_form, enable_form=enable_form)
+        edit_gift_form = GiftForm()
+        return render_template('list.htm', gift_list=gift_list, edit_gift_form=edit_gift_form, gift_form=gift_form, enable_form=enable_form)
     return render_template('listNotFound.htm')
     
 @giftlist.route('/gift/new/', methods=['POST'])
@@ -60,25 +63,27 @@ def edit_list(gift_list_id):
 def add_gift():
     return edit_gift(None)
 
-@giftlist.route('/gift/<int:gift_id>/', methods=['POST'])
+@giftlist.route('/gift/<int:gift_id>/', methods=['POST','GET'])
 @login_required
 def edit_gift(gift_id):
     gift_form = GiftForm()
     try:
-        #int(gift_form.gift_list_id.data)
+        int(gift_form.gift_list_id.data)
         if gift_form.validate_on_submit():
+            new_data = gift_form.data.copy()
+            new_data['prize'] = int(new_data['prize'])
             if gift_id:
                 gift = Gift.query.filter(Gift.id==gift_id).first()
+                gift.update(**new_data)
                 return 'gift saved'
             else:
                 new_gift = gift_form.data.copy()
                 #new_gift['image'] = "yes"
                 new_gift['prize'] = int(new_gift['prize'])
                 gift = Gift.create(**new_gift)
-                return 'new gift created: ' + str(gift.gift_list_id) + '/' #+ str(dump(new_gift))#['gift_list_id'])
-            return render_template('editGiftForm.htm', gift_list=gift_form.gift_list_id, edit_gift_form=gift_form)
-        return render_template('editGiftForm.htm', gift_list=gift_form.gift_list_id, edit_gift_form=gift_form)
-        #return redirect(url_for('.edit_list', list_id=gift_form.list_id.data))
+                #return 'new gift created: ' + str(gift.gift_list_id) + '/' #+ str(dump(new_gift))#['gift_list_id'])
+            return redirect(url_for('.edit_list', gift_list_id=gift_form.gift_list_id.data))
+        return render_template('editGift.htm', gift_list=gift_form.gift_list_id, edit_gift_form=gift_form)
     except ValueError:
         return 'invalid list id'
         return redirect(url_for('.show_lists'))
