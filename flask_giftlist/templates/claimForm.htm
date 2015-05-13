@@ -8,11 +8,11 @@
         {{ render_field(claim_form.email) }}
         {{ render_field(claim_form.email_confirm) }}
 
-        <p>
+        {#<p>
             {% for error in claim_form.recaptcha.errors %}
                 {{ error }}
             {% endfor %}
-        </p>
+        </p>#}
         <p>
             <input type="SUBMIT" value='Geschenk reservieren'>
         </p>

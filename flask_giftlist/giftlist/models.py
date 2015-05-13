@@ -11,8 +11,10 @@ class Gift(db.Model, CRUDMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    prize = db.Column(db.Integer)
     description = db.Column(db.String)
     url = db.Column(db.String)
+    image = db.Column(db.String)
     mail_text = db.Column(db.String)
     gift_list_id = db.Column(db.Integer, db.ForeignKey('giftlist.id'))
     gifter_id = db.Column(db.Integer, db.ForeignKey('gifter.id'))

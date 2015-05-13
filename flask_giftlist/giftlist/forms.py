@@ -1,15 +1,16 @@
 #from flask.ext.uploads import UploadSet, IMAGES
 from flask_wtf import Form, RecaptchaField
 from flask_wtf.file import FileRequired, FileAllowed, FileField
-from wtforms import TextField, HiddenField, TextAreaField, validators
+from wtforms import TextField, HiddenField, TextAreaField, IntegerField, validators
 from wtforms.fields.html5 import URLField, DecimalField, EmailField
 from wtforms.validators import DataRequired, url, email
+from wtforms.widgets import HiddenInput
 
 image_extensions = ['jpg', 'gif', 'png', 'bmp', 'svg', 'tiff']
 
 class GiftForm(Form):
     name = TextField('Name', validators = [validators.Required()])
-    list_id = HiddenField("list id")
+    gift_list_id = IntegerField("list id", widget=HiddenInput())
     prize = DecimalField(
             'Preis (ca.)',
             validators=[validators.Required()])
@@ -22,7 +23,7 @@ class GiftForm(Form):
             #validators=[])
                 #FileRequired(),
                 #FileAllowed(image_extensions, 'Images only!')])
-    recaptcha = RecaptchaField()
+    #recaptcha = RecaptchaField()
 
 class ClaimGiftForm(Form):
     surname = TextField(
@@ -41,5 +42,5 @@ class ClaimGiftForm(Form):
             validators=[
                 validators.Required(),
                 validators.EqualTo('email_confirm', message='Die E-Mail-Adressen m&uuml;ssen &uuml;bereinstimmen!')])
-    recaptcha = RecaptchaField()
+    #recaptcha = RecaptchaField()
 

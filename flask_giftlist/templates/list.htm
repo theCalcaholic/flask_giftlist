@@ -2,7 +2,7 @@
 
 {% block content %}
 <dl class='giftlist'>
-{% if giftlist %}
+{% if gift_list.gifts is defined and gift_list.gifts|length != 0 %}
 {% for gift in gift_list.gifts %}
     <dt class='gift' id='gift-{{ gift.id }}'>
         <div class='gift-count'>{{ loop.index }}</div>
@@ -25,9 +25,9 @@
 {% endfor %}
 {% else %}
     <dt class='gift' id='gift-placeholder'>
-        Es sind noch keine Geschenke in der Liste
+        Es sind noch keine Geschenke in der Liste.
     </dt>
 {% endif %}
-{% include 'newGiftForm.htm' %}
+{% include 'editGiftForm.htm' %}
 </dl>
 {% endblock %}
