@@ -1,0 +1,42 @@
+ul#gifts {
+    color: white;
+    dl {
+        /*border-color: white;
+        border-width: 1px;
+        border-style: dashed;*/
+        display: block;
+        width: 400px;
+        margin: auto;
+        margin-bottom: 30px;
+        background-color: #880505;
+        border-radius: 15px;
+
+        dt {
+            border-right-color: white;
+            border-right-width: 1px;
+            border-right-style: dashed;
+            display: inline-block;
+            padding-right: 10px;
+            margin-right: 0;
+
+            p.gift-name {
+            }
+            p.gift-prize {
+            }
+        }
+        dd {
+            border-left-color: white;
+            border-left-width: 1px;
+            border-left-style: dashed;
+            padding-left: 10px;
+            display: inline-block;
+            margin-left: -6px;
+            text-align: left;
+
+            p.gift-description {
+            }
+            p.gift-url {
+            }
+        }
+    }
+}
