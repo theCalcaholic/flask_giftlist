@@ -3,7 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user, login_required
 from werkzeug.contrib.fixers import ProxyFix
 from .models import Gift, GiftList
-from .forms import ClaimGiftForm, GiftForm, EnableListForm
+from .forms import ClaimGiftForm, GiftForm, ListSettingsForm
 import os
 
 giftlist = Blueprint("giftlist", __name__)
@@ -15,7 +15,7 @@ def index():
     for gift_list in lists:
         gifts.extend(gift_list.gifts)
 
-    gifts = filter(lambda g: g.gifter, gifts)
+    gifts = filter(lambda g: (not g.gifter), gifts)
 
     claim_form = ClaimGiftForm()
     return render_template(
@@ -50,12 +50,13 @@ def add_list():
 def edit_list(gift_list_id):
     gift_list = GiftList.query.filter(GiftList.id == gift_list_id).first()
     if gift_list:
-        enable_form = EnableListForm()
-        if enable_form.validate_on_submit():
-            gift_list.update(**enable_form.data)
+        list_settings_form = ListSettingsForm()
+        if list_settings_form.validate_on_submit():
+            gift_list.update( commit=True, **{"show": list_settings_form.show.data})
         gift_form = GiftForm()
         edit_gift_form = GiftForm()
-        return render_template('list.htm', gift_list=gift_list, edit_gift_form=edit_gift_form, gift_form=gift_form, enable_form=enable_form)
+        list_settings_form.process(**{"show": gift_list.show})
+        return render_template('list.htm', gift_list=gift_list, edit_gift_form=edit_gift_form, gift_form=gift_form, list_settings_form=list_settings_form)
     return render_template('listNotFound.htm')
     
 @giftlist.route('/gift/new/', methods=['POST'])

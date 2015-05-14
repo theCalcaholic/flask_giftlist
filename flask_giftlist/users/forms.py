@@ -10,7 +10,7 @@ class LoginForm(Form):
             validators = [validators.Required()])
     password = PasswordField('Passwort', 
             validators = [validators.Required()])
-    recaptcha = RecaptchaField()
+    #recaptcha = RecaptchaField()
 
     def validate_password(form, field):
         try:
