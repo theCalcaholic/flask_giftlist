@@ -5,14 +5,16 @@
     <div class='gift-options'>
         <input ng-click="claimGift('{{ gift.id }}')" type='submit' class='claim-gift' id='claim-gift-{{ gift.id }}' value='reservieren' />
     </div>
-    <dt>
-        <p class='gift-name'>{{ gift.name }}:</p>
-    </dt>
-    <dd>
-        <p class='gift-prize'>Preis: {{ gift.prize }}</p>
-        <p class='gift-description'>{{ gift.description }}</p>
-        <p class='gift-url'>URL: <a href='{{ gift.url }}'>{{ gift.url }}</a></p>
-    </dt>
+    <div class='gift-content'>
+        <dt>
+            <p class='gift-name'>{{ gift.name }}</p>
+        </dt>
+        <dd>
+            <p class='gift-prize'>Preis: {{ gift.prize }}</p>
+            <p class='gift-description'>{{ gift.description }}</p>
+            <p class='gift-url'>URL: <a href='{{ gift.url }}'>{{ gift.url }}</a></p>
+        </dt>
+    </div>
 </dl>
 {% endfor %}
 
