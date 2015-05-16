@@ -4,15 +4,17 @@ from flask_wtf.file import FileRequired, FileAllowed, FileField
 from wtforms import TextField, HiddenField, TextAreaField, \
         IntegerField, BooleanField, SubmitField, validators
 from wtforms.fields.html5 import URLField, DecimalField, EmailField
-from wtforms.validators import DataRequired, url, email
+from wtforms.validators import url, email
 from wtforms.widgets import HiddenInput
 from werkzeug.datastructures import MultiDict
 
 image_extensions = ['jpg', 'gif', 'png', 'bmp', 'svg', 'tiff']
+error_field_required = 'Dieses Feld darf nicht leer sein.'
 
 class GiftForm(Form):
     name = TextField('Name', validators = [validators.Required()])
-    gift_list_id = IntegerField("list id", widget=HiddenInput())
+    gift_list_id = IntegerField("list id", widget=HiddenInput(),
+            validators = [validators.Required('An error has occurred. Please try again.')])
     prize = DecimalField(
             'Preis (ca.)',
             validators=[validators.Required()])
@@ -49,21 +51,22 @@ class GiftForm(Form):
 
 
 class ClaimGiftForm(Form):
+    gift_id = IntegerField(default="{{ giftId }}", widget=HiddenInput())
     surname = TextField(
             'Vorname',
-            validators=[DataRequired()])
+            validators=[validators.Required(error_field_required)])
     name = TextField(
         'Name',
-        validators=[DataRequired()])
+        validators=[validators.Required(error_field_required)])
     email = EmailField(
             'E-Mail',
             validators=[
-                email(), 
-                DataRequired()])
+                validators.email('Keine g&uuml;ltige E-Mail-Adresse!'), 
+                validators.Required(error_field_required)])
     email_confirm = EmailField(
             'E-Mail best&auml;tigen',
             validators=[
-                validators.Required(),
+                validators.Required(error_field_required),
                 validators.EqualTo('email_confirm', message='Die E-Mail-Adressen m&uuml;ssen &uuml;bereinstimmen!')])
     #recaptcha = RecaptchaField()
 

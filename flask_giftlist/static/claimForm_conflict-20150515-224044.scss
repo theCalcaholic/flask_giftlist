@@ -1,0 +1,37 @@
+form#claim-form {
+    display: none; //block
+    background-color: rgba(0.6, 0.6, 0.6, 0.5);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    //box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding-top: 50%;
+    box-sizing: border-box;
+    margin: 0;
+    margin-top: -68px;
+
+    div.close-button {
+        width: 32px;
+        height: 32px;
+        background-image: url(static/img/close.svg)
+    }
+
+    fieldset#claim-form_fields {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-color: red;
+        border-width: 1px;
+        border-style: dashed;
+        box-sizing: border-box;
+        display: inline-block;
+        background-color: #CCC;
+
+        height: 320px;
+        margin-top: -102px;
+        margin-left: -111px;
+
+    }
+}

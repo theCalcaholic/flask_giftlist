@@ -14,6 +14,7 @@ from .data import db
 app = Flask(__name__)
 app.config.from_object(config.BaseConfiguration)
 
+
 #db = SQLAlchemy()
 
 

@@ -2,6 +2,9 @@
 
 {% for gift in gifts %}
 <dl>
+    <div class='gift-options'>
+        <input ng-click="claimGift('{{ gift.id }}')" type='submit' class='claim-gift' id='claim-gift-{{ gift.id }}' value='reservieren' />
+    </div>
     <dt>
         <p class='gift-name'>{{ gift.name }}:</p>
     </dt>

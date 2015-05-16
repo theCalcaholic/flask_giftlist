@@ -12,12 +12,6 @@ main {
     //background-color: #202020;
     padding-top: 40px;
     padding-bottom: 40px;
-    //box-sizing: border-box;
-    font-family: Geneva, sans-serif;
-
-    a {
-        color: white;
-    }
 }
 
 h1 {
@@ -29,22 +23,6 @@ h1 {
     display: inline-block;
 }
 
-div.vbar {
-    border-left-color: white;
-    border-left-style: solid;
-    border-left-width: 3px;
-    height: 100%;
-    min-width: 100px;
-    width: 0px;
-    display: inline-block;
+@import 'giftList'
 
-}
-
-.errors {
-    color: red;
-    font-weight: bold;
-}
-
-@import 'giftList';
-@import 'claimForm';
-
+@import 'claimForm'

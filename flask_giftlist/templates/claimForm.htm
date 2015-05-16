@@ -1,8 +1,16 @@
 {% from "_formhelpers.htm" import render_field %}
 
-<div id='claim-form_container'>
-    <form id='claim-form' method='post' action='{{ url_for('.claim_gift') }}'>
+<form 
+    id='claim-form' 
+    method='post' 
+    action='{{ url_for('.index') }}' 
+    style='display:{{ '{{' }} claimFormDisplay {{ '}}' }};'>
+    <fieldset id='claim-form_fields'>
+        <div class='options'>
+            <div class='close-button' ng-click='cancelClaimGift()'></div>
+        </div>
         {{ claim_form.csrf_token }}
+        {{ claim_form.gift_id() }}
         {{ render_field(claim_form.surname) }}
         {{ render_field(claim_form.name) }}
         {{ render_field(claim_form.email) }}
@@ -16,7 +24,6 @@
         <p>
             <input type="SUBMIT" value='Geschenk reservieren'>
         </p>
-    </form>
-</div>
-
+    </fieldset>
+</form>
 

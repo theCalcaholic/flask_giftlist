@@ -3,6 +3,7 @@
     <h1>Gabentisch zur Hochzeit von Henrike und Tobias</h1>
 {% endblock %}
 {% block content %}
+<main ng-app='claimGiftApp' ng-controller='claimGiftController' {% if request.method == 'POST' %}ng-init='showClaimForm()'{% endif %}>
     {% if logged_in %}
         <div class='navlink'>
             <a href='{{ url_for('.show_lists') }}'>Geschenklisten bearbeiten</a>
@@ -10,4 +11,9 @@
     {% endif %}
     {% include 'gifts.htm' %}
     {% include 'claimForm.htm' %}
+    </main>
+    
+    <script src="static/js/claimGiftApp.js"></script>
+    <script src="static/js/controllers/claimGiftController.js"></script>
+    
 {% endblock %}

@@ -9,10 +9,7 @@ main {
   width: 100%;
   background-color: #999999;
   padding-top: 40px;
-  padding-bottom: 40px;
-  font-family: Geneva, sans-serif; }
-  main a {
-    color: white; }
+  padding-bottom: 40px; }
 
 h1 {
   font-family: Verdana, Geneva, Georgia, sans-serif;
@@ -22,32 +19,18 @@ h1 {
   margin-bottom: 40px;
   display: inline-block; }
 
-div.vbar {
-  border-left-color: white;
-  border-left-style: solid;
-  border-left-width: 3px;
-  height: 100%;
-  min-width: 100px;
-  width: 0px;
-  display: inline-block; }
-
-.errors {
-  color: red;
-  font-weight: bold; }
-
 ul#gifts {
   color: white; }
   ul#gifts dl {
     /*border-width: 1px;
     border-style: dashed;*/
+    display: block;
     width: 400px;
     margin: auto;
     margin-bottom: 30px;
     background-color: #880505;
     border-radius: 15px; }
     ul#gifts dl div.gift-options {
-      display: block;
-      width: 100%;
       height: 0px;
       text-align: right;
       position: relative;
@@ -67,21 +50,20 @@ ul#gifts {
         cursor: pointer;
         border-color: #880505; }
     ul#gifts dl dt {
-      /*border-right-color: white;
+      border-right-color: white;
       border-right-width: 1px;
-      border-right-style: dashed;*/
-      padding-right: 10px;
-      margin-right: 0;
+      border-right-style: dashed;
       display: inline-block;
-      max-width: 50%; }
+      padding-right: 10px;
+      margin-right: 0; }
     ul#gifts dl dd {
-      /*border-left-color: white;
+      border-left-color: white;
       border-left-width: 1px;
-      border-left-style: dashed;*/
+      border-left-style: dashed;
       padding-left: 10px;
+      display: inline-block;
       margin-left: -6px;
-      text-align: left;
-      display: inline-block; }
+      text-align: left; }
 
 form#claim-form {
   display: none;
@@ -91,35 +73,34 @@ form#claim-form {
   left: 0px;
   height: 100%;
   width: 100%;
+  padding-top: 50%;
+  box-sizing: border-box;
   margin: 0;
-  justify-content: center;
-  align-items: center; }
+  margin-top: -68px; }
+  form#claim-form div.options {
+    display: block;
+    width: 100%;
+    text-align: right; }
+    form#claim-form div.options div.close-button {
+      width: 32px;
+      height: 32px;
+      background-image: url(img/close.svg);
+      background-size: 32px 32px;
+      display: inline-block; }
+  form#claim-form div.close-button:hover {
+    cursor: pointer; }
   form#claim-form fieldset#claim-form_fields {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     border-color: red;
     border-width: 1px;
     border-style: dashed;
+    box-sizing: border-box;
     display: inline-block;
     background-color: #CCC;
-    padding: 6px 10px 12px 10px;
-    box-sizing: border-box;
-    width: 322px; }
-    form#claim-form fieldset#claim-form_fields div.options {
-      display: block;
-      width: 100%;
-      height: 36px;
-      text-align: right;
-      box-sizing: border-box;
-      border-bottom-width: 1px;
-      border-bottom-style: dashed;
-      border-bottom-color: #050505;
-      padding-bottom: 3px; }
-      form#claim-form fieldset#claim-form_fields div.options div.close-button {
-        width: 32px;
-        height: 32px;
-        background-image: url(img/close.svg);
-        background-size: 32px 32px;
-        display: inline-block; }
-      form#claim-form fieldset#claim-form_fields div.options div.close-button:hover {
-        cursor: pointer; }
+    height: 320px;
+    margin-top: -102px;
+    margin-left: -111px; }
 
 /*# sourceMappingURL=style.css.map */
