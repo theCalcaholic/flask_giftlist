@@ -7,7 +7,7 @@
     style='display:{{ '{{' }} claimFormDisplay {{ '}}' }};'>
     <fieldset id='claim-form_fields'>
         <div class='options'>
-            <div class='close-button' ng-click='cancelClaimGift()'></div>
+            <div class='close-button' title="schließen" ng-click='cancelClaimGift()'></div>
         </div>
         {{ claim_form.csrf_token }}
         {{ claim_form.gift_id() }}

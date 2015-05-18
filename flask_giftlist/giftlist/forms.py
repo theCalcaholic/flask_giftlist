@@ -64,7 +64,7 @@ class ClaimGiftForm(Form):
                 validators.email('Keine g&uuml;ltige E-Mail-Adresse!'), 
                 validators.Required(error_field_required)])
     email_confirm = EmailField(
-            'E-Mail best&auml;tigen',
+            u'E-Mail best\xe4tigen',
             validators=[
                 validators.Required(error_field_required),
                 validators.EqualTo('email_confirm', message='Die E-Mail-Adressen m&uuml;ssen &uuml;bereinstimmen!')])

@@ -1,7 +1,7 @@
 {% macro render_field(field) %}
     <p>
-        {{ field.label }}<br />
-        {{ field() }}
+    {# {{ field.label }}<br /> #}
+        {{ field(placeholder=field.label.text) }}
     </p>
     {% if field.errors %}
         <ul class='errors'>
