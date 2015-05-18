@@ -7,11 +7,11 @@
         {{ render_field(form.login) }}
         {{ render_field(form.password) }}
 
-        <p>
+        {#<p>
             {% for error in form.recaptcha.errors %}
                 {{ error }}
             {% endfor %}
-        </p>
+        </p>#}
         <p>
             <input type="SUBMIT" value='Best&auml;tigen'>
         </p>

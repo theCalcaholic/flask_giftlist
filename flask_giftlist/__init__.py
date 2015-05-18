@@ -7,7 +7,9 @@ from flask.ext.login import LoginManager
 #import os
 import config
 from .auth import login_manager
-from .giftlist.views import giftlist
+from .giftlist.views import giftlist_blueprint
+from .giftlist.admin.views import admin
+from .giftlist.public.views import public
 from .users.views import users
 from .data import db
 
@@ -22,6 +24,8 @@ db.init_app(app)
 
 login_manager.init_app(app)
 
-app.register_blueprint(giftlist)
+app.register_blueprint(giftlist_blueprint)
+app.register_blueprint(admin)
+app.register_blueprint(public)
 app.register_blueprint(users)
 
