@@ -29,6 +29,10 @@ def index():
             gift_form=form, 
             logged_in=(not current_user.is_anonymous()))
 
+@public.route('/claim/', methods = ['GET', 'POST'])
+def claim_gift():
+    return 'claimed'
+
 @public.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

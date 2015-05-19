@@ -26,7 +26,8 @@
         {% else %}
             action='{{ url_for('.claim_gift') }}' 
         {% endif %}
-        style='display:{{ '{{' }} giftFormDisplay {{ '}}' }};'>
+        style='display:{{ '{{' }} giftFormDisplay {{ '}}' }};'
+        ng-click="closeGiftForm();">
         <fieldset id='gift-form_fields'>
             <div class='options'>
                 <div class='close-button' title="schließen" ng-click='closeGiftForm()'>
