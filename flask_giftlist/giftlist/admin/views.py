@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, Blueprint, redirect, url_for
+from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user, login_required
+from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 from ..models import Gift, GiftList, Gifter
-#from .. import models
 from .forms import GiftForm, ListSettingsForm
 import os
 
@@ -40,9 +40,8 @@ def edit_list(gift_list_id):
 @login_required
 def add_gift():
     gift_form = GiftForm()
-    if request.method == 'POST' and gift_form.validate_on_submit():
-        new_data = gift_form.data.copy()
-        new_data['prize'] = int(new_data['prize'])
+    new_data = process_gift_form(gift_form)
+    if request.method == 'POST' and new_data:
         gift = Gift.create(**new_data)
         return redirect(url_for('.edit_list', gift_list_id=gift_form.gift_list_id.data))
     return render_template('giftlist/admin/editGift.htm', gift_list=gift_form.gift_list_id, edit_gift_form=gift_form)
@@ -52,9 +51,8 @@ def add_gift():
 def edit_gift(gift_id):
     gift_form = GiftForm()
     gift = Gift.query.filter(Gift.id==gift_id).first()
-    if request.method == 'POST' and gift_form.validate_on_submit():
-        new_data = gift_form.data.copy()
-        new_data['prize'] = int(new_data['prize'])
+    new_data = process_gift_form(gift_form)
+    if request.method == 'POST' and new_data:
         gift.update(**new_data)
         return redirect(url_for('.edit_list', gift_list_id=gift.gift_list_id))
     elif gift:
@@ -64,6 +62,32 @@ def edit_gift(gift_id):
     return render_template('giftlist/admin/editGift.htm', gift_list_id=gift.gift_list_id, edit_gift_form=gift_form)
 
     
+def process_gift_form(form):
+    if not form.validate_on_submit():
+        return None
+    data = form.data
+    data['prize'] = int(data['prize'])
+    if form.image.data:
+        image_name = secure_filename(form.image.data.filename)
+        uploads_dir = os.path.normpath(os.path.join(
+            current_app.static_folder, 
+            current_app.config.get('UPLOAD_DIR')))
+        i = 1
+        while os.path.isfile(os.path.join(uploads_dir, image_name)):
+            file_parts = os.path.splitext(form.image.data.filename)
+            image_name = file_parts[0] \
+                    + '_' + str(i) \
+                    + file_parts[1]
+            i += 1
+        image_path = os.path.join(current_app.config.get('UPLOAD_DIR'), image_name)
+        print( 'Saving image as ' + image_path )
+        form.image.data.save(os.path.join(uploads_dir, image_name))
+        data['image'] = image_path
+    else:
+        data['image'] = None
+    return data
+
+
 
 #giftlist.wsgi_app = ProxyFix(giftlist.wsgi_app)
 	

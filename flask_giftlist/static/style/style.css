@@ -52,7 +52,7 @@ ul#gifts {
       text-align: right;
       position: relative;
       z-index: 0; }
-      ul#gifts dl div.gift-options input.claim-gift {
+      ul#gifts dl div.gift-options input.open-form {
         border-top-right-radius: 15px;
         padding: 0 10px;
         border-width: 2px;
@@ -61,7 +61,7 @@ ul#gifts {
         line-height: 24px;
         color: 880505;
         background-color: #CCCCCC; }
-      ul#gifts dl div.gift-options input.claim-gift:hover {
+      ul#gifts dl div.gift-options input.open-form:hover {
         border-style: inset;
         background-color: #AAAAAA;
         cursor: pointer;
@@ -77,6 +77,11 @@ ul#gifts {
         margin-right: 0;
         display: inline-block;
         flex: 1; }
+        ul#gifts dl div dt img.gift-image {
+          max-width: 100px;
+          margin-top: 10px; }
+        ul#gifts dl div dt p {
+          margin: 10px 0; }
         ul#gifts dl div dt p.gift-name {
           text-align: left; }
       ul#gifts dl div dd {
@@ -89,8 +94,7 @@ ul#gifts {
         text-align: left;
         display: inline-block; }
 
-form#claim-form {
-  display: none;
+form#gift_form {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0px;
@@ -100,7 +104,7 @@ form#claim-form {
   margin: 0;
   justify-content: center;
   align-items: center; }
-  form#claim-form fieldset#claim-form_fields {
+  form#gift_form fieldset#gift-form_fields {
     border-color: red;
     border-width: 1px;
     border-style: none;
@@ -109,7 +113,7 @@ form#claim-form {
     padding: 6px 10px 12px 10px;
     box-sizing: border-box;
     width: 322px; }
-    form#claim-form fieldset#claim-form_fields div.options {
+    form#gift_form fieldset#gift-form_fields div.options {
       display: block;
       width: 100%;
       height: 36px;
@@ -119,15 +123,17 @@ form#claim-form {
       border-bottom-style: dashed;
       border-bottom-color: #050505;
       padding-bottom: 3px; }
-      form#claim-form fieldset#claim-form_fields div.options div.close-button {
+      form#gift_form fieldset#gift-form_fields div.options div.close-button {
         width: 32px;
         height: 32px;
         background-image: url(../img/close.svg);
         background-size: 32px 32px;
         display: inline-block; }
-      form#claim-form fieldset#claim-form_fields div.options div.close-button:hover {
+      form#gift_form fieldset#gift-form_fields div.options div.close-button:hover {
         cursor: pointer; }
-    form#claim-form fieldset#claim-form_fields input:not([type="submit"]) {
+    form#gift_form fieldset#gift-form_fields input, form#gift_form fieldset#gift-form_fields textarea {
+      width: 200px; }
+    form#gift_form fieldset#gift-form_fields textarea, form#gift_form fieldset#gift-form_fields input:not([type="submit"]):not([type="file"]) {
       border-style: none;
       background-color: #660505;
       color: white;
@@ -135,5 +141,7 @@ form#claim-form {
       padding: 0 4px;
       height: 22px;
       line-height: 22px; }
+    form#gift_form fieldset#gift-form_fields textarea {
+      height: 60px; }
 
 /*# sourceMappingURL=style.css.map */

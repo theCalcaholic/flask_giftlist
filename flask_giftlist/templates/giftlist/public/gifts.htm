@@ -1,22 +1,59 @@
-<ul id='gifts'>
+<ul id='gifts' 
+    ng-init="loadGifts([
+    {% for gift in gifts %}
+        {
+            id: '{{ gift.id }}',
+            name: '{{ gift.name }}',
+            prize: '{{ gift.prize }}',
+            url: '{{ gift.url }}',
+            description: '{{ gift.description }}',
+            {% if gift.image %}
+            image: '{{ url_for('static', filename=gift.image) }}',
+            {% else %}
+            image: null,
+            {% endif %}
+            mailText: '{{ gift.mail_text }}'
+        },
 
-{% for gift in gifts %}
-<dl>
+    {% endfor %}
+    ]);">
+
+<dl ng-repeat="gift in gifts">
     <div class='gift-options'>
-        <input ng-click="claimGift('{{ gift.id }}')" type='submit' class='claim-gift' id='claim-gift-{{ gift.id }}' value='reservieren' />
+        <input 
+        {% if logged_in %}
+            value='bearbeiten'
+        {% else %}
+            value='reservieren' 
+        {% endif %}
+            ng-click="callGiftForm($index);" 
+            type='submit' 
+            class='open-form' 
+            id='open-form_gift-{{ "{{" }} gift.id {{ "}}" }}'/>
     </div>
     <div class='gift-content'>
         <dt>
-            <p class='gift-name'>{{ gift.name }}</p>
+            <img class='gift-image' ng-src='{{ "{{" }} gift.image {{ "}}" }}' />
+            <p class='gift-name'>
+                {{ "{{" }} gift.name {{ "}}" }}
+            </p>
         </dt>
         <dd>
-            <p class='gift-prize'>Preis: {{ gift.prize }}</p>
-            <p class='gift-description'>{{ gift.description }}</p>
-            <p class='gift-url'>URL: <a href='{{ gift.url }}'>{{ gift.url }}</a></p>
+            <p class='gift-prize'>
+                Preis: {{ "{{" }} gift.prize {{ "}}" }}
+            </p>
+            <p class='gift-description'>
+                {{ "{{" }} gift.description {{ "}}" }}
+            </p>
+            <p class='gift-url'>
+                URL: 
+                <a ng-href='{{ "{{" }} gift.url {{ "}}" }}'>
+                    {{ "{{" }} gift.url {{ "}}" }}
+                </a>
+            </p>
         </dt>
     </div>
 </dl>
-{% endfor %}
 
 </ul>
 

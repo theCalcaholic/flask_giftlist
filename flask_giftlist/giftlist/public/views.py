@@ -4,6 +4,7 @@ from flask.ext.login import current_user
 from werkzeug.contrib.fixers import ProxyFix
 from ..models import Gift, GiftList, Gifter
 from .forms import ClaimGiftForm
+from ..admin.forms import GiftForm
 import os
 
 public = Blueprint("giftlist_public", __name__)
@@ -15,14 +16,17 @@ def index():
     for gift_list in lists:
         gifts.extend(gift_list.gifts)
     gifts = filter(lambda g: (not g.gifter), gifts)
-    claim_form = ClaimGiftForm()
+    if current_user.is_anonymous():
+        form = ClaimGiftForm()
+    else:
+        form = GiftForm()
     if request.method == 'POST' and claim_form.validate_on_submit():
         return claim_gift(claim_form)
     else:
         return render_template(
             'giftlist/public/index.htm', 
             gifts=gifts,
-            claim_form=claim_form, 
+            gift_form=form, 
             logged_in=(not current_user.is_anonymous()))
 
 @public.errorhandler(404)

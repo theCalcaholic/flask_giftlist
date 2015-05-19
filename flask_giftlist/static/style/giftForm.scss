@@ -1,5 +1,5 @@
-form#claim-form {
-    display: none; //block
+form#gift_form {
+    //display: none; //block
     background-color: rgba(0.6, 0.6, 0.6, 0.5);
     position: fixed;
     top: 0px;
@@ -12,7 +12,7 @@ form#claim-form {
 
 
 
-    fieldset#claim-form_fields {
+    fieldset#gift-form_fields {
         //position: absolute;
         //top: 50%;
         //left: 50%;
@@ -54,7 +54,11 @@ form#claim-form {
             }
         }
 
-        input:not([type="submit"]) {
+        input, textarea {
+            width: 200px;
+        }
+
+        textarea, input:not([type="submit"]):not([type="file"]) {
             border-style: none;
             background-color: #660505;
             color: white;
@@ -63,6 +67,10 @@ form#claim-form {
             height: 22px;
             line-height: 22px;
 
+        }
+
+        textarea {
+            height: 60px;
         }
 
     }

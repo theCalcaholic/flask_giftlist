@@ -2,6 +2,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import UserMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask_giftlist.data import db, CRUDMixin
+from werkzeug.datastructures import MultiDict
 import pbkdf2
 import hashlib
 
@@ -24,6 +25,9 @@ class Gift(db.Model, CRUDMixin):
 
     def __str__(self):
         return self.name + '(' + self.url + '):' + self.description
+
+    def data(self):
+        return MultiDict(self.__dict__)
 
 
 class GiftList(db.Model, CRUDMixin):

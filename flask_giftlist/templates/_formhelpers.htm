@@ -1,7 +1,29 @@
 {% macro render_field(field) %}
     <p>
-    {# {{ field.label }}<br /> #}
+        {# {{ field.label }}<br /> #}
         {{ field(placeholder=field.label.text) }}
+    </p>
+    {% if field.errors %}
+        <ul class='errors'>
+        {% for error in field.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% macro ng_render_field(field, placeholder, ng_model) %}
+    <p>
+        {% if field.label %}
+            {{ field.label }}<br />
+        {% endif %}
+        {% set args = dict() %}
+        {% if ng_model %}
+            {% set f = args.update( {"ng-model":ng_model} ) %}
+        {% endif %}{% if placeholder %}
+            {#% set f = args.update( {"placeholder":placeholder} ) %#}
+        {% endif %}
+        {{ field(**args) }}
     </p>
     {% if field.errors %}
         <ul class='errors'>

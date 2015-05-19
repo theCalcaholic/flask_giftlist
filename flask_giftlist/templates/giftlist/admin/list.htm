@@ -13,26 +13,39 @@
 {% if gift_list.gifts is defined and gift_list.gifts|length != 0 %}
 {% for gift in gift_list.gifts %}
     <dt class='gift' id='gift-{{ gift.id }}'>
-        <div class='gift-count'>{{ loop.index }}</div>
-        <div class='gift-name'>{{ gift.name }}</div>
+        {% if gift.image %}
+        <div class='gift-image'><img src='{{ url_for('static', filename=gift.image) }}' /></div>
+        {% endif %}
+        <div class='gift-name'>{{ loop.index }} - {{ gift.name }}</div>
     </dt>
     <dd>
-        <div class='gift_url'>
+        <div class='gift_url' style='display:none;'>
             <p class='label'>URL:</p>
             <p class='value'>{{ gift.url }}</p>
         </div>
-        <div class='gift_description'>
+        <div class='gift_description' style='display:none;'>
             <p class='label'>Beschreibung:</p>
             <p class='value'>{{ gift.description }}</p>
         </div>
-        <div class='gift_mail-text'>
+        <div class='gift_mail-text' style='display:none;'>
             <p class='label'>Email-Text:</p>
             <p class='value'>{{ gift.mail_text }}</p>
         </div>
-        <div class="gift_form_container" style="display:none;">
+        <div class="gift_form_container" style="display:;">
             {% set f = gift_form.reset() %}
-            {% set f = gift_form.populate_with(gift) %}
-            {{ render_edit_gift_form(gift_form, gift_list.id, hide=False) }}
+            {% set f = gift_form.process(obj=gift) %}
+
+            <form id='gift-{{ gift.id }}_form' class='edit-gift_form' method='post' action="{{ url_for('.edit_gift', gift_id=gift.id) }}" enctype="multipart/form-data">
+                {{ gift_form.csrf_token }}
+                {{ gift_form.gift_list_id() }}
+                {{ render_field(gift_form.name) }}
+                {{ render_field(gift_form.prize) }}
+                {{ render_field(gift_form.url) }}
+                {{ render_field(gift_form.image) }}
+                {{ render_field(gift_form.description) }}
+                {{ render_field(gift_form.mail_text) }}
+                <input type='submit' value='speichern'>
+            </form>
         </div>
     </dd>
     </a>
