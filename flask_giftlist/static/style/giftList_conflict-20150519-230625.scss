@@ -15,33 +15,8 @@ ul#gifts {
             width: 100%;
             height: 0px;
             text-align: right;
-            vertical-align: top;
             position: relative;
             z-index: 0;
-
-            svg.delete-gift {
-                width: 28px;
-                height: 28px;
-                padding: 2px;
-                border-width: 2px;
-                border-style: solid;
-                border-color: #CCCCCC;
-                margin-right: 2px;
-                background-color: #CCCCCC;
-                box-sizing: border-box;
-                fill: #880505;
-                stroke: #880505;
-            }
-
-            svg.delete-gift:hover {
-                background-color: #AAAAAA;
-                border-color: #880505;
-                border-style: solid;
-                border-width: 2px;
-                fill: #880505;
-                stroke: #880505;
-                cursor: pointer;
-            }
 
             input.open-form {
                 border-top-right-radius: 15px;
@@ -50,19 +25,15 @@ ul#gifts {
                 border-color: #CCC;
                 border-style: solid;
                 line-height: 24px;
-                float: right;
-                height: 28px;
-                box-sizing: border-box;
 
                 color: 880505;
                 background-color: #CCCCCC;
             }
 
             input.open-form:hover {
-                border-style: solid;
-                border-color: #880505;
+                border-style: inset;
                 background-color: #AAAAAA;
-                color: #880505;
+                border-color: #880505;
                 cursor: pointer;
             }
         }

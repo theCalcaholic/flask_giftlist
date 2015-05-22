@@ -12,27 +12,20 @@ image_extensions = ['jpg', 'gif', 'png', 'bmp', 'svg', 'tiff']
 error_field_required = 'Dieses Feld darf nicht leer sein.'
 
 class GiftForm(Form):
-    name = TextField(
-            validators = [validators.Required()],
-            default='{{ gifts[selected].name }}')
-    gift_list_id = IntegerField("list id", widget=HiddenInput(),
-            validators = [validators.Required('An error has occurred. Please try again.')])
-    prize = TextField(
-            validators=[validators.Required()])
-    url = URLField(validators=[url()])
-    description = TextField()
-    mail_text = TextAreaField(
-            default='{{ gifts[selected].mailText }}')
-    image = FileField(
+    name = TextField(validators = [validators.Required()])
+    prize = TextField(validators=[validators.Required()])
+    url = URLField(
             validators=[
-                FileAllowed(image_extensions, 'Images only!')])
+                validators.Optional(),
+                url()])
+    description = TextField()
+    mail_text = TextAreaField()
+    image = FileField(validators=[FileAllowed(image_extensions, 'Images only!')])
     #recaptcha = RecaptchaField()
 
     def populate_with(self, obj):
         if obj.name:
             self.name.data = obj.name
-        if obj.gift_list_id:
-            self.gift_list_id.data = obj.gift_list_id
         if obj.prize:
             self.prize.data = obj.prize
         if obj.url:

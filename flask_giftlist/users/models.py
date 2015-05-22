@@ -15,8 +15,6 @@ class User(UserMixin, CRUDMixin, db.Model):
     email = db.Column(db.String(120), unique=True)
     _password = db.Column(db.LargeBinary(120))
     _salt = db.Column(db.String(120))
-    gift_list_id = db.Column(db.Integer, db.ForeignKey('giftlist.id'))
-    gift_list = db.relationship('GiftList', backref='owners')
     
     @hybrid_property
     def password(self):

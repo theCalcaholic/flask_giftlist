@@ -2,10 +2,8 @@
 
 {% macro render_edit_gift_form( form, list_id, populate=False, hide=False ) %}
 <div class='newgift-form_container'>
-    <form class='newgift-form' method='post' action="{{ url_for('.add_gift') }}" enctype="multipart/form-data">
+    <form class='newgift-form' method='post' action="." enctype="multipart/form-data">
         {{ form.csrf_token }}
-        {% set f = form.gift_list_id.process_data( list_id ) %}
-        {{ form.gift_list_id() }}
         {{ render_field(form.name) }}
         {{ render_field(form.prize) }}
         {{ render_field(form.url) }}

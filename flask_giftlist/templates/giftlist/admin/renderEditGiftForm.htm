@@ -1,7 +1,6 @@
 {% from "_formhelpers.htm" import ng_render_field %}
 
 {{ gift_form.csrf_token }}
-{{ gift_form.gift_list_id(**{"ng-model":"selectedGift.id"}) }}
 {{ ng_render_field(gift_form.name, "Name", "selectedGift.name") }}
 {{ ng_render_field(gift_form.prize, "Preis", "selectedGift.prize") }}
 {{ ng_render_field(gift_form.url, "Url", "selectedGift.url") }}

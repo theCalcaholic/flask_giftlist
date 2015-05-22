@@ -17,7 +17,6 @@ class Gift(db.Model, CRUDMixin):
     url = db.Column(db.String)
     image = db.Column(db.String)
     mail_text = db.Column(db.String)
-    gift_list_id = db.Column(db.Integer, db.ForeignKey('giftlist.id'))
     gifter_id = db.Column(db.Integer, db.ForeignKey('gifter.id'))
 
     def __repr__(self):
@@ -30,12 +29,12 @@ class Gift(db.Model, CRUDMixin):
         return MultiDict(self.__dict__)
 
 
-class GiftList(db.Model, CRUDMixin):
+"""class GiftList(db.Model, CRUDMixin):
     __tablename__ = 'giftlist'
 
     id = db.Column(db.Integer, primary_key=True)
     gifts = db.relationship('Gift', backref='gift_list', lazy='select')
-    show = db.Column(db.Boolean)
+    show = db.Column(db.Boolean)"""
 
 
 class Gifter(db.Model, CRUDMixin):

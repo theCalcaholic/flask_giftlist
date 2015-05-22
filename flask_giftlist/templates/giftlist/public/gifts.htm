@@ -20,15 +20,28 @@
 
 <dl ng-repeat="gift in gifts">
     <div class='gift-options'>
+        {% if logged_in %}
+        <a ng-href='gift/{{ "{{" }} gift.id {{ "}}" }}/delete/'>
+        <svg class='delete-gift' xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" version="1.1" height="32" width="32">
+            {% include 'giftlist/public/trashbin.svg' %}
+        </svg>
+        </a>
+        {#<object 
+            type='image/svg+xml'
+            data='{{ url_for('static', filename='img/trashbin_optimized.svg') }}' 
+    class='delete-gift'/>
+        </object>#}
+        {% endif %}
         <input 
         {% if logged_in %}
             value='bearbeiten'
+            class='open-form edit_button'
         {% else %}
             value='reservieren' 
+            class='open-form claim_button' 
         {% endif %}
-            ng-click="callGiftForm($index);" 
+            ng-click="callGiftForm($index, $event);" 
             type='submit' 
-            class='open-form' 
             id='open-form_gift-{{ "{{" }} gift.id {{ "}}" }}'/>
     </div>
     <div class='gift-content'>

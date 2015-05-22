@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, Blueprint, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user
 from werkzeug.contrib.fixers import ProxyFix
-from ..models import Gift, GiftList, Gifter
+from ..models import Gift, Gifter
 from .forms import ClaimGiftForm
 from ..admin.forms import GiftForm
 import os
@@ -11,11 +11,7 @@ public = Blueprint("giftlist_public", __name__)
 
 @public.route('/', methods = ['GET', 'POST'])
 def index():
-    lists = GiftList.query.filter(GiftList.show==True)
-    gifts = []
-    for gift_list in lists:
-        gifts.extend(gift_list.gifts)
-    gifts = filter(lambda g: (not g.gifter), gifts)
+    gifts = Gift.query.filter(Gift.gifter == None)
     if current_user.is_anonymous():
         form = ClaimGiftForm()
     else:

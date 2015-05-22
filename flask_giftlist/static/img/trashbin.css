@@ -1,0 +1,9 @@
+g {
+    stroke: #880505;
+    fill: #880505;
+}
+
+g:hover {
+    stroke: #fff;
+    fill: #fff;
+}

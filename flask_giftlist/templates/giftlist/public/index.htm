@@ -14,6 +14,17 @@
 {% endif %#}
 {% include 'giftlist/public/gifts.htm' %}
 
+
+{% if logged_in %}
+    <div class='add-gift-button_container'>
+            <input 
+                value='Neues Geschenk'
+                ng-click="callGiftForm(null, $event);" 
+                type='submit' 
+                class='add-gift_button' />
+    </div>
+{% endif %}
+
     <form 
         id='gift_form' 
         {% if logged_in %}
@@ -21,13 +32,8 @@
             enctype='multipart/form-data'
         {% endif %}
         method='post' 
-        {% if logged_in %}
-            action='{{ '{{' }} "gift/" + selectedGift.id + "/" {{ '}}' }}' 
-        {% else %}
-            action='{{ url_for('.claim_gift') }}' 
-        {% endif %}
-        style='display:{{ '{{' }} giftFormDisplay {{ '}}' }};'
-        ng-click="closeGiftForm();">
+        action='{{ '{{' }} action {{ '}}' }}' 
+        style='display:{{ '{{' }} giftFormDisplay {{ '}}' }};'>
         <fieldset id='gift-form_fields'>
             <div class='options'>
                 <div class='close-button' title="schließen" ng-click='closeGiftForm()'>
