@@ -1,0 +1,16 @@
+{% from "_formhelpers.htm" import ng_render_field %}
+
+{{ gift_form.csrf_token }}
+{{ gift_form.gift_id(**{"ng-model": "selectedGift.id"}) }}
+{{ ng_render_field(gift_form.surname, "Vorname", "gifter.surname") }}
+{{ ng_render_field(gift_form.name, "Name", "gifter.name") }}
+{{ ng_render_field(gift_form.email, "E-Mail-Adresse", "gifter.email") }}
+{{ ng_render_field(gift_form.email_confirm, "E-Mail-Adresse wiederholen", "gifter.confirmEmail") }}
+{#<p>
+    {% for error in gift_form.recaptcha.errors %}
+        {{ error }}
+    {% endfor %}
+</p>#}
+<p>
+    <input type="SUBMIT" value='Geschenk reservieren'>
+</p>

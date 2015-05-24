@@ -50,3 +50,24 @@ class ListSettingsForm(Form):
     delete = SubmitField(
             default='Liste l&ouml;schen',
             validators=[])
+
+class ClaimGiftForm(Form):
+    gift_id = IntegerField(default="{{ giftId }}", widget=HiddenInput())
+    surname = TextField(
+            'Vorname',
+            validators=[validators.Required(error_field_required)])
+    name = TextField(
+        'Name',
+        validators=[validators.Required(error_field_required)])
+    email = EmailField(
+            'E-Mail',
+            validators=[
+                validators.email('Keine g&uuml;ltige E-Mail-Adresse!'), 
+                validators.Required(error_field_required)])
+    email_confirm = EmailField(
+            u'E-Mail best\xe4tigen',
+            validators=[
+                validators.Required(error_field_required),
+                validators.EqualTo('email_confirm', message='Die E-Mail-Adressen m&uuml;ssen &uuml;bereinstimmen!')])
+    #recaptcha = RecaptchaField()
+

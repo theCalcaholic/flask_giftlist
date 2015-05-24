@@ -10,25 +10,49 @@ main {
     width: 100%;
     background-color: #999999;
     //background-color: #202020;
-    padding-top: 40px;
-    padding-bottom: 40px;
     //box-sizing: border-box;
     font-family: Geneva, sans-serif;
+    min-width: 480px;
+    padding: 40px 0;
 
     a {
         color: white;
     }
 }
 
-h1 {
-    font-family: Verdana, Geneva, Georgia, sans-serif;
-    font-size: 30px;
-    color: #CCCCCC;
-    margin-top: 40;
-    margin-bottom: 40px;
-    display: inline-block;
-}
+div#header {
+    h1 {
+        font-family: Verdana, Geneva, Georgia, sans-serif;
+        font-size: 30px;
+        color: #CCCCCC;
+        margin-top: 40;
+        margin-bottom: 40px;
+        display: inline-block;
+    }
 
+    a#logout-button {
+        color: white;
+        font-family: Geneva;
+        font-size: 1.4em;
+        background-color: #880505;
+        float:right;
+        text-decoration: none;
+        padding: 4px;
+        margin-right: 4px;
+        border-width: 1px;
+        border-top-width: 0px;
+        border-color: white;
+        border-style: solid;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    a#logout-button:hover, a#logout-button:focus {
+        color: #880505;
+        background-color: white;
+    }
+
+}
 div.vbar {
     border-left-color: white;
     border-left-style: solid;

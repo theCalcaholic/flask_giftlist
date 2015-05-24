@@ -1,6 +1,9 @@
 {% extends 'master.htm' %}
 {% block header %}
     <h1>Gabentisch zur Hochzeit von Henrike und Tobias</h1>
+    {% if logged_in %}
+    <a id='logout-button' href='{{ url_for('users.logout') }}'>Log out</a>
+    {% endif %}
 {% endblock %}
 {% block content %}
 <main ng-app='giftFormApp' ng-controller='GiftFormController' 
@@ -12,7 +15,7 @@
         <a href='{{ url_for('giftlist_admin.show_lists') }}'>Geschenklisten bearbeiten</a>
     </div>
 {% endif %#}
-{% include 'giftlist/public/gifts.htm' %}
+{% include 'giftlist/gifts.htm' %}
 
 
 {% if logged_in %}
@@ -40,9 +43,9 @@
                 </div>
             </div>
             {% if logged_in %}
-                {% include 'giftlist/admin/renderEditGiftForm.htm' %}
+                {% include 'giftlist/renderEditGiftForm.htm' %}
             {% else %}
-                {% include 'giftlist/public/renderClaimForm.htm' %}
+                {% include 'giftlist/renderClaimForm.htm' %}
             {% endif %}
         </fieldset>
     </form>

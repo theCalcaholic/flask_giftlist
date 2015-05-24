@@ -4,9 +4,10 @@
         <script type="application/javascript" src="{{ url_for('static', filename='js/angular.js') }}"></script>
     </head>
     <body>
+        <div id='header'>
         {% block header %}
-        
         {% endblock %}
+        </div>
         {% block content %}
         {% endblock %}
         {% block footer %}
