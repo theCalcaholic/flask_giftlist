@@ -19,33 +19,6 @@
     ]);">
 
 <dl ng-repeat="gift in gifts">
-    <div class='gift-options'>
-        <input 
-        {% if logged_in %}
-            value='bearbeiten'
-            class='open-form edit_button'
-        {% else %}
-            value='reservieren' 
-            class='open-form claim_button' 
-        {% endif %}
-            ng-click="callGiftForm($index, $event);" 
-            type='submit' 
-            id='open-form_gift-{{ "{{" }} gift.id {{ "}}" }}'/>
-        {% if logged_in %}
-            <a class='delete-gift_link' ng-href='gift/{{ "{{" }} gift.id {{ "}}" }}/delete/'>
-            <span>
-            <svg class='delete-gift' xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" version="1.1" height="32" width="32">
-               {% include 'giftlist/public/trashbin.svg' %}
-            </svg>
-            </span>
-            </a>
-        {#<object 
-            type='image/svg+xml'
-            data='{{ url_for('static', filename='img/trashbin_optimized.svg') }}' 
-    class='delete-gift'/>
-        </object>#}
-        {% endif %}
-    </div>
     <div class='gift-content'>
         <dt>
             <img class='gift-image' ng-src='{{ "{{" }} gift.image {{ "}}" }}' />
@@ -54,6 +27,35 @@
             </p>
         </dt>
         <dd>
+
+            <div class='gift-options'>
+                <input 
+                {% if logged_in %}
+                    value='bearbeiten'
+                    class='open-form edit_button'
+                {% else %}
+                    value='reservieren' 
+                    class='open-form claim_button' 
+                {% endif %}
+                    ng-click="callGiftForm($index, $event);" 
+                    type='submit' 
+                    id='open-form_gift-{{ "{{" }} gift.id {{ "}}" }}'/>
+                {% if logged_in %}
+                    <a class='delete-gift_link' ng-href='gift/{{ "{{" }} gift.id {{ "}}" }}/delete/'>
+                    <span>
+                    <svg class='delete-gift' xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" version="1.1" height="32" width="32">
+                       {% include 'giftlist/public/trashbin.svg' %}
+                    </svg>
+                    </span>
+                    </a>
+                {#<object 
+                    type='image/svg+xml'
+                    data='{{ url_for('static', filename='img/trashbin_optimized.svg') }}' 
+            class='delete-gift'/>
+                </object>#}
+                {% endif %}
+            </div>
+
             <p class='gift-prize'>
                 Preis: {{ "{{" }} gift.prize {{ "}}" }}
             </p>

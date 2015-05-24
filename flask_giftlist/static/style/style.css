@@ -36,84 +36,30 @@ div.vbar {
   font-weight: bold; }
 
 ul#gifts {
+  padding: 0 40px;
   color: white; }
   ul#gifts dl {
     /*border-width: 1px;
     border-style: dashed;*/
-    width: 400px;
+    min-width: 400px;
+    max-width: 700px;
+    width: 100%;
     margin: auto;
     margin-bottom: 30px;
     background-color: #880505;
     border-radius: 15px; }
-    ul#gifts dl div.gift-options {
-      display: block;
-      height: 0px;
-      text-align: right;
-      vertical-align: top;
-      position: relative;
-      z-index: 0;
-      right: 0; }
-      ul#gifts dl div.gift-options a.delete-gift_link {
-        float: right;
-        width: 24px;
-        height: 24px;
-        box-sizing: content-box;
-        display: block;
-        margin-right: 6px;
-        margin-bottom: -24px; }
-        ul#gifts dl div.gift-options a.delete-gift_link svg.delete-gift {
-          width: 28px;
-          height: 28px;
-          box-sizing: border-box;
-          padding: 2px;
-          border-width: 2px;
-          border-style: solid;
-          border-color: #CCCCCC;
-          background-color: #CCCCCC;
-          fill: #880505;
-          stroke: #880505; }
-        ul#gifts dl div.gift-options a.delete-gift_link svg.delete-gift:hover {
-          background-color: #AAAAAA;
-          border-color: #880505;
-          border-style: solid;
-          border-width: 2px;
-          fill: #880505;
-          stroke: #880505;
-          cursor: pointer; }
-      ul#gifts dl div.gift-options input.open-form {
-        border-top-right-radius: 15px;
-        padding: 0 10px;
-        border-width: 2px 2px 2px 2px;
-        border-color: #CCC;
-        border-style: solid;
-        line-height: 24px;
-        height: 24px;
-        width: 98px;
-        box-sizing: content-box;
-        margin-bottom: -24px;
-        color: 880505;
-        background-color: #CCCCCC;
-        float: right;
-        display: block; }
-      ul#gifts dl div.gift-options input.open-form:hover {
-        border-style: solid;
-        border-color: #880505;
-        background-color: #AAAAAA;
-        color: #880505;
-        cursor: pointer; }
     ul#gifts dl div.gift-content {
       display: flex;
       flex-direction: row;
       clear: both;
       margin-bottom: 2px; }
       ul#gifts dl div.gift-content dt {
-        /*border-right-color: white;
-        border-right-width: 1px;
+        /*border-right-width: 1px;
         border-right-style: dashed;*/
         padding: 0 10px 0 10px;
         margin-right: 0;
-        display: inline-block;
-        flex: 1; }
+        display: inline-flex;
+        flex: 2 1 0; }
         ul#gifts dl div.gift-content dt img.gift-image {
           max-width: 100px;
           margin-top: 10px; }
@@ -121,16 +67,72 @@ ul#gifts {
           margin: 10px 0; }
         ul#gifts dl div.gift-content dt p.gift-name {
           text-align: left; }
+      ul#gifts dl div.gift-content dd::before {
+        content: none; }
       ul#gifts dl div.gift-content dd {
-        flex: 3;
+        flex: 3 1 0;
         border-left-color: white;
         border-left-width: 1px;
         border-left-style: dashed;
         padding-left: 10px;
+        padding-top: 0px;
         margin-left: -6px;
         text-align: left;
         display: inline-block;
-        margin-bottom: 2px; }
+        margin-bottom: 2px;
+        vertical-align: top; }
+        ul#gifts dl div.gift-content dd p {
+          margin: 8px 0; }
+        ul#gifts dl div.gift-content dd p.gift-url a {
+          word-wrap: wrap; }
+        ul#gifts dl div.gift-content dd div.gift-options {
+          display: inline-block;
+          width: 100%;
+          text-align: right;
+          margin-bottom: 4px; }
+          ul#gifts dl div.gift-content dd div.gift-options a.delete-gift_link {
+            float: right;
+            width: 24px;
+            height: 24px;
+            box-sizing: content-box;
+            display: block;
+            margin-right: 6px; }
+            ul#gifts dl div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift {
+              width: 28px;
+              height: 28px;
+              box-sizing: border-box;
+              padding: 2px;
+              border-width: 2px;
+              border-style: solid;
+              border-color: #CCCCCC;
+              background-color: #CCCCCC;
+              fill: #880505;
+              stroke: #880505; }
+            ul#gifts dl div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift:hover {
+              background-color: #AAAAAA;
+              border-color: #880505;
+              cursor: pointer; }
+          ul#gifts dl div.gift-content dd div.gift-options input.open-form {
+            border-top-right-radius: 15px;
+            padding: 0 10px;
+            border-width: 2px 2px 2px 2px;
+            border-color: #CCC;
+            border-style: solid;
+            line-height: 24px;
+            height: 24px;
+            width: 98px;
+            box-sizing: content-box;
+            color: 880505;
+            background-color: #CCCCCC;
+            float: right;
+            display: block; }
+          ul#gifts dl div.gift-content dd div.gift-options input.open-form:hover {
+            border-color: #880505;
+            background-color: #AAAAAA;
+            cursor: pointer; }
+    @media only screen and (max-device-width: 790px) and (orientation: landscape) {
+      ul#gifts dl {
+        height: 95%; } }
 
 form#gift_form {
   background-color: rgba(0, 0, 0, 0.5);

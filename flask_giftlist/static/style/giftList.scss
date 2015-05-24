@@ -1,85 +1,18 @@
 ul#gifts {
+    padding: 0 40px;
     color: white;
 
     dl {
         /*border-width: 1px;
         border-style: dashed;*/
-        width: 400px;
+        min-width: 400px;
+        max-width: 700px;
+        width: 100%;
         margin: auto;
         margin-bottom: 30px;
         background-color: #880505;
         border-radius: 15px;
 
-        div.gift-options {
-            display: block;
-            height: 0px;
-            text-align: right;
-            vertical-align: top;
-            position: relative;
-            z-index: 0;
-            right: 0;
-
-            a.delete-gift_link {
-                float: right;
-                //margin-bottom: -28px;
-                width: 24px;
-                height: 24px;
-                box-sizing: content-box;
-                display: block;
-                margin-right: 6px;
-                margin-bottom:-24px;
-
-                svg.delete-gift {
-                    width: 28px;
-                    height: 28px;
-                    box-sizing: border-box;
-                    padding: 2px;
-                    border-width: 2px;
-                    border-style: solid;
-                    border-color: #CCCCCC;
-                    background-color: #CCCCCC;
-                    fill: #880505;
-                    stroke: #880505;
-                }
-
-                svg.delete-gift:hover {
-                    background-color: #AAAAAA;
-                    border-color: #880505;
-                    border-style: solid;
-                    border-width: 2px;
-                    fill: #880505;
-                    stroke: #880505;
-                    cursor: pointer;
-                }
-            }
-
-            input.open-form {
-                border-top-right-radius: 15px;
-                padding: 0 10px;
-                border-width: 2px 2px 2px 2px;
-                border-color: #CCC;
-                border-style: solid;
-                line-height: 24px;
-                height: 24px;
-                width: 98px;
-                box-sizing: content-box;
-                margin-bottom: -24px;
-
-                color: 880505;
-                background-color: #CCCCCC;
-                //margin-bottom: -28px;
-                float: right;
-                display: block;
-            }
-
-            input.open-form:hover {
-                border-style: solid;
-                border-color: #880505;
-                background-color: #AAAAAA;
-                color: #880505;
-                cursor: pointer;
-            }
-        }
 
         div.gift-content {
 
@@ -89,15 +22,14 @@ ul#gifts {
             margin-bottom: 2px;
 
             dt {
-                /*border-right-color: white;
-                border-right-width: 1px;
+                /*border-right-width: 1px;
                 border-right-style: dashed;*/
                 padding: 0 10px 0 10px;
                 margin-right: 0;
-                display: inline-block;
+                display: inline-flex;
                 //max-width: 50%;
                 //min-width: 100px;
-                flex:1;
+                flex:2 1 0;
 
                 img.gift-image {
                     max-width: 100px;
@@ -113,16 +45,27 @@ ul#gifts {
                     text-align: left;
                 }
             }
+
+            dd::before {
+                content: none;
+            }
+
             dd {
-                flex:3;
+                flex:3 1 0;
                 border-left-color: white;
                 border-left-width: 1px;
                 border-left-style: dashed;
                 padding-left: 10px;
+                padding-top: 0px;
                 margin-left: -6px;
                 text-align: left;
                 display: inline-block;
                 margin-bottom: 2px;
+                vertical-align: top;
+
+                p {
+                    margin: 8px 0;
+                }
 
                 p.gift-prize {
                 }
@@ -130,9 +73,77 @@ ul#gifts {
                 p.gift-description {
                 }
                 p.gift-url {
+                    a {
+                        word-wrap: wrap;
+                    }
+                }
+
+                div.gift-options {
+                    display: inline-block;
+                    width: 100%;
+                    text-align: right;
+                    margin-bottom: 4px;
+
+                    a.delete-gift_link {
+                        float: right;
+                        width: 24px;
+                        height: 24px;
+                        box-sizing: content-box;
+                        display: block;
+                        margin-right: 6px;
+
+                        svg.delete-gift {
+                            width: 28px;
+                            height: 28px;
+                            box-sizing: border-box;
+                            padding: 2px;
+                            border-width: 2px;
+                            border-style: solid;
+                            border-color: #CCCCCC;
+                            background-color: #CCCCCC;
+                            fill: #880505;
+                            stroke: #880505;
+                        }
+
+                        svg.delete-gift:hover {
+                            background-color: #AAAAAA;
+                            border-color: #880505;
+                            cursor: pointer;
+                        }
+                    }
+
+                    input.open-form {
+                        border-top-right-radius: 15px;
+                        padding: 0 10px;
+                        border-width: 2px 2px 2px 2px;
+                        border-color: #CCC;
+                        border-style: solid;
+                        line-height: 24px;
+                        height: 24px;
+                        width: 98px;
+                        box-sizing: content-box;
+                        color: 880505;
+                        background-color: #CCCCCC;
+                        float: right;
+                        display: block;
+                    }
+
+                    input.open-form:hover {
+                        border-color: #880505;
+                        background-color: #AAAAAA;
+                        cursor: pointer;
+                    }
                 }
             }
         }
+
+        @media only screen
+            and (max-device-width: 790px)
+            and (orientation: landscape) {
+
+            height: 95%;
+        }
     }
+
 }
 
