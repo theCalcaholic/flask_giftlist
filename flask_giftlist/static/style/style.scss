@@ -35,16 +35,17 @@ div#header {
         font-family: Geneva;
         font-size: 1.4em;
         background-color: #880505;
-        float:right;
         text-decoration: none;
         padding: 4px;
-        margin-right: 4px;
         border-width: 1px;
         border-top-width: 0px;
         border-color: white;
         border-style: solid;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+        position: absolute;
+        top: 0px;
+        right: 4px;
     }
 
     a#logout-button:hover, a#logout-button:focus {

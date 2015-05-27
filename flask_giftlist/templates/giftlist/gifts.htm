@@ -1,22 +1,4 @@
-<ul id='gifts' 
-    ng-init="loadGifts([
-    {% for gift in gifts %}
-        {
-            id: '{{ gift.id }}',
-            name: '{{ gift.name }}',
-            prize: '{{ gift.prize }}',
-            url: '{{ gift.url }}',
-            description: '{{ gift.description }}',
-            {% if gift.image %}
-            image: '{{ url_for('static', filename=gift.image) }}',
-            {% else %}
-            image: null,
-            {% endif %}
-            mailText: '{{ gift.mail_text }}'
-        },
-
-    {% endfor %}
-    ]);">
+<ul id='gifts'>
 
 <dl ng-repeat="gift in gifts">
     <div class='gift-content'>
@@ -37,7 +19,7 @@
                     value='reservieren' 
                     class='open-form claim_button' 
                 {% endif %}
-                    ng-click="callGiftForm($index, $event);" 
+                    ng-click="callGiftForm($index);" 
                     type='submit' 
                     id='open-form_gift-{{ "{{" }} gift.id {{ "}}" }}'/>
                 {% if logged_in %}
@@ -68,7 +50,7 @@
                     {{ "{{" }} gift.url {{ "}}" }}
                 </a>
             </p>
-        </dt>
+        </dd>
     </div>
 </dl>
 

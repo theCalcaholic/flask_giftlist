@@ -9,10 +9,12 @@ import os
 giftlist = Blueprint("giftlist", __name__)
 
 @giftlist.route('/', methods = ['GET', 'POST'])
-def index():
+def index(gift_form=None):
     gifts = Gift.query.filter(Gift.gifter == None)
     if current_user.is_anonymous():
         form = ClaimGiftForm()
+    elif gift_form:
+        form = gift_form
     else:
         form = GiftForm()
     if request.method == 'POST' and claim_form.validate_on_submit():
@@ -24,8 +26,19 @@ def index():
             gift_form=form, 
             logged_in=(not current_user.is_anonymous()))
 
-@giftlist.route('/claim/', methods = ['GET', 'POST'])
-def claim_gift():
+@giftlist.route('/claim/<int:gift_id>/', methods = ['GET', 'POST'])
+def claim_gift(gift_id):
+    gift = Gift.query.filter(Gift.id==gift_id, Gift.gifter==None).first()
+    
+    if gift:
+        claim_form = ClaimGiftForm()
+        if claim_form.validate_on_submit():
+            return render_template('giftlist/claimGift.htm', gift=gift, claim_form=claim_form, done=True)
+        else:
+            return redirect(url_for('.index'), gift_form=claim_form)
+    else:
+        return 'not found'
+        return render_template('giftlist/giftNotAvailable.htm')
     return 'claimed'
 
 @giftlist.route('/gift/new/', methods=['GET', 'POST'])
@@ -35,7 +48,10 @@ def add_gift():
     new_data = process_gift_form(gift_form)
     if request.method == 'POST' and new_data:
         gift = Gift.create(**new_data)
-        return redirect(url_for('index'))
+        if gift:
+            return redirect(url_for('.index', ))
+        else:
+            return type(gift)
     return render_template('giftlist/editGift.htm', edit_gift_form=gift_form)
 
 @giftlist.route('/gift/<int:gift_id>/', methods=['POST','GET'])
@@ -48,10 +64,10 @@ def edit_gift(gift_id):
         if not gift:
             return render_template('error/404.html'), 404
         gift.update(**new_data)
-        return redirect(url_for('index'))
+        return redirect(url_for('.index'))
     elif gift:
         gift_form.populate_with(gift)
-    return render_template('giftlist/editGift.htm', gift_list_id=gift.gift_list_id, edit_gift_form=gift_form)
+    return render_template('giftlist/editGift.htm', edit_gift_form=gift_form)
 
 @giftlist.route('/gift/<int:gift_id>/delete/')
 @login_required
@@ -59,7 +75,7 @@ def delete_gift(gift_id):
     gift = Gift.query.filter(Gift.id==gift_id).first()
     if gift:
         gift.delete()
-    return redirect(url_for('index'))
+    return redirect(url_for('.index'))
 
     
 def process_gift_form(form):

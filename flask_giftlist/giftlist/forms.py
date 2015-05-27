@@ -52,7 +52,6 @@ class ListSettingsForm(Form):
             validators=[])
 
 class ClaimGiftForm(Form):
-    gift_id = IntegerField(default="{{ giftId }}", widget=HiddenInput())
     surname = TextField(
             'Vorname',
             validators=[validators.Required(error_field_required)])
