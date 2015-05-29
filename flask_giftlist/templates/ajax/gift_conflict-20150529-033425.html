@@ -1,6 +1,6 @@
 <ul id='gifts'>
-
-<dl ng-repeat="gift in gifts" class='gift'>
+    <li>
+<dl ng-repeat="gift in vm.gifts" class='gift'>
     <div class='gift-content'>
         <dt>
             <img class='gift-image' ng-src='{{ "{{" }} gift.image {{ "}}" }}' />
@@ -53,6 +53,5 @@
         </dd>
     </div>
 </dl>
-
+    </li>
 </ul>
-

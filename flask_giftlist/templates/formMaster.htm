@@ -1,0 +1,20 @@
+<form 
+    class='gift_form' 
+    method='post' 
+    ng-show='vm.show' 
+    ng-action='{{ "{{" }} vm.action {{ "}}" }}' 
+    {% block form_attributes %}
+    {% endblock %}
+    >
+    <fieldset id='gift-form_fields'>
+            <div class='options'>
+                <div class='close-button' title="schließen" ng-click='vm.closeDialog()'>
+                </div>
+            </div>
+            {% block form_fields %}
+            {% endblock %}
+        <p>
+            <input type="SUBMIT" value='speichern'>
+        </p>
+    </fieldset>
+</form>

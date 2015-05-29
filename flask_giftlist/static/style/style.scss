@@ -70,6 +70,71 @@ div.vbar {
     font-weight: bold;
 }
 
+dl {
+
+    min-width: 400px;
+    max-width: 700px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+p {
+    display: block;
+    clear: both;
+}
+
+#credentialsList {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: flex-left;
+    
+
+    label {
+        margin-bottom: 30px;
+        display: inline-block;
+    }
+
+    li {
+        display: block;
+        text-align: left;
+
+        dl {
+            display: block;
+            min-width: initial;
+            width: initial;
+            max-width: initial;
+            margin-bottom: 12px;
+            background-color: #888;
+            padding: 6px;
+        }
+
+        dt, dd {
+            text-align: left;
+            display: inline-block;
+            min-width: 40%;
+        }
+        dt {
+        }
+        dd::before {
+            display: none;
+            content: none;
+            float:right;
+        }
+        dd {
+            margin: 0;
+            padding: 0;
+            flex: 2;
+            font-style: italic;
+        }
+    }
+
+}
+
 @import 'giftList';
 @import 'giftForm';
 

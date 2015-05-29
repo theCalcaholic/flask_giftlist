@@ -1,0 +1,34 @@
+{% set ng_init='' %}
+
+<form 
+    id='gift_form' 
+    name='giftForm' 
+    {% if logged_in %}
+        class="edit-gift_form" 
+        enctype='multipart/form-data'
+        {% set ng_init="actionUrl = \"gift\";" %}
+    {% else %}
+        {% set ng_init="actionUrl = \"claim\";" %}
+    {% endif %}
+    method='post' 
+    action='{{ '{{' }} giftForm.action {{ '}}' }}' 
+    {#% if not gift_form.validate_on_submit() %}
+        {% set ng_init=ng_init + "giftForm.$setDirty(); callGiftForm(null);" %}
+    {% endif %#}
+    ng-init='{{ ng_init }}' 
+    ng-show='giftForm.show'>
+    <fieldset id='gift-form_fields'>
+            <div class='options'>
+                <div class='close-button' title="schließen" ng-click='closeGiftForm()'>
+                </div>
+            </div>
+            {% if logged_in %}
+                {% include 'giftlist/editGiftFormFields.htm' %}
+            {% else %}
+                {% include 'giftlist/claimGiftFormFields.htm' %}
+            {% endif %}
+        <p>
+            <input type="SUBMIT" value='speichern'>
+        </p>
+    </fieldset>
+</form>

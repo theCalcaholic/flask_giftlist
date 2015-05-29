@@ -1,0 +1,52 @@
+<div class='gift-content'>
+    <dt>
+        <img class='gift-image' ng-src='{{ "{{" }} gift.image {{ "}}" }}' />
+        <p class='gift-name'>
+            {{ "{{" }} gift.name {{ "}}" }}
+        </p>
+    </dt>
+    <dd>
+
+        <div class='gift-options'>
+            <input 
+            {% if logged_in %}
+                value='bearbeiten'
+                class='open-form edit_button'
+                ng-click='vm.editGift($index);' 
+            {% else %}
+                value='reservieren' 
+                class='open-form claim_button' 
+                ng-click='vm.claimGift($index);' 
+            {% endif %}
+                type='submit' 
+                id='open-form_gift-{{ "{{" }} gift.id {{ "}}" }}'/>
+            {% if logged_in %}
+                <a class='delete-gift_link' 
+                    ng-click='deleteGift($index)' 
+                    ng-href='gift/{{ "{{" }} gift.id {{ "}}" }}/delete/'>
+                <span>
+                <svg class='delete-gift' xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" version="1.1" height="32" width="32">
+                   {% include 'giftlist/trashbin.svg' %}
+                </svg>
+                </span>
+                </a>
+            {% endif %}
+        </div>
+
+        <p class='gift-prize'>
+            Preis: {{ "{{" }} gift.prize {{ "}}" }}
+        </p>
+        <p class='gift-description'>
+            {{ "{{" }} gift.description {{ "}}" }}
+        </p>
+        <p class='gift-url'>
+            URL: 
+            <a ng-href='{{ "{{" }} gift.url {{ "}}" }}'>
+                {{ "{{" }} gift.url {{ "}}" }}
+            </a>
+        </p>
+    </dd>
+    <p class='gift-mail-text' ng-show="gift.mail_text && showFull">
+        {{ "{{" }} gift.mail_text {{ "}}" }}
+    </p>
+</div>

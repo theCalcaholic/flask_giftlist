@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app
+from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app, jsonify, Response
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user, login_required
 from werkzeug.contrib.fixers import ProxyFix
@@ -24,6 +24,7 @@ def index(gift_form=None):
             'giftlist/index.htm', 
             gifts=gifts,
             gift_form=form, 
+            showMail=True,
             logged_in=(not current_user.is_anonymous()))
 
 @giftlist.route('/claim/<int:gift_id>/', methods = ['GET', 'POST'])
@@ -33,9 +34,9 @@ def claim_gift(gift_id):
     if gift:
         claim_form = ClaimGiftForm()
         if claim_form.validate_on_submit():
-            return render_template('giftlist/claimGift.htm', gift=gift, claim_form=claim_form, done=True)
+            return render_template('giftlist/claimGift.htm', gift=gift, gift_form=claim_form, done=True)
         else:
-            return redirect(url_for('.index'), gift_form=claim_form)
+            return redirect(url_for('.index'))
     else:
         return 'not found'
         return render_template('giftlist/giftNotAvailable.htm')
@@ -76,6 +77,25 @@ def delete_gift(gift_id):
     if gift:
         gift.delete()
     return redirect(url_for('.index'))
+
+@giftlist.route('/ajax/gifts')
+def gifts_as_json():
+    gifts = [ gift.dict() for gift in Gift.query.filter(Gift.gifter==None) ]
+    return jsonify(success = True,
+            loggedIn = True,
+            gifts = gifts)
+
+@giftlist.route('/ajax/template/<path:template_path>')
+def get_template(template_path):
+    base_path = os.path.join(current_app.root_path, current_app.template_folder)
+    if os.path.isfile(os.path.join(base_path, 'ajax', template_path)):
+        return render_template(os.path.join('ajax', template_path))
+    return render_template('error/404.html'), 404
+
+@giftlist.route('/ajax/template/claimDialog.html')
+def get_claimdialog_template():
+    claim_form = ClaimGiftForm()
+    return render_template('ajax/claimDialog.html', claim_form=claim_form)
 
     
 def process_gift_form(form):

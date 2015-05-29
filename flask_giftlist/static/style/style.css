@@ -54,106 +54,156 @@ div.vbar {
   color: red;
   font-weight: bold; }
 
+dl {
+  min-width: 400px;
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 30px; }
+
+p {
+  display: block;
+  clear: both; }
+
+#credentialsList {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  align-items: flex-left; }
+  #credentialsList label {
+    margin-bottom: 30px;
+    display: inline-block; }
+  #credentialsList li {
+    display: block;
+    text-align: left; }
+    #credentialsList li dl {
+      display: block;
+      min-width: initial;
+      width: initial;
+      max-width: initial;
+      margin-bottom: 12px;
+      background-color: #888;
+      padding: 6px; }
+    #credentialsList li dt, #credentialsList li dd {
+      text-align: left;
+      display: inline-block;
+      min-width: 40%; }
+    #credentialsList li dd::before {
+      display: none;
+      content: none;
+      float: right; }
+    #credentialsList li dd {
+      margin: 0;
+      padding: 0;
+      flex: 2;
+      font-style: italic; }
+
 ul#gifts {
   padding: 0 40px;
-  color: white; }
-  ul#gifts dl {
-    /*border-width: 1px;
-    border-style: dashed;*/
-    min-width: 400px;
-    max-width: 700px;
-    width: 100%;
-    margin: auto;
-    margin-bottom: 30px;
-    background-color: #880505;
-    border-radius: 15px; }
-    ul#gifts dl div.gift-content {
-      display: flex;
-      flex-direction: row;
-      clear: both;
-      margin-bottom: 2px; }
-      ul#gifts dl div.gift-content dt {
-        /*border-right-width: 1px;
-        border-right-style: dashed;*/
-        padding: 0 10px 0 10px;
-        margin-right: 0;
-        display: inline-flex;
-        flex: 2 1 0; }
-        ul#gifts dl div.gift-content dt img.gift-image {
-          max-width: 100px;
-          margin-top: 10px; }
-        ul#gifts dl div.gift-content dt p {
-          margin: 10px 0; }
-        ul#gifts dl div.gift-content dt p.gift-name {
-          text-align: left; }
-      ul#gifts dl div.gift-content dd::before {
-        content: none; }
-      ul#gifts dl div.gift-content dd {
-        flex: 3 1 0;
-        border-left-color: white;
-        border-left-width: 1px;
-        border-left-style: dashed;
-        padding-left: 10px;
-        padding-top: 0px;
-        margin-left: -6px;
-        text-align: left;
-        display: inline-block;
-        margin-bottom: 2px;
-        vertical-align: top; }
-        ul#gifts dl div.gift-content dd p {
-          margin: 8px 0; }
-        ul#gifts dl div.gift-content dd p.gift-url a {
-          word-wrap: wrap; }
-        ul#gifts dl div.gift-content dd div.gift-options {
-          display: inline-block;
-          width: 100%;
-          text-align: right;
-          margin-bottom: 4px; }
-          ul#gifts dl div.gift-content dd div.gift-options a.delete-gift_link {
-            float: right;
-            width: 24px;
-            height: 24px;
-            box-sizing: content-box;
-            display: block;
-            margin-right: 6px; }
-            ul#gifts dl div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift {
-              width: 28px;
-              height: 28px;
-              box-sizing: border-box;
-              padding: 2px;
-              border-width: 2px;
-              border-style: solid;
-              border-color: #CCCCCC;
-              background-color: #CCCCCC;
-              fill: #880505;
-              stroke: #880505; }
-            ul#gifts dl div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift:hover {
-              background-color: #AAAAAA;
-              border-color: #880505;
-              cursor: pointer; }
-          ul#gifts dl div.gift-content dd div.gift-options input.open-form {
-            border-top-right-radius: 15px;
-            padding: 0 10px;
-            border-width: 2px 2px 2px 2px;
-            border-color: #CCC;
-            border-style: solid;
-            line-height: 24px;
-            height: 24px;
-            width: 98px;
-            box-sizing: content-box;
-            color: 880505;
-            background-color: #CCCCCC;
-            float: right;
-            display: block; }
-          ul#gifts dl div.gift-content dd div.gift-options input.open-form:hover {
-            border-color: #880505;
-            background-color: #AAAAAA;
-            cursor: pointer; }
-    @media only screen and (max-device-width: 790px) and (orientation: landscape) {
-      ul#gifts dl {
-        height: 95%; } }
+  list-style: none; }
 
-form#gift_form {
+dl.gift {
+  color: white;
+  background-color: #880505;
+  border-radius: 15px; }
+  dl.gift div.gift-content {
+    display: flex;
+    flex-direction: row;
+    clear: both;
+    margin-bottom: 2px; }
+    dl.gift div.gift-content dt {
+      /*border-right-width: 1px;
+      border-right-style: dashed;*/
+      padding: 0 10px 0 10px;
+      margin-right: 0;
+      display: inline-flex;
+      flex: 2 1 0; }
+      dl.gift div.gift-content dt img.gift-image {
+        max-width: 100px;
+        margin-top: 10px; }
+      dl.gift div.gift-content dt p {
+        margin: 10px 0; }
+      dl.gift div.gift-content dt p.gift-name {
+        text-align: left; }
+    dl.gift div.gift-content dd::before {
+      content: none; }
+    dl.gift div.gift-content dd {
+      flex: 3 1 0;
+      border-left-color: white;
+      border-left-width: 1px;
+      border-left-style: dashed;
+      padding-left: 10px;
+      padding-top: 0px;
+      margin-left: -6px;
+      text-align: left;
+      display: inline-block;
+      margin-bottom: 2px;
+      vertical-align: top; }
+      dl.gift div.gift-content dd p {
+        margin: 8px 0; }
+      dl.gift div.gift-content dd p.gift-url a {
+        word-wrap: wrap; }
+      dl.gift div.gift-content dd div.gift-options {
+        display: inline-block;
+        width: 100%;
+        text-align: right;
+        margin-bottom: 4px; }
+        dl.gift div.gift-content dd div.gift-options a.delete-gift_link {
+          float: right;
+          width: 24px;
+          height: 24px;
+          box-sizing: content-box;
+          display: block;
+          margin-right: 6px; }
+          dl.gift div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift {
+            width: 28px;
+            height: 28px;
+            box-sizing: border-box;
+            padding: 2px;
+            border-width: 2px;
+            border-style: solid;
+            border-color: #CCCCCC;
+            background-color: #CCCCCC;
+            fill: #880505;
+            stroke: #880505; }
+          dl.gift div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift:hover {
+            background-color: #AAAAAA;
+            border-color: #880505;
+            cursor: pointer; }
+        dl.gift div.gift-content dd div.gift-options input.open-form {
+          border-top-right-radius: 15px;
+          padding: 0 10px;
+          border-width: 2px 2px 2px 2px;
+          border-color: #CCC;
+          border-style: solid;
+          line-height: 24px;
+          height: 24px;
+          width: 98px;
+          box-sizing: content-box;
+          color: 880505;
+          background-color: #CCCCCC;
+          float: right;
+          display: block; }
+        dl.gift div.gift-content dd div.gift-options input.open-form:hover {
+          border-color: #880505;
+          background-color: #AAAAAA;
+          cursor: pointer; }
+  dl.gift p.gift-mail-text {
+    clear: both;
+    width: 100%;
+    display: inline-block;
+    border-top-style: dashed;
+    border-top-width: 1px;
+    border-top-color: white; }
+  @media only screen and (max-device-width: 790px) and (orientation: landscape) {
+    dl.gift {
+      height: 95%; } }
+
+form.gift_form {
+  display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0px;
@@ -163,7 +213,7 @@ form#gift_form {
   margin: 0;
   justify-content: center;
   align-items: center; }
-  form#gift_form fieldset#gift-form_fields {
+  form.gift_form fieldset#gift-form_fields {
     border-color: red;
     border-width: 1px;
     border-style: none;
@@ -172,7 +222,7 @@ form#gift_form {
     padding: 6px 10px 12px 10px;
     box-sizing: border-box;
     width: 322px; }
-    form#gift_form fieldset#gift-form_fields div.options {
+    form.gift_form fieldset#gift-form_fields div.options {
       display: block;
       width: 100%;
       height: 36px;
@@ -182,17 +232,17 @@ form#gift_form {
       border-bottom-style: dashed;
       border-bottom-color: #050505;
       padding-bottom: 3px; }
-      form#gift_form fieldset#gift-form_fields div.options div.close-button {
+      form.gift_form fieldset#gift-form_fields div.options div.close-button {
         width: 32px;
         height: 32px;
         background-image: url(../img/close.svg);
         background-size: 32px 32px;
         display: inline-block; }
-      form#gift_form fieldset#gift-form_fields div.options div.close-button:hover {
+      form.gift_form fieldset#gift-form_fields div.options div.close-button:hover {
         cursor: pointer; }
-    form#gift_form fieldset#gift-form_fields input, form#gift_form fieldset#gift-form_fields textarea {
+    form.gift_form fieldset#gift-form_fields input, form.gift_form fieldset#gift-form_fields textarea {
       width: 200px; }
-    form#gift_form fieldset#gift-form_fields textarea, form#gift_form fieldset#gift-form_fields input:not([type="submit"]):not([type="file"]) {
+    form.gift_form fieldset#gift-form_fields textarea, form.gift_form fieldset#gift-form_fields input:not([type="submit"]):not([type="file"]) {
       border-style: none;
       background-color: #660505;
       color: white;
@@ -200,7 +250,7 @@ form#gift_form {
       padding: 0 4px;
       height: 22px;
       line-height: 22px; }
-    form#gift_form fieldset#gift-form_fields textarea {
+    form.gift_form fieldset#gift-form_fields textarea {
       height: 60px; }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,15 @@
+{
+    loggedIn: {{ 'false' if logged_in else 'true' }},
+    gifts: [
+    {% for gift in gifts %}
+        {
+            id: '{{ gift.id }}',
+            name: '{{ gift.name }}',
+            prize: '{{ gift.prize }}',
+            description: '{{ gift.description }}',
+            url: '{{ gift.url }}',
+            mailText: '{{ gift.mail_text }}'
+        },
+    {% endfor %}
+    ]
+}

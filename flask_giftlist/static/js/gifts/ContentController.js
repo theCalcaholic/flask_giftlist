@@ -1,16 +1,21 @@
 //alert(dump(app));
 app.controller('GiftFormController', ['$scope', function($scope) {
-    $scope.giftForm = {
-        'show': false,
-        'action': null,
-        'gift': null,
-        'gifter': null
-    };
-    $scope.actionUrl = '';
+
+    $scope.showDeleteDialog = false;
+    $scope.showEditDialog = false;
+    $scope.showClaimDialog = false;
 
     $scope.gifts = [];
+    $scope.gifter = null;
+    $scope.currentGift = null;
 
-    $scope.callGiftForm = function(giftIndex) {
+    $scope.claimGift = function(giftIndex) {
+        if( !$scope.claimDialog.gifter ) {
+            $scope.claimDialog.gifter = $scope.gifter;
+        }
+        if( giftIndex !== undefined ) {
+            $scope.claimDialog.gift = $scope.gifts[giftIndex];
+            $scope.showClaimDialog = true;
         if( giftIndex == "new" ) {
             $scope.giftForm.gift = null;
             $scope.giftForm.action = $scope.actionUrl + "/new/";

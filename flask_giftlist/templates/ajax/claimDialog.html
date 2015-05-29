@@ -1,0 +1,23 @@
+{% extends 'formMaster.htm' %}
+{% from "_formhelpers.htm" import ng_render_field %}
+
+{% block form_attributes %}
+    name='vm.claimDialog' 
+    class='claim-gift_form'
+    {#% if not claim_form.validate_on_submit() %}
+        ng-init="vm.claimDialog.$setDirty(); vm.show();"
+    {% endif %#}
+{% endblock %}
+
+{% block form_fields %}
+    {{ claim_form.csrf_token }}
+    {{ ng_render_field(claim_form.surname, "Vorname", "vm.gifter.surname") }}
+    {{ ng_render_field(claim_form.name, "Name", "vm.gifter.name") }}
+    {{ ng_render_field(claim_form.email, "E-Mail-Adresse", "vm.gifter.email") }}
+    {{ ng_render_field(claim_form.email_confirm, "E-Mail-Adresse wiederholen", "vm.gifter.confirmEmail") }}
+    {#<p>
+        {% for error in claim_form.recaptcha.errors %}
+            {{ error }}
+        {% endfor %}
+    </p>#}
+{% endblock %}

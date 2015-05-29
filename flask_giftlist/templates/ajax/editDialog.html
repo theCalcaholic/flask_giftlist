@@ -1,0 +1,28 @@
+{% extends 'formMaster.htm' %}
+{% from "_formhelpers.htm" import ng_render_field %}
+
+{% block form_attributes %}
+    ng-controller='editDialogCtrl as vm' 
+    name='vm.editDialog' 
+    class="edit-gift_form" 
+    enctype='multipart/form-data'
+    {#% if not edit_form.validate_on_submit() %}
+        ng-init="vm.editDialog.$setDirty(); vm.show();"
+    {% endif %#}
+{% endblock %}
+{% block form_fields %}
+
+    {{ gift_form.csrf_token }}
+    {{ ng_render_field(edit_form.name, "Name", "vm.gift.name") }}
+    {{ ng_render_field(eidt_form.prize, "Preis", "vm.gift.prize") }}
+    {{ ng_render_field(edit_form.url, "Url", "vm.gift.url") }}
+    {{ ng_render_field(edit_form.image) }}
+    {{ ng_render_field(edit_form.description, "Beschreibung", "vm.gift.description") }}
+            {{ ng_render_field(gift_form.mail_text, "E-Mail-Text", "vm.gift.mailText") }}
+            {#<p>
+                {% for error in claim_form.recaptcha.errors %}
+                    {{ error }}
+                {% endfor %}
+            </p>#}
+
+{% endblock %}

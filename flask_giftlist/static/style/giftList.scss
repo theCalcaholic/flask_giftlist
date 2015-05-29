@@ -1,149 +1,152 @@
 ul#gifts {
     padding: 0 40px;
+    list-style: none;
+}
+
+dl.gift {
     color: white;
-
-    dl {
-        /*border-width: 1px;
-        border-style: dashed;*/
-        min-width: 400px;
-        max-width: 700px;
-        width: 100%;
-        margin: auto;
-        margin-bottom: 30px;
-        background-color: #880505;
-        border-radius: 15px;
+    background-color: #880505;
+    border-radius: 15px;
 
 
-        div.gift-content {
+    div.gift-content {
 
-            display: flex;
-            flex-direction: row;
-            clear: both;
-            margin-bottom: 2px;
+        display: flex;
+        flex-direction: row;
+        clear: both;
+        margin-bottom: 2px;
 
-            dt {
-                /*border-right-width: 1px;
-                border-right-style: dashed;*/
-                padding: 0 10px 0 10px;
-                margin-right: 0;
-                display: inline-flex;
-                //max-width: 50%;
-                //min-width: 100px;
-                flex:2 1 0;
+        dt {
+            /*border-right-width: 1px;
+            border-right-style: dashed;*/
+            padding: 0 10px 0 10px;
+            margin-right: 0;
+            display: inline-flex;
+            //max-width: 50%;
+            //min-width: 100px;
+            flex:2 1 0;
 
-                img.gift-image {
-                    max-width: 100px;
-                    //max-height: 50px;
-                    margin-top: 10px;
-                }
-
-                p {
-                    margin: 10px 0;
-                }
-
-                p.gift-name {
-                    text-align: left;
-                }
+            img.gift-image {
+                max-width: 100px;
+                //max-height: 50px;
+                margin-top: 10px;
             }
 
-            dd::before {
-                content: none;
+            p {
+                margin: 10px 0;
             }
 
-            dd {
-                flex:3 1 0;
-                border-left-color: white;
-                border-left-width: 1px;
-                border-left-style: dashed;
-                padding-left: 10px;
-                padding-top: 0px;
-                margin-left: -6px;
+            p.gift-name {
                 text-align: left;
+            }
+        }
+
+        dd::before {
+            content: none;
+        }
+
+        dd {
+            flex:3 1 0;
+            border-left-color: white;
+            border-left-width: 1px;
+            border-left-style: dashed;
+            padding-left: 10px;
+            padding-top: 0px;
+            margin-left: -6px;
+            text-align: left;
+            display: inline-block;
+            margin-bottom: 2px;
+            vertical-align: top;
+
+            p {
+                margin: 8px 0;
+            }
+
+            p.gift-prize {
+            }
+
+            p.gift-description {
+            }
+            p.gift-url {
+                a {
+                    word-wrap: wrap;
+                }
+            }
+
+            div.gift-options {
                 display: inline-block;
-                margin-bottom: 2px;
-                vertical-align: top;
+                width: 100%;
+                text-align: right;
+                margin-bottom: 4px;
 
-                p {
-                    margin: 8px 0;
-                }
+                a.delete-gift_link {
+                    float: right;
+                    width: 24px;
+                    height: 24px;
+                    box-sizing: content-box;
+                    display: block;
+                    margin-right: 6px;
 
-                p.gift-prize {
-                }
-
-                p.gift-description {
-                }
-                p.gift-url {
-                    a {
-                        word-wrap: wrap;
-                    }
-                }
-
-                div.gift-options {
-                    display: inline-block;
-                    width: 100%;
-                    text-align: right;
-                    margin-bottom: 4px;
-
-                    a.delete-gift_link {
-                        float: right;
-                        width: 24px;
-                        height: 24px;
-                        box-sizing: content-box;
-                        display: block;
-                        margin-right: 6px;
-
-                        svg.delete-gift {
-                            width: 28px;
-                            height: 28px;
-                            box-sizing: border-box;
-                            padding: 2px;
-                            border-width: 2px;
-                            border-style: solid;
-                            border-color: #CCCCCC;
-                            background-color: #CCCCCC;
-                            fill: #880505;
-                            stroke: #880505;
-                        }
-
-                        svg.delete-gift:hover {
-                            background-color: #AAAAAA;
-                            border-color: #880505;
-                            cursor: pointer;
-                        }
-                    }
-
-                    input.open-form {
-                        border-top-right-radius: 15px;
-                        padding: 0 10px;
-                        border-width: 2px 2px 2px 2px;
-                        border-color: #CCC;
+                    svg.delete-gift {
+                        width: 28px;
+                        height: 28px;
+                        box-sizing: border-box;
+                        padding: 2px;
+                        border-width: 2px;
                         border-style: solid;
-                        line-height: 24px;
-                        height: 24px;
-                        width: 98px;
-                        box-sizing: content-box;
-                        color: 880505;
+                        border-color: #CCCCCC;
                         background-color: #CCCCCC;
-                        float: right;
-                        display: block;
+                        fill: #880505;
+                        stroke: #880505;
                     }
 
-                    input.open-form:hover {
-                        border-color: #880505;
+                    svg.delete-gift:hover {
                         background-color: #AAAAAA;
+                        border-color: #880505;
                         cursor: pointer;
                     }
                 }
+
+                input.open-form {
+                    border-top-right-radius: 15px;
+                    padding: 0 10px;
+                    border-width: 2px 2px 2px 2px;
+                    border-color: #CCC;
+                    border-style: solid;
+                    line-height: 24px;
+                    height: 24px;
+                    width: 98px;
+                    box-sizing: content-box;
+                    color: 880505;
+                    background-color: #CCCCCC;
+                    float: right;
+                    display: block;
+                }
+
+                input.open-form:hover {
+                    border-color: #880505;
+                    background-color: #AAAAAA;
+                    cursor: pointer;
+                }
             }
         }
+    }
+    p.gift-mail-text {
+        clear: both;
+        width: 100%;
+        display: inline-block;
+        border-top-style:dashed;
+        border-top-width: 1px;
+        border-top-color: white;
 
-        @media only screen
-            and (max-device-width: 790px)
-            and (orientation: landscape) {
-
-            height: 95%;
-        }
     }
 
+    @media only screen
+        and (max-device-width: 790px)
+        and (orientation: landscape) {
+
+        height: 95%;
+    }
 }
+
 

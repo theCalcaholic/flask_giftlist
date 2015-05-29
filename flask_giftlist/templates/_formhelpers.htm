@@ -22,6 +22,7 @@
         {% set args = dict() %}
         {% if ng_model %}
             {% set f = args.update( {"ng-model":ng_model} ) %}
+            {#% set f = args.update( {"ng-init": ng_model + "=" + field.data }) %#}
         {% endif %}{% if placeholder %}
             {% set f = args.update( {"placeholder":placeholder} ) %}
         {% endif %}

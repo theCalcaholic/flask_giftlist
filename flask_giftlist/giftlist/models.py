@@ -28,6 +28,17 @@ class Gift(db.Model, CRUDMixin):
     def data(self):
         return MultiDict(self.__dict__)
 
+    def dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'prize': self.prize,
+            'description': self.description,
+            'url': self.url,
+            'image': self.image,
+            'mail_text': self.mail_text,
+            'gifter': self.gifter_id}
+
 
 """class GiftList(db.Model, CRUDMixin):
     __tablename__ = 'giftlist'
