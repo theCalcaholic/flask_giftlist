@@ -101,6 +101,12 @@ p {
       flex: 2;
       font-style: italic; }
 
+.ng-valid.ng-dirty {
+  box-shadow: 0 0 4px 2px #fff; }
+
+.ng-invalid.ng-dirty, form.ng-dirty .ng-invalid {
+  box-shadow: 0 0 2px 1px #f00; }
+
 ul#gifts {
   padding: 0 40px;
   list-style: none; }
@@ -252,5 +258,12 @@ form.gift_form {
       line-height: 22px; }
     form.gift_form fieldset#gift-form_fields textarea {
       height: 60px; }
+
+.field-error_container {
+  color: #990000;
+  font-size: 0.7em;
+  margin-top: 10px;
+  display: block;
+  font-weight: bold; }
 
 /*# sourceMappingURL=style.css.map */

@@ -8,17 +8,7 @@
 {% block content %}
 <main ng-app='giftListApp'>
 
-<ul id='gifts' ng-controller='giftListCtrl as vm' ng-init="showFull = {{ 'true' if showMail else 'false' }};">
-<li class='loading-indicator' ng-show='!vm.gifts'>
-    Loading...
-</li>
-<li>
-<dl ng-repeat="gift in vm.gifts" class='gift'>
-    <gift></gift>
-</dl>
-</li>
-</ul>
-
+<div ng-view></div>
 
 {% if logged_in %}
     <div class='add-gift-button_container'>
@@ -31,7 +21,6 @@
 {% endif %}
 
 <claimdialog>
-claimdialog
 </claimdialog>
 
 {#% include 'giftlist/giftForm.htm' %#}
@@ -44,4 +33,7 @@ claimdialog
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/giftListCtrl.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/giftListDirective.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/claimDialogDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/claimGiftCtrl.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/equalToDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/fieldErrorsDirective.js') }}"></script>
 {% endblock %}

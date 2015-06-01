@@ -11,6 +11,16 @@ from werkzeug.datastructures import MultiDict
 image_extensions = ['jpg', 'gif', 'png', 'bmp', 'svg', 'tiff']
 error_field_required = 'Dieses Feld darf nicht leer sein.'
 
+class NgTextInput(object):
+    def __init__(self, error_class=u'has_errors'):
+        super(NgTextInput, self).__init__()
+        self.error_class = error_class
+
+    def __call__(self, field, **kwargs):
+        pass
+
+
+
 class GiftForm(Form):
     name = TextField(validators = [validators.Required()])
     prize = TextField(validators=[validators.Required()])

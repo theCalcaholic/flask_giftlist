@@ -14,25 +14,18 @@
     {% endif %}
 {% endmacro %}
 
-{% macro ng_render_field(field, placeholder=None, ng_model=None) %}
-    <p>
+{% macro ng_render_field(field, placeholder=None, ng_model=None, args={}) %}
         {% if field.label %}
             {# {{ field.label }}<br />#}
         {% endif %}
-        {% set args = dict() %}
         {% if ng_model %}
             {% set f = args.update( {"ng-model":ng_model} ) %}
             {#% set f = args.update( {"ng-init": ng_model + "=" + field.data }) %#}
         {% endif %}{% if placeholder %}
             {% set f = args.update( {"placeholder":placeholder} ) %}
         {% endif %}
+        {% if field.flags.required %}
+            {% set f = args.update( {"required": True} ) %}
+        {% endif %}
         {{ field(**args) }}
-    </p>
-    {% if field.errors %}
-        <ul class='errors'>
-        {% for error in field.errors %}
-            <li class='wtf-error'>{{ error }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
 {% endmacro %}

@@ -2,7 +2,8 @@
     class='gift_form' 
     method='post' 
     ng-show='vm.show' 
-    ng-action='{{ "{{" }} vm.action {{ "}}" }}' 
+    novalidate 
+    {#ng-action='{{ "{{" }} vm.action {{ "}}" }}' #}
     {% block form_attributes %}
     {% endblock %}
     >
@@ -14,7 +15,8 @@
             {% block form_fields %}
             {% endblock %}
         <p>
-            <input type="SUBMIT" value='speichern'>
+        <button type='submit'>Speichern</button>
+        <button type='button' ng-click='vm.debug()'>Debug</button>
         </p>
     </fieldset>
 </form>

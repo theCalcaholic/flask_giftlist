@@ -29,5 +29,9 @@ app.controller('giftListCtrl', ['$http', 'giftActions', function($http, giftActi
         giftActions.deleteSelected();
     };
 
+    this.selectedGift = function() {
+        return giftActions.selectedGift;
+    }
+
     this.updateGifts();
 }]);

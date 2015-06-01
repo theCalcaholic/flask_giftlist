@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app, jsonify, Response
+from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app, jsonify, Response, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user, login_required
 from werkzeug.contrib.fixers import ProxyFix
@@ -96,6 +96,12 @@ def get_template(template_path):
 def get_claimdialog_template():
     claim_form = ClaimGiftForm()
     return render_template('ajax/claimDialog.html', claim_form=claim_form)
+
+@giftlist.route('/claim/')
+def redirect_claim_gift():
+    if 'selected_gift' in session:
+        return redirect('/#/claim/');
+    return redirect('/');
 
     
 def process_gift_form(form):

@@ -135,6 +135,24 @@ p {
 
 }
 
+.ng-valid.ng-dirty {
+    box-shadow: 0 0 4px 2px #fff;
+}
+
+.ng-invalid.ng-dirty, form.ng-dirty .ng-invalid {
+    //border-color: red;
+    //box-shadow: none;
+    box-shadow: 0 0 2px 1px #f00;
+}
+
 @import 'giftList';
 @import 'giftForm';
 
+
+.field-error_container {
+    color: #990000;
+    font-size: 0.7em;
+    margin-top: 10px;
+    display: block;
+    font-weight: bold;
+}
