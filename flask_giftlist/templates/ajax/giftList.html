@@ -1,0 +1,10 @@
+<ul id='gifts' ng-controller='giftListCtrl as vm' ng-init="showFull = 'false';">
+    <li class='loading-indicator' ng-show='!vm.gifts'>
+        Loading...
+    </li>
+    <li>
+        <dl ng-repeat="gift in vm.gifts" class='gift'>
+            <gift></gift>
+        </dl>
+    </li>
+</ul>

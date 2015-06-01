@@ -1,0 +1,14 @@
+<div class='field-error_container' ng-messages="field.$error" role="alert" ng-show="field.$dirty">
+    <div class='field-error' ng-message="required">
+        Dieses Feld darf nicht leer sein.
+    </div>
+    <div class='field-error' ng-message="minlength">
+        Es sind mindestens 3 Buchstaben erforderlich.
+    </div>
+    <div class='field-error' ng-message="email">
+        Dies ist keine gültige E-Mail-Adresse.
+    </div>
+    <div class='field-error' ng-message="equalTo">
+        Die E-Mail-Adressen müssen übereinstimmen.
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<ul id='gifts' ng-controller='claimGiftCtrl as vm' ng-init="showFull = 'false';">
+    <li class='loading-indicator' ng-show='!vm.gift'>
+        Loading...
+    </li>
+    <li>
+        <dl ng-init='gift = vm.gift' class='gift'>
+            <gift></gift>
+        </dl>
+    </li>
+</ul>
