@@ -104,7 +104,7 @@ p {
 .ng-valid.ng-dirty {
   box-shadow: 0 0 4px 2px #fff; }
 
-.ng-invalid.ng-dirty, form.ng-dirty .ng-invalid {
+.ng-invalid.ng-dirty {
   box-shadow: 0 0 2px 1px #f00; }
 
 ul#gifts {
@@ -198,9 +198,8 @@ dl.gift {
           background-color: #AAAAAA;
           cursor: pointer; }
   dl.gift p.gift-mail-text {
-    clear: both;
     width: 100%;
-    display: inline-block;
+    display: block;
     border-top-style: dashed;
     border-top-width: 1px;
     border-top-color: white; }
@@ -208,7 +207,7 @@ dl.gift {
     dl.gift {
       height: 95%; } }
 
-form.gift_form {
+.gift_form {
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -219,16 +218,16 @@ form.gift_form {
   margin: 0;
   justify-content: center;
   align-items: center; }
-  form.gift_form fieldset#gift-form_fields {
-    border-color: red;
-    border-width: 1px;
-    border-style: none;
+  .gift_form .gift-form_fields {
     display: inline-block;
     background-color: #CCC;
     padding: 6px 10px 12px 10px;
     box-sizing: border-box;
-    width: 322px; }
-    form.gift_form fieldset#gift-form_fields div.options {
+    width: 322px;
+    outline-style: solid;
+    outline-color: #888;
+    outline-width: 2px; }
+    .gift_form .gift-form_fields .options {
       display: block;
       width: 100%;
       height: 36px;
@@ -238,17 +237,17 @@ form.gift_form {
       border-bottom-style: dashed;
       border-bottom-color: #050505;
       padding-bottom: 3px; }
-      form.gift_form fieldset#gift-form_fields div.options div.close-button {
+      .gift_form .gift-form_fields .options .close-button {
         width: 32px;
         height: 32px;
         background-image: url(../img/close.svg);
         background-size: 32px 32px;
         display: inline-block; }
-      form.gift_form fieldset#gift-form_fields div.options div.close-button:hover {
+      .gift_form .gift-form_fields .options .close-button:hover {
         cursor: pointer; }
-    form.gift_form fieldset#gift-form_fields input, form.gift_form fieldset#gift-form_fields textarea {
+    .gift_form .gift-form_fields input, .gift_form .gift-form_fields textarea {
       width: 200px; }
-    form.gift_form fieldset#gift-form_fields textarea, form.gift_form fieldset#gift-form_fields input:not([type="submit"]):not([type="file"]) {
+    .gift_form .gift-form_fields textarea, .gift_form .gift-form_fields input:not([type="submit"]):not([type="file"]) {
       border-style: none;
       background-color: #660505;
       color: white;
@@ -256,8 +255,14 @@ form.gift_form {
       padding: 0 4px;
       height: 22px;
       line-height: 22px; }
-    form.gift_form fieldset#gift-form_fields textarea {
+    .gift_form .gift-form_fields textarea {
       height: 60px; }
+
+.no-options .gift-form_fields .options {
+  display: none; }
+
+#gift-preview-full .gift-options {
+  display: none; }
 
 .field-error_container {
   color: #990000;
@@ -265,5 +270,50 @@ form.gift_form {
   margin-top: 10px;
   display: block;
   font-weight: bold; }
+
+#gifter-data {
+  border-width: 3px;
+  border-color: #880505;
+  border-style: solid;
+  border-radius: 15px;
+  color: white;
+  display: inline-block;
+  max-width: 400px;
+  padding: 0 10px; }
+  #gifter-data dt, #gifter-data dd {
+    display: block;
+    background-color: white;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #666;
+    color: #880505; }
+  #gifter-data dt {
+    padding-bottom: 0;
+    padding-right: 2em;
+    margin-top: 10px;
+    border-bottom-width: 0px; }
+  #gifter-data dd {
+    padding-top: 0;
+    margin-left: 0px;
+    padding-left: 40px;
+    border-top-width: 0px;
+    margin-bottom: 10px; }
+
+.info {
+  border-color: white;
+  border-width: 1px;
+  border-radius: 15px;
+  border-style: solid;
+  padding: 10px;
+  background-color: white;
+  margin: 20px auto;
+  max-width: 700px;
+  color: #880505; }
+
+.claimBy {
+  color: white; }
 
 /*# sourceMappingURL=style.css.map */

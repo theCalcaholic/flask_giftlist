@@ -52,7 +52,7 @@ class Gifter(db.Model, CRUDMixin):
     __tablename__ = 'gifter'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    lastname = db.Column(db.String)
     surname = db.Column(db.String)
     email = db.Column(db.String)
     gifts = db.relationship("Gift", backref="gifter", lazy="select")

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
+from flask_wtf.csrf import CsrfProtect
 #from werkzeug.contrib.fixers import ProxyFix
 #import models
 #import forms
@@ -13,6 +14,7 @@ from .data import db
 
 app = Flask(__name__)
 app.config.from_object(config.BaseConfiguration)
+#CsrfProtect(app)
 
 
 #db = SQLAlchemy()

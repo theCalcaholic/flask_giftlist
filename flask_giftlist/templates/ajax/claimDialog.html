@@ -5,6 +5,7 @@
     name='vm.claimDialog' 
     class='claim-gift_form'
     ng-submit='vm.submit()' 
+    ng-show='giftList.showForm == "claim"'
     {#% if not claim_form.validate_on_submit() %}
         ng-init="vm.claimDialog.$setDirty(); vm.show();"
     {% endif %#}
@@ -26,11 +27,11 @@
     </p>
     <p>
     {{ ng_render_field(
-        claim_form.name, 
+        claim_form.lastname, 
         "Name", 
-        "vm.gifter.name", 
+        "vm.gifter.lastname", 
         args) }}
-    <field-errors field="vm.claimDialog.name"></field-errors>
+    <field-errors field="vm.claimDialog.lastname"></field-errors>
     </p>
     <p>
     {{ ng_render_field(
@@ -54,4 +55,7 @@
             {{ error }}
         {% endfor %}
     </p>#}
+{% endblock %}
+{% block form_buttons %}
+    <button type='submit' ng-disabled='vm.claimDialog.$invalid || !vm.claimDialog.$dirty'>Ok</button>
 {% endblock %}

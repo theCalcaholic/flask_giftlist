@@ -139,7 +139,7 @@ p {
     box-shadow: 0 0 4px 2px #fff;
 }
 
-.ng-invalid.ng-dirty, form.ng-dirty .ng-invalid {
+.ng-invalid.ng-dirty {
     //border-color: red;
     //box-shadow: none;
     box-shadow: 0 0 2px 1px #f00;
@@ -148,6 +148,9 @@ p {
 @import 'giftList';
 @import 'giftForm';
 
+#gift-preview-full .gift-options {
+    display: none;
+}
 
 .field-error_container {
     color: #990000;
@@ -155,4 +158,58 @@ p {
     margin-top: 10px;
     display: block;
     font-weight: bold;
+}
+
+#gifter-data {
+    border-width: 3px;
+    border-color: #880505;
+    border-style: solid;
+    border-radius: 15px;
+    color: white;
+    display: inline-block;
+    max-width: 400px;
+    padding: 0 10px;
+
+    dt, dd {
+        display: block;
+        background-color: white;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 4px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #666;
+        color: #880505;
+
+    }
+    dt {
+        padding-bottom: 0;
+        padding-right: 2em;
+        margin-top: 10px;
+        border-bottom-width: 0px;
+    }
+
+    dd {
+        padding-top: 0;
+        margin-left: 0px;
+        padding-left: 40px;
+        border-top-width: 0px;
+        margin-bottom: 10px;
+    }
+}
+
+.info {
+    border-color: white;
+    border-width: 1px;
+    border-radius: 15px;
+    border-style:solid;
+    padding: 10px;
+    background-color: white;
+    margin: 20px auto;
+    max-width: 700px;
+    color: #880505;
+}
+
+.claimBy {
+    color: white;
 }

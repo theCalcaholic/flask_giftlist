@@ -2,23 +2,25 @@
 {% from "_formhelpers.htm" import ng_render_field %}
 
 {% block form_attributes %}
+    name='dialog.form' 
     class='edit-gift_form'
     ng-submit='dialog.submit()'
     ng-show='dialog.shown'
+    ng-class='"no-options"'
     {#% if not claim_form.validate_on_submit() %}
         ng-init="vm.claimDialog.$setDirty(); vm.show();"
     {% endif %#}
 {% endblock %}
 
 {% block form_fields %}
-    {#<input type='hidden' ng-model='vm.editDialog.csrfToken' value='{{ csrf_token() }}'></input>#}
+{#
     {% set args = {
         "minlength": "3",
         "pattern": ".{3}.*", 
         "title": "Mindestens 3 Buchstaben sind erforderlich."} %}
     <p>
     {{ ng_render_field(
-        edit_form.name, 
+        delete_form.name, 
         "Name", 
         "dialog.gift.giftName",  
         args) }}
@@ -26,7 +28,7 @@
     </p>
     <p>
     {{ ng_render_field(
-        edit_form.prize, 
+        delete_form.prize, 
         "Preis", 
         "dialog.gift.prize", 
         args) }}
@@ -34,37 +36,29 @@
     </p>
     <p>
     {{ ng_render_field(
-        edit_form.url, 
+        delete_form.url, 
         "URL",
         "dialog.gift.url") }}
     <field-errors field="dialog.form.url"></field-errors>
     </p>
-    <p>{#
-    {{ ng_render_field(
-        edit_form.image, 
-        "image",
-        "gift.image") }}
-        <field-errors field="claimDialog.email_confirm"></field-errors>#}
+    <p>
     </p>
     <p>
     {{ ng_render_field(
-        edit_form.description, 
+        delete_form.description, 
         "Beschreibung",
         "dialog.gift.description") }}
     <field-errors field="dialog.form.description"></field-errors>
     <p>
     {{ ng_render_field(
-        edit_form.mail_text, 
+        delete_form.mail_text, 
         "ausführliche Beschreibung",
         "dialog.gift.mailText") }}
-    <field-errors field="dialog.form.mail_text"></field-errors>
-    </p>
-    {#<p>
-        {% for error in claim_form.recaptcha.errors %}
-            {{ error }}
-        {% endfor %}
+    <field-errors field="dialog.form.url"></field-errors>
     </p>#}
+    <div class='info'>Wollen sie das Geschenk "{{"{{"}} dialog.gift.giftName {{"}}"}}" wirklich löschen?</div>
 {% endblock %}
 {% block form_buttons %}
-    <button type='submit' ng-disabled='dialog.form.$invalid || !dialog.form.$dirty'>Ok</button>
+    <button type='submit'>Ja</button>
+    <button type='button' ng-click='dialog.close()'>Abbrechen</button>
 {% endblock %}

@@ -6,7 +6,7 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-<main ng-app='giftListApp'>
+<main ng-app='GiftsApp' ng-controller='GiftListCtrl as giftList'>
 
 <div ng-view></div>
 
@@ -14,26 +14,36 @@
     <div class='add-gift-button_container'>
         <input 
             value='Neues Geschenk'
-            ng-click="callGiftForm('new');" 
+            ng-click="giftList.editGift(null);" 
             type='submit' 
             class='add-gift_button' />
     </div>
+    <edit-dialog>
+    </edit-dialog>
+    <delete-dialog>
+    </delete-dialog>
+{% else %}
+    <claimdialog>
+    </claimdialog>
 {% endif %}
-
-<claimdialog>
-</claimdialog>
 
 {#% include 'giftlist/giftForm.htm' %#}
 
 </main>
 {% endblock %}
 {% block footer %}
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/app.js') }}"></script>
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/giftActionsService.js') }}"></script>
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/giftListCtrl.js') }}"></script>
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/giftListDirective.js') }}"></script>
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/claimDialogDirective.js') }}"></script>
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/claimGiftCtrl.js') }}"></script>
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/equalToDirective.js') }}"></script>
-    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/fieldErrorsDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/GiftsApp.js') }}"></script>
+
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/services/DataProviderService.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/services/DialogsService.js') }}"></script>
+
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/controllers/GiftListController.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/controllers/ClaimGiftController.js') }}"></script>
+
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/GiftDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/ClaimDialogDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/EditDialogDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/DeleteDialogDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/EqualToDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/FieldErrorsDirective.js') }}"></script>
 {% endblock %}

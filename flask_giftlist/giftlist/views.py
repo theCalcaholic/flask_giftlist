@@ -16,7 +16,7 @@ def index(gift_form=None):
     elif gift_form:
         form = gift_form
     else:
-        form = GiftForm()
+        form = GiftForm(csrf_enabled=False)
     if request.method == 'POST' and claim_form.validate_on_submit():
         return claim_gift(claim_form)
     else:
@@ -45,15 +45,16 @@ def claim_gift(gift_id):
 @giftlist.route('/gift/new/', methods=['GET', 'POST'])
 @login_required
 def add_gift():
-    gift_form = GiftForm()
+    gift_form = GiftForm(csrf_enabled=False)
     new_data = process_gift_form(gift_form)
     if request.method == 'POST' and new_data:
         gift = Gift.create(**new_data)
         if gift:
-            return redirect(url_for('.index', ))
+            return jsonify({
+                'error': 'no error'})
         else:
-            return type(gift)
-    return render_template('giftlist/editGift.htm', edit_gift_form=gift_form)
+            return jsonify({'error':'gift creation failed'}), 500
+    return jsonify({'error': 'post required'})
 
 @giftlist.route('/gift/<int:gift_id>/', methods=['POST','GET'])
 @login_required
@@ -78,7 +79,7 @@ def delete_gift(gift_id):
         gift.delete()
     return redirect(url_for('.index'))
 
-@giftlist.route('/ajax/gifts')
+@giftlist.route('/ajax/gifts/')
 def gifts_as_json():
     gifts = [ gift.dict() for gift in Gift.query.filter(Gift.gifter==None) ]
     return jsonify(success = True,
@@ -89,7 +90,7 @@ def gifts_as_json():
 def get_template(template_path):
     base_path = os.path.join(current_app.root_path, current_app.template_folder)
     if os.path.isfile(os.path.join(base_path, 'ajax', template_path)):
-        return render_template(os.path.join('ajax', template_path))
+        return render_template(os.path.join('ajax', template_path), logged_in=(not current_user.is_anonymous()))
     return render_template('error/404.html'), 404
 
 @giftlist.route('/ajax/template/claimDialog.html')
@@ -97,13 +98,17 @@ def get_claimdialog_template():
     claim_form = ClaimGiftForm()
     return render_template('ajax/claimDialog.html', claim_form=claim_form)
 
+@giftlist.route('/ajax/template/editDialog.html')
+def get_editdialog_template():
+    edit_form = GiftForm()
+    return render_template('ajax/editDialog.html', edit_form = edit_form)
+
 @giftlist.route('/claim/')
 def redirect_claim_gift():
     if 'selected_gift' in session:
         return redirect('/#/claim/');
     return redirect('/');
 
-    
 def process_gift_form(form):
     if not form.validate_on_submit():
         return None

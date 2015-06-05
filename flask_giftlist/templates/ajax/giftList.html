@@ -1,9 +1,9 @@
-<ul id='gifts' ng-controller='giftListCtrl as vm' ng-init="showFull = 'false';">
-    <li class='loading-indicator' ng-show='!vm.gifts'>
+<ul id='gifts' ng-init="showFull = 'false';">
+    <li class='loading-indicator' ng-show='!giftList.gifts'>
         Loading...
     </li>
     <li>
-        <dl ng-repeat="gift in vm.gifts" class='gift'>
+        <dl ng-repeat="gift in giftList.gifts" class='gift'>
             <gift></gift>
         </dl>
     </li>

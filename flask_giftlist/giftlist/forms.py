@@ -65,7 +65,7 @@ class ClaimGiftForm(Form):
     surname = TextField(
             'Vorname',
             validators=[validators.Required(error_field_required)])
-    name = TextField(
+    lastname = TextField(
         'Name',
         validators=[validators.Required(error_field_required)])
     email = EmailField(

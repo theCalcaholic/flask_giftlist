@@ -1,22 +1,23 @@
 <form 
     class='gift_form' 
     method='post' 
-    ng-show='vm.show' 
     novalidate 
+    name='dialog.form'
     {#ng-action='{{ "{{" }} vm.action {{ "}}" }}' #}
     {% block form_attributes %}
     {% endblock %}
     >
-    <fieldset id='gift-form_fields'>
-            <div class='options'>
-                <div class='close-button' title="schließen" ng-click='vm.closeDialog()'>
-                </div>
+    <fieldset class='gift-form_fields'>
+        <div class='options'>
+            <div class='close-button' title="schließen" ng-click='dialog.close()'>
             </div>
-            {% block form_fields %}
-            {% endblock %}
+        </div>
+        {% block form_fields %}
+        {% endblock %}
         <p>
-        <button type='submit'>Speichern</button>
-        <button type='button' ng-click='vm.debug()'>Debug</button>
+            {% block form_buttons %}
+            {% endblock %}
+            <button type='button' ng-click='dialog.debug();claimDialog.$validate()'>Debug</button>
         </p>
     </fieldset>
 </form>
