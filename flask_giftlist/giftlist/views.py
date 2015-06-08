@@ -174,7 +174,8 @@ def process_gift_form(form):
         data['image'] = url_for('static', filename=image_path)
     else:
         print('No image transmitted')
-    del form.data['deleteImage']
+    del data['deleteImage']
+    del data['imageFile']
     return data
 
 def form_errors(form):

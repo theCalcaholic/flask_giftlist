@@ -163,13 +163,13 @@
                 } else {
                     _newGift = {
                         id: 'new',
-                        giftName: null,
-                        prize: null,
+                        giftName: undefined,
+                        prize: undefined,
                         url: '',
-                        description: null,
-                        mailText: null,
-                        image: null,
-                        imageFile: null
+                        description: undefined,
+                        mailText: undefined,
+                        image: undefined,
+                        imageFile: undefined
                     };
                 }
                 return _newGift;
