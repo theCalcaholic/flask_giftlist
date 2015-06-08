@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import UserMixin
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -27,6 +29,19 @@ class Gift(db.Model, CRUDMixin):
 
     def data(self):
         return MultiDict(self.__dict__)
+
+    def mail(self):
+        return u"""Geschenk: {name:s}
+Preis (ca): {prize:d}€
+Beschreibung: {desc:s}
+Link: {url:s}
+
+{mail_text:s}""".format(
+                name=self.giftName or '',
+                prize=self.prize or '',
+                desc=self.description or '',
+                url=self.url or '',
+                mail_text=self.mailText or '')
 
     def dict(self):
         return {

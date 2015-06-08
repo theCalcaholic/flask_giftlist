@@ -8,7 +8,7 @@ from flask_wtf.csrf import CsrfProtect
 #import os
 import config
 from .auth import login_manager
-from .giftlist.views import giftlist
+from .giftlist.views import giftlist, mail
 from .users.views import users
 from .data import db
 
@@ -21,6 +21,7 @@ app.config.from_object(config.BaseConfiguration)
 
 
 db.init_app(app)
+mail.init_app(app)
 
 login_manager.init_app(app)
 

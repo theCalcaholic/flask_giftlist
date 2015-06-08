@@ -2,12 +2,17 @@
 from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app, jsonify, Response, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user, login_required
+from flask.ext.mail import Mail, Message
 from werkzeug.contrib.fixers import ProxyFix
 from .models import Gift, Gifter
 from .forms import GiftForm, ClaimGiftForm
 import os
 
 giftlist = Blueprint("giftlist", __name__)
+mail = Mail()
+
+default_mail_start = u"Liebe/r {surname} {lastname},\n\rVielen Dank für die Reservierung des Geschenks.\n\r\n\r"
+default_mail_end = u"\n\rLiebe Grüße, Henrike und Tobias"
 
 @giftlist.route('/', methods = ['GET', 'POST'])
 def index(gift_form=None):
@@ -39,7 +44,17 @@ def claim_gift(gift_id):
             del new_data['email_confirm']
             gifter = Gifter.create(**new_data)
             if gifter:
-                gifter.gift = gift
+                gift.gifter = gifter
+                msg=Message("Hochzeitsgeschenk",
+                    sender = ("Tobias Knöppler", "toberrrt@online.de"),
+                    recipients = [(gifter.surname + " " + gifter.lastname, 
+                        gifter.email)])
+                msg.body = default_mail_start.format(
+                       surname=gifter.surname,
+                       lastname=gifter.lastname)\
+                    + gift.mail() + default_mail_end
+                mail.send(msg)
+                return jsonify({'errors':[]})
             else:
                 return jsonify({
                     'errors': ['Der Schenkende konnte nicht angelegt werden']})
@@ -160,6 +175,24 @@ def process_gift_form(form):
 
 def form_errors(form):
     return [field + ': ' + ';'.join(errors) for field, errors in form.errors.iteritems()]
+
+@giftlist.route('/sendmail/')
+def send_test_mail():
+    send_mail()
+
+def send_mail():
+    gifter = Gifter.query.first()
+    gift = Gift.query.first()
+    msg=Message("Hochzeitsgeschenk",
+        sender = ("Tobias Knöppler", "toberrrt@online.de"),
+        recipients = [(gifter.surname + " " + gifter.lastname, 
+            gifter.email)])
+    msg.body = default_mail_start.format(
+            surname=gifter.surname, 
+            lastname=gifter.lastname) \
+        + gift.mail() + default_mail_end
+    mail.send(msg)
+
 
 
 
