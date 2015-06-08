@@ -42,6 +42,12 @@
             'onchange': "angular.element(this).scope().dialog.gift.imageFile = this.files[0]"}) }}
         <field-errors field="claimDialog.email_confirm"></field-errors>
     </p>
+    <p ng-hide="!dialog.gift.image" class='delete-image-checkbox_container'>
+    {% set args = { 'label': "Bild löschen", 'ng-model': "dialog.gift.deleteImage" } %}
+    {{ ng_render_field(edit_form.deleteImage, 
+        **{'ng-model': "dialog.gift.deleteImage"}) }}
+    <label for='deleteImage'>Bild löschen</label>
+    </p>
     <p>
     {{ ng_render_field(edit_form.description, 
         **{

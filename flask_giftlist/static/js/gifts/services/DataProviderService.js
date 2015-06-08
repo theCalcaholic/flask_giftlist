@@ -28,6 +28,7 @@
             data.append('description', gift.description);
             data.append('mailText', gift.mailText);
             data.append('image', gift.image);
+            data.append('deleteImage', Boolean(gift.deleteImage));
             if( gift.imageFile ) {
                 data.append('imageFile', gift.imageFile);
             }

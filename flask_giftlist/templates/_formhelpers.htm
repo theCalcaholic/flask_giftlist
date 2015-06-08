@@ -20,9 +20,9 @@
                 + "; optional_flag: " ~ field.flags.optional
                 + "; type: " ~ field.type
                 + "; name: " ~ field.name } ) %#}
-        {% if field.label %}
-            {# {{ field.label }}<br />#}
-        {% endif %}
+        {#% if field.label  and not field.type == 'checkbox' %}
+            {{ field.label }}<br />
+        {% endif %#}
         {% if kwargs["ng_model"] %}
             {#% set f = kwargs.update( {"ng-init": ng-model + "=" + field.data }) %#}
         {% endif %}
@@ -31,4 +31,7 @@
             {% set f = kwargs.update( {"info": field.name } ) %}
         {% endif %}
         {{ field(**kwargs) }}
+        {#% if field.label  and field.type == 'checkbox' %}
+            {{ field.label }}
+        {% endif %#}
 {% endmacro %}

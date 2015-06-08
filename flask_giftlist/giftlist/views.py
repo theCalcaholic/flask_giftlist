@@ -153,8 +153,10 @@ def process_gift_form(form):
         return None
     data = form.data
     data['prize'] = float(data['prize'])
-    if form.imageFile.data:
-        #print("imageFile.data: " + form.imageFile.data)
+    if form.deleteImage.data:
+        print('deleting image.')
+        data['image'] = None
+    elif form.imageFile.data:
         image_name = secure_filename(form.imageFile.data.filename)
         uploads_dir = os.path.normpath(os.path.join(
             current_app.static_folder, 
@@ -172,7 +174,7 @@ def process_gift_form(form):
         data['image'] = url_for('static', filename=image_path)
     else:
         print('No image transmitted')
-        data['image'] = None
+    del form.data['deleteImage']
     return data
 
 def form_errors(form):

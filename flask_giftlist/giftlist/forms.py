@@ -29,21 +29,7 @@ class GiftForm(Form):
     mailText = TextAreaField()
     imageFile = FileField(validators=[FileAllowed(image_extensions, 'Images only!')])
     image = HiddenInput()
-    #recaptcha = RecaptchaField()
-
-    def populate_with(self, obj):
-        if obj.name:
-            self.name.data = obj.name
-        if obj.prize:
-            self.prize.data = obj.prize
-        if obj.url:
-            self.url.data = obj.url
-        if obj.description:
-            self.description.data = obj.description
-        if obj.mail_text:
-            self.mail_text.data = obj.mail_text
-        if obj.image:
-            self.image.data = obj.image
+    deleteImage = BooleanField()
 
     def reset(self):
         blankData = MultiDict([('csrf', self.generate_csrf_token())])
