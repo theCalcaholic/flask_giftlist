@@ -1,7 +1,8 @@
 (function() {
-    GiftListCtrl = function($scope, DataProvider, Dialogs) {
+    GiftListCtrl = function($scope, DataProvider, Dialogs, Notify) {
         this.gifts = DataProvider.gifts;
         this.loggedIn = false;//giftActions._loggedIn;
+        this.notifications = Notify.notifications;
         var thiz = this;
 
         this.claimGift = function(index) {
@@ -14,7 +15,7 @@
             if( index !== undefined ) {
                 DataProvider.selectedIndex = index;
             } else {
-                index = DataProvider.addGift();
+                //index = DataProvider.addGift();
                 DataProvider.selectedGift = DataProvider.addGift();
             }
             Dialogs.showEditDialog();
@@ -41,8 +42,12 @@
             DataProvider.updateGifts();
         };
 
+        this.notify = function() {
+            Notify.flashMessage({msg:"Some random message."});
+        };
+
     };
 
     angular.module('GiftsApp').controller('GiftListCtrl', 
-        ['$scope', 'DataProvider', 'Dialogs', GiftListCtrl]);
+        ['$scope', 'DataProvider', 'Dialogs', 'Notify', GiftListCtrl]);
 })();

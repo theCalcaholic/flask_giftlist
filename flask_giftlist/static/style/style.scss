@@ -213,3 +213,18 @@ p {
 .claimBy {
     color: white;
 }
+
+.close-button {
+    width: 32px;
+    height: 32px;
+    background-image: url(../img/close.svg);
+    background-size: 32px 32px;
+    display: inline-block;
+    float:right;
+}
+
+.close-button:hover {
+    cursor: pointer;
+}
+
+@import 'notifications';

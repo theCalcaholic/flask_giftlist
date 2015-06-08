@@ -14,18 +14,21 @@
     {% endif %}
 {% endmacro %}
 
-{% macro ng_render_field(field, placeholder=None, ng_model=None, args={}) %}
+{% macro ng_render_field(field) %}
+            {#% set f = kwargs.update( {"info":
+                "required_flag: " ~ field.flags.required
+                + "; optional_flag: " ~ field.flags.optional
+                + "; type: " ~ field.type
+                + "; name: " ~ field.name } ) %#}
         {% if field.label %}
             {# {{ field.label }}<br />#}
         {% endif %}
-        {% if ng_model %}
-            {% set f = args.update( {"ng-model":ng_model} ) %}
-            {#% set f = args.update( {"ng-init": ng_model + "=" + field.data }) %#}
-        {% endif %}{% if placeholder %}
-            {% set f = args.update( {"placeholder":placeholder} ) %}
+        {% if kwargs["ng_model"] %}
+            {#% set f = kwargs.update( {"ng-init": ng-model + "=" + field.data }) %#}
         {% endif %}
         {% if field.flags.required %}
-            {% set f = args.update( {"required": True} ) %}
+            {% set f = kwargs.update( {"required": True} ) %}
+            {% set f = kwargs.update( {"info": field.name } ) %}
         {% endif %}
-        {{ field(**args) }}
+        {{ field(**kwargs) }}
 {% endmacro %}

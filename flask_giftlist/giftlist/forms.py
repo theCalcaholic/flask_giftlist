@@ -22,14 +22,11 @@ class NgTextInput(object):
 
 
 class GiftForm(Form):
-    name = TextField(validators = [validators.Required()])
+    giftName = TextField(validators = [validators.Required()])
     prize = TextField(validators=[validators.Required()])
-    url = URLField(
-            validators=[
-                validators.Optional(),
-                url()])
+    url = URLField(validators=[validators.URL(), validators.Optional()])
     description = TextField()
-    mail_text = TextAreaField()
+    mailText = TextAreaField()
     image = FileField(validators=[FileAllowed(image_extensions, 'Images only!')])
     #recaptcha = RecaptchaField()
 

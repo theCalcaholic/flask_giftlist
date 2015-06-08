@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app, jsonify, Response, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user, login_required
@@ -32,15 +33,23 @@ def claim_gift(gift_id):
     gift = Gift.query.filter(Gift.id==gift_id, Gift.gifter==None).first()
     
     if gift:
-        claim_form = ClaimGiftForm()
+        claim_form = ClaimGiftForm(csrf_enabled=False)
         if claim_form.validate_on_submit():
-            return render_template('giftlist/claimGift.htm', gift=gift, gift_form=claim_form, done=True)
+            new_data = claim_form.data.copy()
+            del new_data['email_confirm']
+            gifter = Gifter.create(**new_data)
+            if gifter:
+                gifter.gift = gift
+            else:
+                return jsonify({
+                    'errors': ['Der Schenkende konnte nicht angelegt werden']})
         else:
-            return redirect(url_for('.index'))
+            return jsonify({
+                'errors': ['Die angegebenen Daten sind ungültig!'] + form_errors(claim_form)})
     else:
-        return 'not found'
-        return render_template('giftlist/giftNotAvailable.htm')
-    return 'claimed'
+        return jsonify({
+            'errors': ['Das Geschenk konnte nicht reserviert werden.']}), 404
+    return jsonify({'errors': []})
 
 @giftlist.route('/gift/new/', methods=['GET', 'POST'])
 @login_required
@@ -50,11 +59,14 @@ def add_gift():
     if request.method == 'POST' and new_data:
         gift = Gift.create(**new_data)
         if gift:
-            return jsonify({
-                'error': 'no error'})
+            return jsonify({'errors': ['no errors']})
         else:
-            return jsonify({'error':'gift creation failed'}), 500
-    return jsonify({'error': 'post required'})
+            return jsonify({'errors':['Konnte Datenbankeintrag nicht speichern.']})
+    elif not new_data:
+        return jsonify({
+            'errors': ["Ungültige Geschenk-Daten:"] + form_errors(gift_form)})
+    else:
+        return jsonify({'errors': ['unbekannter Fehler.']})
 
 @giftlist.route('/gift/<int:gift_id>/', methods=['POST','GET'])
 @login_required
@@ -77,7 +89,10 @@ def delete_gift(gift_id):
     gift = Gift.query.filter(Gift.id==gift_id).first()
     if gift:
         gift.delete()
-    return redirect(url_for('.index'))
+        return jsonify({'successful': True, 'errors': {}});
+    return jsonify({
+        'successful': False, 
+        'errors': ["Geschenk nicht gefunden."]}), 404
 
 @giftlist.route('/ajax/gifts/')
 def gifts_as_json():
@@ -101,6 +116,10 @@ def get_claimdialog_template():
 @giftlist.route('/ajax/template/editDialog.html')
 def get_editdialog_template():
     edit_form = GiftForm()
+    """return jsonify({
+        'urlField': edit_form.url(),
+        'requiredFlag': edit_form.url.flags.required,
+        'optionalFlag': edit_form.url.flags.optional}), 200"""
     return render_template('ajax/editDialog.html', edit_form = edit_form)
 
 @giftlist.route('/claim/')
@@ -108,6 +127,11 @@ def redirect_claim_gift():
     if 'selected_gift' in session:
         return redirect('/#/claim/');
     return redirect('/');
+
+@giftlist.route('/test/')
+def test_something():
+    edit_form = GiftForm()
+    return render_template("testsomething.html", edit_form = edit_form)
 
 def process_gift_form(form):
     if not form.validate_on_submit():
@@ -133,6 +157,9 @@ def process_gift_form(form):
     else:
         data['image'] = None
     return data
+
+def form_errors(form):
+    return [field + ': ' + ';'.join(errors) for field, errors in form.errors.iteritems()]
 
 
 

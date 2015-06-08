@@ -237,14 +237,6 @@ dl.gift {
       border-bottom-style: dashed;
       border-bottom-color: #050505;
       padding-bottom: 3px; }
-      .gift_form .gift-form_fields .options .close-button {
-        width: 32px;
-        height: 32px;
-        background-image: url(../img/close.svg);
-        background-size: 32px 32px;
-        display: inline-block; }
-      .gift_form .gift-form_fields .options .close-button:hover {
-        cursor: pointer; }
     .gift_form .gift-form_fields input, .gift_form .gift-form_fields textarea {
       width: 200px; }
     .gift_form .gift-form_fields textarea, .gift_form .gift-form_fields input:not([type="submit"]):not([type="file"]) {
@@ -315,5 +307,61 @@ dl.gift {
 
 .claimBy {
   color: white; }
+
+.close-button {
+  width: 32px;
+  height: 32px;
+  background-image: url(../img/close.svg);
+  background-size: 32px 32px;
+  display: inline-block;
+  float: right; }
+
+.close-button:hover {
+  cursor: pointer; }
+
+.notifications-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; }
+
+.notifications-list {
+  width: 100%;
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px; }
+  .notifications-list hr {
+    width: 100%; }
+  .notifications-list .notification {
+    width: initial;
+    max-width: initial;
+    min-height: 40px;
+    box-sizing: border-box;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin: 0 20px;
+    display: block;
+    background: none;
+    border-style: none;
+    border-radius: 0px;
+    border-width: 0px;
+    border-top-width: 1px;
+    border-color: #880505;
+    border-style: dashed;
+    padding: 10px;
+    color: #880505;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px; }
+    .notifications-list .notification .close-button {
+      margin-top: -8px; }
+  .notifications-list .notification:first-of-type {
+    border-style: none !important; }
+  .notifications-list .notification.error {
+    background-color: rgba(200, 5, 5, 0.3); }
 
 /*# sourceMappingURL=style.css.map */

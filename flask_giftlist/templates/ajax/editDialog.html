@@ -12,52 +12,47 @@
 
 {% block form_fields %}
     {#<input type='hidden' ng-model='vm.editDialog.csrfToken' value='{{ csrf_token() }}'></input>#}
-    {% set args = {
-        "minlength": "3",
-        "pattern": ".{3}.*", 
-        "title": "Mindestens 3 Buchstaben sind erforderlich."} %}
     <p>
-    {{ ng_render_field(
-        edit_form.name, 
-        "Name", 
-        "dialog.gift.giftName",  
-        args) }}
-    <field-errors field="dialog.form.name"></field-errors>
+    {{ ng_render_field(edit_form.giftName, 
+        **{ 'placeholder':"Name", 
+            'ng-model': "dialog.gift.giftName",  
+            'minlength': "3" }) }}
+    <field-errors field="dialog.form.giftName"></field-errors>
     </p>
     <p>
-    {{ ng_render_field(
-        edit_form.prize, 
-        "Preis", 
-        "dialog.gift.prize", 
-        args) }}
+    {% set args = {} %}
+    {{ ng_render_field(edit_form.prize, 
+        **{
+            'placeholder': "Preis",
+            'ng-model': "dialog.gift.prize"}) }}
     <field-errors field="dialog.form.prize"></field-errors>
     </p>
     <p>
-    {{ ng_render_field(
-        edit_form.url, 
-        "URL",
-        "dialog.gift.url") }}
+    {{ ng_render_field( edit_form.url, 
+        **{
+            'placeholder': "URL",
+            'ng-model': "dialog.gift.url"}) }}
     <field-errors field="dialog.form.url"></field-errors>
     </p>
     <p>{#
-    {{ ng_render_field(
-        edit_form.image, 
-        "image",
-        "gift.image") }}
+    {{ ng_render_field(edit_form.image, 
+        **{
+            'placeholder': "image",
+            'ng-model': "gift.image") }}
         <field-errors field="claimDialog.email_confirm"></field-errors>#}
     </p>
     <p>
-    {{ ng_render_field(
-        edit_form.description, 
-        "Beschreibung",
-        "dialog.gift.description") }}
+    {{ ng_render_field(edit_form.description, 
+        **{
+            'placeholder': "Beschreibung",
+            'ng-model': "dialog.gift.description"}) }}
     <field-errors field="dialog.form.description"></field-errors>
     <p>
-    {{ ng_render_field(
-        edit_form.mail_text, 
-        "ausführliche Beschreibung",
-        "dialog.gift.mailText") }}
-    <field-errors field="dialog.form.mail_text"></field-errors>
+    {{ ng_render_field(edit_form.mailText, 
+        **{
+            'placeholder': "ausführliche Beschreibung",
+            'ng-model': "dialog.gift.mailText"}) }}
+    <field-errors field="dialog.form.mailText"></field-errors>
     </p>
     {#<p>
         {% for error in claim_form.recaptcha.errors %}
@@ -66,5 +61,5 @@
     </p>#}
 {% endblock %}
 {% block form_buttons %}
-    <button type='submit' ng-disabled='dialog.form.$invalid || !dialog.form.$dirty'>Ok</button>
+    <button type='submit'>Ok</button>
 {% endblock %}

@@ -11,13 +11,13 @@ class Gift(db.Model, CRUDMixin):
     __tablename__ = 'gift'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    giftName = db.Column(db.String)
     prize = db.Column(db.Integer)
     description = db.Column(db.String)
     url = db.Column(db.String)
     image = db.Column(db.String)
-    mail_text = db.Column(db.String)
-    gifter_id = db.Column(db.Integer, db.ForeignKey('gifter.id'))
+    mailText = db.Column(db.String)
+    gifterId = db.Column(db.Integer, db.ForeignKey('gifter.id'))
 
     def __repr__(self):
         return '<Gift %r>' % (self.name)
@@ -31,21 +31,21 @@ class Gift(db.Model, CRUDMixin):
     def dict(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'giftName': self.giftName,
             'prize': self.prize,
             'description': self.description,
             'url': self.url,
             'image': self.image,
-            'mail_text': self.mail_text,
-            'gifter': self.gifter_id}
+            'mailText': self.mailText,
+            'gifter': self.gifterId}
 
 
 """class GiftList(db.Model, CRUDMixin):
-    __tablename__ = 'giftlist'
+__tablename__ = 'giftlist'
 
-    id = db.Column(db.Integer, primary_key=True)
-    gifts = db.relationship('Gift', backref='gift_list', lazy='select')
-    show = db.Column(db.Boolean)"""
+id = db.Column(db.Integer, primary_key=True)
+gifts = db.relationship('Gift', backref='gift_list', lazy='select')
+show = db.Column(db.Boolean)"""
 
 
 class Gifter(db.Model, CRUDMixin):

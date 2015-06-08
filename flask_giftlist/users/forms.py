@@ -1,6 +1,6 @@
 #from flask.ext.uploads import UploadSet, IMAGES
 from flask_wtf import Form, RecaptchaField
-from wtforms import TextField, PasswordField, validators
+from wtforms import TextField, PasswordField, validators, ValidationError
 from .models import User
 
 image_extensions = ['jpg', 'gif', 'png', 'bmp', 'svg', 'tiff']

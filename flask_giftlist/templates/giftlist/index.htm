@@ -8,13 +8,17 @@
 {% block content %}
 <main ng-app='GiftsApp' ng-controller='GiftListCtrl as giftList'>
 
+<notifications></notifications>
+
+<button type='button' ng-click='giftList.notify("some Message")'>notify!</button>
+
 <div ng-view></div>
 
 {% if logged_in %}
     <div class='add-gift-button_container'>
         <input 
             value='Neues Geschenk'
-            ng-click="giftList.editGift(null);" 
+            ng-click="giftList.editGift(undefined);" 
             type='submit' 
             class='add-gift_button' />
     </div>
@@ -36,6 +40,7 @@
 
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/services/DataProviderService.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/services/DialogsService.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/services/NotifyService.js') }}"></script>
 
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/controllers/GiftListController.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/controllers/ClaimGiftController.js') }}"></script>
@@ -44,6 +49,7 @@
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/ClaimDialogDirective.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/EditDialogDirective.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/DeleteDialogDirective.js') }}"></script>
+    <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/NotificationsDirective.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/EqualToDirective.js') }}"></script>
     <script type='application/javascript' src="{{ url_for('static', filename='js/gifts/directives/FieldErrorsDirective.js') }}"></script>
 {% endblock %}

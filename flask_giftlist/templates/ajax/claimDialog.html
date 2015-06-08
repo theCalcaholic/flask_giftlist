@@ -2,53 +2,57 @@
 {% from "_formhelpers.htm" import ng_render_field %}
 
 {% block form_attributes %}
-    name='vm.claimDialog' 
     class='claim-gift_form'
-    ng-submit='vm.submit()' 
-    ng-show='giftList.showForm == "claim"'
+    ng-submit='dialog.submit()' 
+    ng-show='dialog.shown'
     {#% if not claim_form.validate_on_submit() %}
         ng-init="vm.claimDialog.$setDirty(); vm.show();"
     {% endif %#}
 {% endblock %}
 
 {% block form_fields %}
-    {{ claim_form.csrf_token }}
+    {#{ claim_form.csrf_token }#}
     {% set args = {
         "minlength": "3",
         "pattern": ".{3}.*", 
         "title": "Mindestens 3 Buchstaben sind erforderlich."} %}
     <p>
+    {% set surname_args = {
+        'placeholder': "Vorname",
+        'ng-model': "dialog.gifter.surname"} %}
+    {% set f = surname_args.update(args) %}
     {{ ng_render_field(
         claim_form.surname, 
-        "Vorname", 
-        "vm.gifter.surname",  
-        args) }}
-    <field-errors field="vm.claimDialog.surname"></field-errors>
+        **surname_args) }} 
+    <field-errors field="dialog.form.surname"></field-errors>
     </p>
     <p>
+    {% set lastname_args = {
+        'placeholder': "Name",
+        'ng-model': "dialog.gifter.lastname"} %}
+    {% set f = lastname_args.update(args) %}
     {{ ng_render_field(
         claim_form.lastname, 
-        "Name", 
-        "vm.gifter.lastname", 
-        args) }}
-    <field-errors field="vm.claimDialog.lastname"></field-errors>
+        **lastname_args) }}
+    <field-errors field="dialog.form.lastname"></field-errors>
     </p>
     <p>
     {{ ng_render_field(
         claim_form.email, 
-        "E-Mail-Adresse", 
-        "vm.gifter.email") }}
-    <field-errors field="vm.claimDialog.email"></field-errors>
+        **{
+            'placeholder': "E-Mail-Adresse", 
+            'ng-model': "dialog.gifter.email"}) }}
+    <field-errors field="dialog.form.email"></field-errors>
     </p>
     <p>
     <input 
         id='email_confirm' 
         type='email' 
         name="email_confirm"
-        ng-model='vm.gifter.email_confirm' 
-        equal-to='vm.gifter.email' 
+        ng-model='dialog.gifter.email_confirm' 
+        equal-to='dialog.gifter.email' 
         placeholder='E-Mail-Adresse wiederholen'>
-    <field-errors field="vm.claimDialog.email_confirm"></field-errors>
+    <field-errors field="dialog.form.email_confirm"></field-errors>
     </p>
     {#<p>
         {% for error in claim_form.recaptcha.errors %}
@@ -57,5 +61,5 @@
     </p>#}
 {% endblock %}
 {% block form_buttons %}
-    <button type='submit' ng-disabled='vm.claimDialog.$invalid || !vm.claimDialog.$dirty'>Ok</button>
+    <button type='submit'>Ok</button>
 {% endblock %}

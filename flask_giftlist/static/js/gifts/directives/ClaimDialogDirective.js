@@ -1,23 +1,23 @@
 (function () {
-    ClaimDialogCtrl = function($location, DataProvider) {
-        this.show = false;
+    ClaimDialogCtrl = function($location, DataProvider, Dialogs) {
+        this.shown = false;
         this.gifter = DataProvider.gifter;
 
-        this.showDialog = function() {
-            this.show = true;
+        this.show = function() {
+            this.shown = true;
         }
 
-        this.closeDialog = function() {
-            this.show = false;
+        this.close = function() {
+            this.shown = false;
         }
 
         this.submit = function() {
-            if( this.claimDialog.$valid ) {
+            if( this.form.$valid ) {
                 $location.path('/claim/');
-                this.closeDialog();
+                this.close();
                 DataProvider.gifter = this.gifter;
             }
-            this.claimDialog.$setDirty();
+            this.form.$setDirty();
             
         };
 
@@ -30,17 +30,13 @@
         }
 
         this.debug = function() {
-            /*this.gifter.surname = 'Tobias';
+            this.gifter.surname = 'Tobias';
             this.gifter.lastname = 'Knöppler';
             this.gifter.email = 'tobias@knoeppler.net';
             this.gifter.email_confirm = 'tobias@knoeppler.net';
-            this.claimDialog.$validate();
-            $log.debug("gifter.surname:" + this.gifter.surname );
-            $log.debug("gifter.name:" + this.gifter.name);
-            $log.debug("gifter.email:" + this.gifter.email);
-            $log.debug("gifter.email_confirm:" + this.gifter.email_confirm );
-            $log.debug("email_confirm-error:" + this.claimDialog.email_confirm.$error );*/
         };
+
+        Dialogs.claimDialog(this);
 
     };
 
@@ -51,9 +47,9 @@
             replace: true,
             transclude: false,
             controller: ClaimDialogCtrl,
-            controllerAs: 'vm',
+            controllerAs: 'dialog',
         };
     };
 
-    angular.module('GiftsApp').directive('claimdialog', ['$location', 'DataProvider', ClaimDialogDirective.js]);
+    angular.module('GiftsApp').directive('claimdialog', ['$location', 'DataProvider', 'Dialogs', ClaimDialogDirective]);
 })();
