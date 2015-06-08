@@ -25,11 +25,16 @@ dl.gift {
             //max-width: 50%;
             //min-width: 100px;
             flex:2 1 0;
-
-            img.gift-image {
-                max-width: 100px;
-                //max-height: 50px;
-                margin-top: 10px;
+            flex-direction: column;
+            
+            p.gift-image {
+                width: 100%;
+                text-align: left;
+                img {
+                    margin-top: 10px;
+                    width: initial;
+                    height: 100px;
+                }
             }
 
             p {
@@ -38,6 +43,7 @@ dl.gift {
 
             p.gift-name {
                 text-align: left;
+                display: block;
             }
         }
 

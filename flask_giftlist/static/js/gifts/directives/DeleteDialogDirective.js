@@ -19,7 +19,7 @@
             this.close();
             this.form.$setPristine();
             DataProvider.selectedGift = this.gift;
-            DataProvider.server.deleteGift(DataProvider.selectedIndex);
+            DataProvider.deleteGift(DataProvider.selectedIndex);
         } else {
             this.form.$setDirty();
         }

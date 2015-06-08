@@ -14,11 +14,12 @@
 
 {% if logged_in %}
     <div class='add-gift-button_container'>
-        <input 
-            value='Neues Geschenk'
+        <button 
             ng-click="giftList.editGift(undefined);" 
             type='submit' 
-            class='add-gift_button' />
+            class='add-gift_button'>
+            Neues Geschenk
+        </button>
     </div>
     <edit-dialog>
     </edit-dialog>

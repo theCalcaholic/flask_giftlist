@@ -34,7 +34,7 @@
                     alert('error: ' + data.error);
                 });*/
                 //DataProvider.selectedGift = this.gift;
-                DataProvider.server.saveGift(DataProvider.selectedIndex);
+                DataProvider.saveGift(DataProvider.selectedIndex);
                 this.form.$setPristine();
             } else {
                 this.form.$setDirty();
@@ -51,7 +51,12 @@
         }
 
         this.debug = function() {
-        }
+            console.log(this.gift.imageFile);
+            console.log(this.form.image);
+            data = new FormData();
+            data.append("imageFile", this.gift.imageFile);
+            console.log(data);
+        };
 
         Dialogs.editDialog(this);
 

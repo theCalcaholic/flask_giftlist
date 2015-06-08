@@ -4,6 +4,7 @@
     novalidate 
     name='dialog.form'
     {#ng-action='{{ "{{" }} vm.action {{ "}}" }}' #}
+    ng-class='"no-options"'
     {% block form_attributes %}
     {% endblock %}
     >
@@ -17,7 +18,7 @@
         <p>
             {% block form_buttons %}
             {% endblock %}
-            <button type='button' ng-click='dialog.debug();claimDialog.$validate()'>Debug</button>
+            <button type='button' ng-click='dialog.close()'>Abbrechen</button>
         </p>
     </fieldset>
 </form>

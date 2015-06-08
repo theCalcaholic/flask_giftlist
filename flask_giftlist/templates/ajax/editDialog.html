@@ -3,6 +3,7 @@
 
 {% block form_attributes %}
     class='edit-gift_form'
+    enctype='multipart/data'
     ng-submit='dialog.submit()'
     ng-show='dialog.shown'
     {#% if not claim_form.validate_on_submit() %}
@@ -31,15 +32,15 @@
     {{ ng_render_field( edit_form.url, 
         **{
             'placeholder': "URL",
-            'ng-model': "dialog.gift.url"}) }}
+            'file-model': "dialog.gift.url"}) }}
     <field-errors field="dialog.form.url"></field-errors>
     </p>
-    <p>{#
-    {{ ng_render_field(edit_form.image, 
+    <p>
+    {{ ng_render_field(edit_form.imageFile, 
         **{
             'placeholder': "image",
-            'ng-model': "gift.image") }}
-        <field-errors field="claimDialog.email_confirm"></field-errors>#}
+            'onchange': "angular.element(this).scope().dialog.gift.imageFile = this.files[0]"}) }}
+        <field-errors field="claimDialog.email_confirm"></field-errors>
     </p>
     <p>
     {{ ng_render_field(edit_form.description, 

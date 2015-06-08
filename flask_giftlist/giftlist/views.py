@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, Blueprint, redirect, url_for,
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user, login_required
 from flask.ext.mail import Mail, Message
+from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 from .models import Gift, Gifter
 from .forms import GiftForm, ClaimGiftForm
@@ -33,7 +34,13 @@ def index(gift_form=None):
             showMail=True,
             logged_in=(not current_user.is_anonymous()))
 
-@giftlist.route('/claim/<int:gift_id>/', methods = ['GET', 'POST'])
+@giftlist.route('/claim/')
+def redirect_claim_gift():
+    if 'selected_gift' in session:
+        return redirect('/#/claim/');
+    return redirect('/');
+
+@giftlist.route('/ajax/claim/<int:gift_id>/', methods = ['GET', 'POST'])
 def claim_gift(gift_id):
     gift = Gift.query.filter(Gift.id==gift_id, Gift.gifter==None).first()
     
@@ -66,7 +73,7 @@ def claim_gift(gift_id):
             'errors': ['Das Geschenk konnte nicht reserviert werden.']}), 404
     return jsonify({'errors': []})
 
-@giftlist.route('/gift/new/', methods=['GET', 'POST'])
+@giftlist.route('/ajax/gift/new/', methods=['GET', 'POST'])
 @login_required
 def add_gift():
     gift_form = GiftForm(csrf_enabled=False)
@@ -74,7 +81,7 @@ def add_gift():
     if request.method == 'POST' and new_data:
         gift = Gift.create(**new_data)
         if gift:
-            return jsonify({'errors': ['no errors']})
+            return jsonify({'errors': []})
         else:
             return jsonify({'errors':['Konnte Datenbankeintrag nicht speichern.']})
     elif not new_data:
@@ -83,31 +90,33 @@ def add_gift():
     else:
         return jsonify({'errors': ['unbekannter Fehler.']})
 
-@giftlist.route('/gift/<int:gift_id>/', methods=['POST','GET'])
+@giftlist.route('/ajax/gift/<int:gift_id>/save/', methods=['PUT', 'POST','GET'])
 @login_required
 def edit_gift(gift_id):
-    gift_form = GiftForm()
+    gift_form = GiftForm(csrf_enabled=False)
     gift = Gift.query.filter(Gift.id==gift_id).first()
     new_data = process_gift_form(gift_form)
-    if request.method == 'POST' and new_data:
+    if new_data:
         if not gift:
-            return render_template('error/404.html'), 404
+            return jsonif({
+                'success': False,
+                'errors': ["Das Geschenk konnte nicht gefunden werden."]}), 404
         gift.update(**new_data)
-        return redirect(url_for('.index'))
-    elif gift:
-        gift_form.populate_with(gift)
+        return jsonify({'success': True, 'errors': []})
+    else:
+        return jsonify({
+            'success': False,
+            'errors': ['Die angegebenen Geschenk-Daten sind ungültig.']})
     return render_template('giftlist/editGift.htm', edit_gift_form=gift_form)
 
-@giftlist.route('/gift/<int:gift_id>/delete/')
+@giftlist.route('/ajax/gift/<int:gift_id>/delete/', methods=['POST'])
 @login_required
 def delete_gift(gift_id):
     gift = Gift.query.filter(Gift.id==gift_id).first()
     if gift:
         gift.delete()
-        return jsonify({'successful': True, 'errors': {}});
-    return jsonify({
-        'successful': False, 
-        'errors': ["Geschenk nicht gefunden."]}), 404
+        return jsonify({'errors': {}});
+    return jsonify({'errors': ["Geschenk nicht gefunden."]}), 404
 
 @giftlist.route('/ajax/gifts/')
 def gifts_as_json():
@@ -137,39 +146,32 @@ def get_editdialog_template():
         'optionalFlag': edit_form.url.flags.optional}), 200"""
     return render_template('ajax/editDialog.html', edit_form = edit_form)
 
-@giftlist.route('/claim/')
-def redirect_claim_gift():
-    if 'selected_gift' in session:
-        return redirect('/#/claim/');
-    return redirect('/');
-
-@giftlist.route('/test/')
-def test_something():
-    edit_form = GiftForm()
-    return render_template("testsomething.html", edit_form = edit_form)
 
 def process_gift_form(form):
     if not form.validate_on_submit():
+        print(form.errors)
         return None
     data = form.data
-    data['prize'] = int(data['prize'])
-    if form.image.data:
-        image_name = secure_filename(form.image.data.filename)
+    data['prize'] = float(data['prize'])
+    if form.imageFile.data:
+        #print("imageFile.data: " + form.imageFile.data)
+        image_name = secure_filename(form.imageFile.data.filename)
         uploads_dir = os.path.normpath(os.path.join(
             current_app.static_folder, 
             current_app.config.get('UPLOAD_DIR')))
         i = 1
         while os.path.isfile(os.path.join(uploads_dir, image_name)):
-            file_parts = os.path.splitext(form.image.data.filename)
+            file_parts = os.path.splitext(form.imageFile.data.filename)
             image_name = file_parts[0] \
                     + '_' + str(i) \
                     + file_parts[1]
             i += 1
         image_path = os.path.join(current_app.config.get('UPLOAD_DIR'), image_name)
         print( 'Saving image as ' + image_path )
-        form.image.data.save(os.path.join(uploads_dir, image_name))
-        data['image'] = image_path
+        form.imageFile.data.save(os.path.join(uploads_dir, image_name))
+        data['image'] = url_for('static', filename=image_path)
     else:
+        print('No image transmitted')
         data['image'] = None
     return data
 

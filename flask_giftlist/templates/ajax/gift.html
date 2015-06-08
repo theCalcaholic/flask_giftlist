@@ -1,6 +1,8 @@
 <div class='gift-content'>
     <dt>
-        <img class='gift-image' ng-src='{{ "{{" }} gift.image {{ "}}" }}' />
+        <p class='gift-image'>
+            <img class='gift-image' ng-src='{{"{{"}} gift.image {{"}}"}}' />
+        </p>
         <p class='gift-name'>
             {{ "{{" }} gift.giftName {{ "}}" }}
         </p>
@@ -33,19 +35,19 @@
         </div>
 
         <p class='gift-prize'>
-            Preis: {{ "{{" }} gift.prize {{ "}}" }}
+            Preis: {{ "{{" }} gift.prize {{ "}}" }}&euro;
         </p>
-        <p class='gift-description'>
+        <p class='gift-description' ng-show='gift.description'>
             {{ "{{" }} gift.description {{ "}}" }}
         </p>
-        <p class='gift-url'>
+        <p class='gift-url' ng-show='gift.url'>
             URL: 
             <a ng-href='{{ "{{" }} gift.url {{ "}}" }}'>
                 {{ "{{" }} gift.url {{ "}}" }}
             </a>
         </p>
     </dd>
-    <p class='gift-mail-text' ng-show="gift.mailText && showFull">
+    <p class='gift-mail-text' ng-show="gift.mailText && showMailText">
         {{ "{{" }} gift.mailText {{ "}}" }}
     </p>
 </div>

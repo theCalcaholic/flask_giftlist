@@ -27,7 +27,8 @@ class GiftForm(Form):
     url = URLField(validators=[validators.URL(), validators.Optional()])
     description = TextField()
     mailText = TextAreaField()
-    image = FileField(validators=[FileAllowed(image_extensions, 'Images only!')])
+    imageFile = FileField(validators=[FileAllowed(image_extensions, 'Images only!')])
+    image = HiddenInput()
     #recaptcha = RecaptchaField()
 
     def populate_with(self, obj):

@@ -33,9 +33,8 @@
         }
 
         this.update = function() {
-            alert('update');
-            DataProvider.updateGifts();
-            this.gifts = DataProvider.gifts;
+            //DataProvider.updateGifts.bind(DataProvider)();
+            //this.gifts = DataProvider.gifts;
         }
 
         this.resolve = function() {

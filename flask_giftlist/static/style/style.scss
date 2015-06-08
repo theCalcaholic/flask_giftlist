@@ -227,4 +227,21 @@ p {
     cursor: pointer;
 }
 
+button {
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #BB3535;
+    background-color: #880505;
+    color: #FFCCCC;
+    padding: 4 8;
+    margin: 0 4px;
+}
+
+button:hover {
+    background-color: #BB3535;
+    cursor:pointer;
+}
+
 @import 'notifications';

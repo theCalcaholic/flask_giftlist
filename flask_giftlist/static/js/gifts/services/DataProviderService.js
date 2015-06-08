@@ -13,16 +13,31 @@
         serverSaveGift = function(index) {
             if( index && index === 'new' ) {
                 gift = _newGift;
+                url = 'ajax/gift/' + gift.id + '/';
             } else if( index < _gifts.length ) {
                 gift = _gifts[index];
+                url = 'ajax/gift/' + gift.id + '/save/';
             } else {
                 Notify.flashMessage("Internal error: No such gift!");
                 return
             }
-            $http.post('gift/' + gift.id + '/', gift)
-                .success(function(data, status, headers, config) {
+            data = new FormData();
+            data.append('giftName', gift.giftName);
+            data.append('prize', gift.prize);
+            data.append('url', gift.url);
+            data.append('description', gift.description);
+            data.append('mailText', gift.mailText);
+            data.append('image', gift.image);
+            if( gift.imageFile ) {
+                data.append('imageFile', gift.imageFile);
+            }
+
+            $http.post(url, data, {
+                withCredentials: true,
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity
+            }).success(function(data, status, headers, config) {
                     if(data.errors.length) {
-                        alert(data.errors);
                         Notify.flashMessage({
                             msg:'Speichern fehlgeschlagen.', 
                             type:'error', 
@@ -32,11 +47,11 @@
                         Dialogs.showEditDialog();
                     } else {
                         Notify.flashMessage({msg: 'Erfolgreich gespeichert'});
+                        console.log(this);
+                        updateGifts();
                     }
-                })
+                }.bind(this))
                 .error(function(data, status, headers, config) {
-
-                    alert(data.errors);
                     Notify.flashMessage({
                         msg: 'Speichern fehlgeschlagen.', 
                         type:'error', 
@@ -58,7 +73,7 @@
                     type: 'info'
                 });
 
-                $http.post('claim/' + _gifts[index].id + '/', data)
+                $http.post('ajax/claim/' + _gifts[index].id + '/', data)
                     .success(function(data, status, headers, config) {
                         //alert('good status');
                         Notify.hideMessage(claimingMsgId);
@@ -66,7 +81,7 @@
                             //alert('errors!');
                             Notify.flashMessage({
                                 msg: errorMsg,
-                                subNotifications: data.errors,
+                                subMsgs: data.errors,
                                 type: 'error',
                                 duration: 5000
                             });
@@ -82,7 +97,7 @@
                         Notify.hideMessage(claimingMsgId);
                         Notify.flashMessage({
                             msg: errorMsg,
-                            subNotifications: data.errors,
+                            subMsgs: data.errors,
                             type: 'error',
                             duration: 5000
                         });
@@ -91,17 +106,18 @@
         };
 
         serverDeleteGift = function(index) {
-            $http.get('gift/' + _gifts[index].id + '/delete/')
+            $http.post('ajax/gift/' + _gifts[index].id + '/delete/')
                 .success(function(data, status, headers, config) {
                     Notify.flashMessage({msg: 'Geschenk gelöscht.'});
-                    _selectedIndex = undefined;
+                    selectedIndex = undefined;
+                    updateGifts.bind(this)();
                 })
                 .error(function(data, status, headers, config) {
                     Notify.flashMessage({
                         msg: 'Löschen fehlgeschlagen.', 
                         type: 'error', 
                         duration: 5000,
-                        subNotifications: data.errors
+                        subMsgs: data.errors
                     });
                     _selectedIndex = index;
                 });
@@ -122,8 +138,13 @@
                     _gifts = gifts;
                 })
                 .error(function(data, status, headers, config) {
-                    alert("Nooooooooooooooooooooo!!!!");
+                    Notify.flashMessage({
+                        msg: 'Die Geschenkliste konnte nicht geladen werden.',
+                        type: 'error',
+                        duration: 7000
+                    });
                 });
+            console.log(_gifts);
             return _gifts;
         };
 
@@ -145,7 +166,9 @@
                         prize: null,
                         url: '',
                         description: null,
-                        mailText: null
+                        mailText: null,
+                        image: null,
+                        imageFile: null
                     };
                 }
                 return _newGift;
@@ -217,6 +240,9 @@
             },
             giftById: giftById,
             addGift: addGift,
+            saveGift: serverSaveGift,
+            claimGift: serverClaimGift,
+            deleteGift: serverDeleteGift,
             gifter: _gifter,
             get selectedIndex() {
                 return getSelectedIndex();
@@ -224,12 +250,6 @@
             set selectedIndex(index) {
                 setSelectedIndex(index);
             },
-
-            server: {
-                saveGift: serverSaveGift,
-                claimGift: serverClaimGift,
-                deleteGift: serverDeleteGift
-            }
         };
 
         return DataProvider;

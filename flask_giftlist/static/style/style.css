@@ -126,14 +126,20 @@ dl.gift {
       padding: 0 10px 0 10px;
       margin-right: 0;
       display: inline-flex;
-      flex: 2 1 0; }
-      dl.gift div.gift-content dt img.gift-image {
-        max-width: 100px;
-        margin-top: 10px; }
+      flex: 2 1 0;
+      flex-direction: column; }
+      dl.gift div.gift-content dt p.gift-image {
+        width: 100%;
+        text-align: left; }
+        dl.gift div.gift-content dt p.gift-image img {
+          margin-top: 10px;
+          width: initial;
+          height: 100px; }
       dl.gift div.gift-content dt p {
         margin: 10px 0; }
       dl.gift div.gift-content dt p.gift-name {
-        text-align: left; }
+        text-align: left;
+        display: block; }
     dl.gift div.gift-content dd::before {
       content: none; }
     dl.gift div.gift-content dd {
@@ -319,6 +325,21 @@ dl.gift {
 .close-button:hover {
   cursor: pointer; }
 
+button {
+  border-bottom-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #BB3535;
+  background-color: #880505;
+  color: #FFCCCC;
+  padding: 4 8;
+  margin: 0 4px; }
+
+button:hover {
+  background-color: #BB3535;
+  cursor: pointer; }
+
 .notifications-container {
   position: fixed;
   top: 0;
@@ -334,7 +355,8 @@ dl.gift {
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.8);
   border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px; }
+  border-bottom-right-radius: 15px;
+  z-index: 50; }
   .notifications-list hr {
     width: 100%; }
   .notifications-list .notification {

@@ -6,7 +6,6 @@
     class='edit-gift_form'
     ng-submit='dialog.submit()'
     ng-show='dialog.shown'
-    ng-class='"no-options"'
     {#% if not claim_form.validate_on_submit() %}
         ng-init="vm.claimDialog.$setDirty(); vm.show();"
     {% endif %#}
@@ -60,5 +59,4 @@
 {% endblock %}
 {% block form_buttons %}
     <button type='submit'>Ja</button>
-    <button type='button' ng-click='dialog.close()'>Abbrechen</button>
 {% endblock %}

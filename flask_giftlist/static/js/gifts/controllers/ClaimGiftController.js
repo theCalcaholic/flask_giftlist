@@ -6,7 +6,7 @@
 
         this.submitClaim = function() {
             DataProvider.selectedGift = this.gift;
-            DataProvider.server.claimGift( DataProvider.selectedIndex );
+            DataProvider.claimGift( DataProvider.selectedIndex );
         };
     };
 
