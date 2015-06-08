@@ -176,24 +176,6 @@ def process_gift_form(form):
 def form_errors(form):
     return [field + ': ' + ';'.join(errors) for field, errors in form.errors.iteritems()]
 
-@giftlist.route('/sendmail/')
-def send_test_mail():
-    send_mail()
-
-def send_mail():
-    gifter = Gifter.query.first()
-    gift = Gift.query.first()
-    msg=Message("Hochzeitsgeschenk",
-        sender = ("Tobias Knöppler", "toberrrt@online.de"),
-        recipients = [(gifter.surname + " " + gifter.lastname, 
-            gifter.email)])
-    msg.body = default_mail_start.format(
-            surname=gifter.surname, 
-            lastname=gifter.lastname) \
-        + gift.mail() + default_mail_end
-    mail.send(msg)
-
-
 
 
 #giftlist.wsgi_app = ProxyFix(giftlist.wsgi_app)
