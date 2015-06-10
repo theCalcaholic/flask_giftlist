@@ -10,42 +10,46 @@ dl.gift {
     border-radius: 15px;
 
 
-    div.gift-content {
+    div.gift-content_container {
 
-        display: flex;
-        flex-direction: row;
         clear: both;
         margin-bottom: 2px;
 
-        dt {
-            /*border-right-width: 1px;
-            border-right-style: dashed;*/
-            padding: 0 10px 0 10px;
-            margin-right: 0;
-            display: inline-flex;
-            //max-width: 50%;
-            //min-width: 100px;
-            flex:2 1 0;
-            flex-direction: column;
-            
-            p.gift-image {
-                width: 100%;
-                text-align: left;
-                img {
-                    margin-top: 10px;
-                    width: initial;
-                    height: 100px;
+        div.gift-content {
+            display: flex;
+            flex-direction: row;
+
+            dt {
+                /*border-right-width: 1px;
+                border-right-style: dashed;*/
+                padding: 0 10px 0 10px;
+                margin-right: 0;
+                display: inline-flex;
+                //max-width: 50%;
+                //min-width: 100px;
+                flex:2 1 0;
+                flex-direction: column;
+                
+                p.gift-image {
+                    width: 100%;
+                    text-align: left;
+                    img {
+                        margin-top: 10px;
+                        width: initial;
+                        height: 100px;
+                    }
+                }
+
+                p {
+                    margin: 10px 0;
+                }
+
+                p.gift-name {
+                    text-align: left;
+                    display: block;
                 }
             }
 
-            p {
-                margin: 10px 0;
-            }
-
-            p.gift-name {
-                text-align: left;
-                display: block;
-            }
         }
 
         dd::before {

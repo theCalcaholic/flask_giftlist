@@ -1,4 +1,5 @@
-<div class='gift-content'>
+<div class='gift-content_container'>
+    <div class='gift-content'>
     <dt>
         <p class='gift-image'>
             <img class='gift-image' ng-src='{{"{{"}} gift.image {{"}}"}}' />
@@ -41,12 +42,13 @@
             {{ "{{" }} gift.description {{ "}}" }}
         </p>
         <p class='gift-url' ng-show='gift.url'>
-            URL: 
+            Link: 
             <a ng-href='{{ "{{" }} gift.url {{ "}}" }}'>
                 {{ "{{" }} gift.url {{ "}}" }}
             </a>
         </p>
     </dd>
+    </div>
     <p class='gift-mail-text' ng-show="gift.mailText && showMailText">
         {{ "{{" }} gift.mailText {{ "}}" }}
     </p>

@@ -116,34 +116,35 @@ dl.gift {
   color: white;
   background-color: #880505;
   border-radius: 15px; }
-  dl.gift div.gift-content {
-    display: flex;
-    flex-direction: row;
+  dl.gift div.gift-content_container {
     clear: both;
     margin-bottom: 2px; }
-    dl.gift div.gift-content dt {
-      /*border-right-width: 1px;
-      border-right-style: dashed;*/
-      padding: 0 10px 0 10px;
-      margin-right: 0;
-      display: inline-flex;
-      flex: 2 1 0;
-      flex-direction: column; }
-      dl.gift div.gift-content dt p.gift-image {
-        width: 100%;
-        text-align: left; }
-        dl.gift div.gift-content dt p.gift-image img {
-          margin-top: 10px;
-          width: initial;
-          height: 100px; }
-      dl.gift div.gift-content dt p {
-        margin: 10px 0; }
-      dl.gift div.gift-content dt p.gift-name {
-        text-align: left;
-        display: block; }
-    dl.gift div.gift-content dd::before {
+    dl.gift div.gift-content_container div.gift-content {
+      display: flex;
+      flex-direction: row; }
+      dl.gift div.gift-content_container div.gift-content dt {
+        /*border-right-width: 1px;
+        border-right-style: dashed;*/
+        padding: 0 10px 0 10px;
+        margin-right: 0;
+        display: inline-flex;
+        flex: 2 1 0;
+        flex-direction: column; }
+        dl.gift div.gift-content_container div.gift-content dt p.gift-image {
+          width: 100%;
+          text-align: left; }
+          dl.gift div.gift-content_container div.gift-content dt p.gift-image img {
+            margin-top: 10px;
+            width: initial;
+            height: 100px; }
+        dl.gift div.gift-content_container div.gift-content dt p {
+          margin: 10px 0; }
+        dl.gift div.gift-content_container div.gift-content dt p.gift-name {
+          text-align: left;
+          display: block; }
+    dl.gift div.gift-content_container dd::before {
       content: none; }
-    dl.gift div.gift-content dd {
+    dl.gift div.gift-content_container dd {
       flex: 3 1 0;
       border-left-color: white;
       border-left-width: 1px;
@@ -155,23 +156,23 @@ dl.gift {
       display: inline-block;
       margin-bottom: 2px;
       vertical-align: top; }
-      dl.gift div.gift-content dd p {
+      dl.gift div.gift-content_container dd p {
         margin: 8px 0; }
-      dl.gift div.gift-content dd p.gift-url a {
+      dl.gift div.gift-content_container dd p.gift-url a {
         word-wrap: wrap; }
-      dl.gift div.gift-content dd div.gift-options {
+      dl.gift div.gift-content_container dd div.gift-options {
         display: inline-block;
         width: 100%;
         text-align: right;
         margin-bottom: 4px; }
-        dl.gift div.gift-content dd div.gift-options a.delete-gift_link {
+        dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link {
           float: right;
           width: 24px;
           height: 24px;
           box-sizing: content-box;
           display: block;
           margin-right: 6px; }
-          dl.gift div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift {
+          dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.delete-gift {
             width: 28px;
             height: 28px;
             box-sizing: border-box;
@@ -182,11 +183,11 @@ dl.gift {
             background-color: #CCCCCC;
             fill: #880505;
             stroke: #880505; }
-          dl.gift div.gift-content dd div.gift-options a.delete-gift_link svg.delete-gift:hover {
+          dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.delete-gift:hover {
             background-color: #AAAAAA;
             border-color: #880505;
             cursor: pointer; }
-        dl.gift div.gift-content dd div.gift-options input.open-form {
+        dl.gift div.gift-content_container dd div.gift-options input.open-form {
           border-top-right-radius: 15px;
           padding: 0 10px;
           border-width: 2px 2px 2px 2px;
@@ -200,7 +201,7 @@ dl.gift {
           background-color: #CCCCCC;
           float: right;
           display: block; }
-        dl.gift div.gift-content dd div.gift-options input.open-form:hover {
+        dl.gift div.gift-content_container dd div.gift-options input.open-form:hover {
           border-color: #880505;
           background-color: #AAAAAA;
           cursor: pointer; }
@@ -360,7 +361,8 @@ button:hover {
 button:disabled {
   background-color: #777;
   border-color: #888;
-  color: #CCC; }
+  color: #CCC;
+  cursor: initial; }
 
 .notifications-container {
   position: fixed;

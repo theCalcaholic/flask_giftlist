@@ -16,23 +16,10 @@ default_mail_start = u"Liebe/r {surname} {lastname},\n\rVielen Dank für die Res
 default_mail_end = u"\n\rLiebe Grüße, Henrike und Tobias"
 
 @giftlist.route('/', methods = ['GET', 'POST'])
-def index(gift_form=None):
-    gifts = Gift.query.filter(Gift.gifter == None)
-    if current_user.is_anonymous():
-        form = ClaimGiftForm()
-    elif gift_form:
-        form = gift_form
-    else:
-        form = GiftForm(csrf_enabled=False)
-    if request.method == 'POST' and claim_form.validate_on_submit():
-        return claim_gift(claim_form)
-    else:
-        return render_template(
-            'giftlist/index.htm', 
-            gifts=gifts,
-            gift_form=form, 
-            showMail=True,
-            logged_in=(not current_user.is_anonymous()))
+def index():
+    return render_template(
+        'giftlist/index.htm', 
+        logged_in=(not current_user.is_anonymous()))
 
 @giftlist.route('/claim/')
 def redirect_claim_gift():
@@ -60,14 +47,20 @@ def claim_gift(gift_id):
                     'gifter': gifter})
                 print("gifter is:")
                 print(gift.gifter.surname)
+                msg_title = "Geschenkreservierung zur Hochzeit von Henrike und Tobias (" + gift.giftName + ")"
                 msg = Message("Hochzeitsgeschenk",
-                    sender = ("Tobias Knöppler", "toberrrt@online.de"),
+                    sender = ("Henrike & Tobias Knöppler", "toberrrt@online.de"),
                     recipients = [(gifter.surname + " " + gifter.lastname, 
                         gifter.email)])
                 msg.body = default_mail_start.format(
                        surname=gifter.surname,
                        lastname=gifter.lastname)\
                     + gift.mail() + default_mail_end
+                msg.html = render_template(
+                        "gifterMail.htm",
+                        title=msg_title,
+                        gifter=gifter,
+                        gift=gift)
                 mail.send(msg)
                 return jsonify({'errors':[]})
         else:
@@ -125,7 +118,10 @@ def delete_gift(gift_id):
 
 @giftlist.route('/ajax/gifts/')
 def gifts_as_json():
-    gifts = [ gift.dict() for gift in Gift.query.filter(Gift.gifter==None) ]
+    if current_user.is_anonymous():
+        gifts = [ gift.dict() for gift in Gift.query.filter(Gift.gifter==None) ]
+    else:
+        gifts = [ gift.dict() for gift in Gift.query.all() ]
     for gift in Gift.query.filter(Gift.gifter==None):
         print("gifter is:")
         if gift.gifter:
@@ -156,6 +152,21 @@ def get_editdialog_template():
         'requiredFlag': edit_form.url.flags.required,
         'optionalFlag': edit_form.url.flags.optional}), 200"""
     return render_template('ajax/editDialog.html', edit_form = edit_form)
+
+@giftlist.route('/testmail/')
+def test_mail():
+    if request.args.get('giftid'):
+        gift = Gift.query.filter(Gift.id==request.args.get('giftid')).first()
+        if not gift:
+            return 'gift does not exist!'
+    else:
+        gift = Gift.query.first()
+    if not gift.gifter:
+        return 'gift not claimed yet!'
+    else:
+        gifter = gift.gifter
+        return render_template("gifterMail.htm", gifter=gifter, gift=gift)
+
 
 
 def process_gift_form(form):

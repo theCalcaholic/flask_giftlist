@@ -61,7 +61,7 @@
             if( index && index === 'new' ) {
                 gift = _newGift;
                 url = 'ajax/gift/' + gift.id + '/';
-            } else if( index < _gifts.length ) {
+            } else if( index < DataProvider.gifts.length ) {
                 gift = DataProvider.gifts[index];
                 url = 'ajax/gift/' + gift.id + '/save/';
             } else {

@@ -9,7 +9,7 @@ angular.module('GiftsApp', ['ngRoute', 'ngMessages', 'ngCookies'])
         
             .when('/claim/', {
                 templateUrl: 'ajax/template/claimGift.html',
-                controller: 'GiftListCtrl',
+                controller: 'ClaimGiftCtrl',
                 controllerAs: 'vm'
             });
 
