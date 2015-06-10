@@ -49,10 +49,18 @@ def claim_gift(gift_id):
         if claim_form.validate_on_submit():
             new_data = claim_form.data.copy()
             del new_data['email_confirm']
-            gifter = Gifter.create(**new_data)
-            if gifter:
-                gift.gifter = gifter
-                msg=Message("Hochzeitsgeschenk",
+            gifter = Gifter.query.filter(Gifter.email==new_data['email']).first()
+            if not gifter:
+                gifter = Gifter.create(**new_data)
+            if not gifter:
+                return jsonify({
+                    'errors': ['Der Schenkende konnte nicht angelegt werden']})
+            else:
+                gift.update(True, **{
+                    'gifter': gifter})
+                print("gifter is:")
+                print(gift.gifter.surname)
+                msg = Message("Hochzeitsgeschenk",
                     sender = ("Tobias Knöppler", "toberrrt@online.de"),
                     recipients = [(gifter.surname + " " + gifter.lastname, 
                         gifter.email)])
@@ -62,9 +70,6 @@ def claim_gift(gift_id):
                     + gift.mail() + default_mail_end
                 mail.send(msg)
                 return jsonify({'errors':[]})
-            else:
-                return jsonify({
-                    'errors': ['Der Schenkende konnte nicht angelegt werden']})
         else:
             return jsonify({
                 'errors': ['Die angegebenen Daten sind ungültig!'] + form_errors(claim_form)})
@@ -121,6 +126,12 @@ def delete_gift(gift_id):
 @giftlist.route('/ajax/gifts/')
 def gifts_as_json():
     gifts = [ gift.dict() for gift in Gift.query.filter(Gift.gifter==None) ]
+    for gift in Gift.query.filter(Gift.gifter==None):
+        print("gifter is:")
+        if gift.gifter:
+            print(gift.gifter.surname)
+        else:
+            print("None")
     return jsonify(success = True,
             loggedIn = True,
             gifts = gifts)

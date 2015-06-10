@@ -1,6 +1,7 @@
 (function() {
-    DataProvider = function($http, $location, Dialogs, Notify) {
-        var _gifts = undefined;
+    DataProvider = function($q, $http, $location, Dialogs, Notify) {
+        var _callbacks = [];
+        //var _gifts = [];
         var _gifter = {
             surname: null,
             name: null,
@@ -8,26 +9,72 @@
         };
         var _newGift = null;
         var _selectedIndex = undefined;
+        this.identity = 'DataProviderfactory';
 
 
-        serverSaveGift = function(index) {
+        DataProvider = {};
+
+        DataProvider.gifts = [];
+
+        Object.defineProperty(DataProvider, 'selectedGift', {
+            get: function() {
+                if( _selectedIndex === undefined ) {
+                    return null;
+                } else if( _selectedIndex === 'new' ) {
+                    return _newGift;
+                } else {
+                    return DataProvider.gifts[_selectedIndex];
+                }
+            },
+            set: function(gift) {
+                if( gift === undefined ) {
+                    _selectedIndex = undefined;
+                } else if( gift.id ) {
+                    if( _newGift && _newGift.id == gift.id ) {
+                        return _selectedIndex = 'new';
+                    }
+
+                    for( var i=0; i < DataProvider.gifts.length; i++ ) {
+                        if( DataProvider.gifts[i].id = gift.id ) {
+                            _selectedIndex = i;
+                        }
+                    }
+                }
+            },
+            configurable: true
+        });
+
+        DataProvider.gifter = _gifter;
+
+        Object.defineProperty(DataProvider, 'selectedIndex', {
+            get: function() {
+                return _selectedIndex;
+            },
+            set: function(index) {
+                if( index !== undefined && (index === 'new' || index < DataProvider.gifts.length) ) {
+                    _selectedIndex = index;
+                }
+            }
+        });
+
+        DataProvider.saveGift = function(index) {
             if( index && index === 'new' ) {
                 gift = _newGift;
                 url = 'ajax/gift/' + gift.id + '/';
             } else if( index < _gifts.length ) {
-                gift = _gifts[index];
+                gift = DataProvider.gifts[index];
                 url = 'ajax/gift/' + gift.id + '/save/';
             } else {
                 Notify.flashMessage("Internal error: No such gift!");
                 return
             }
             data = new FormData();
-            data.append('giftName', gift.giftName);
-            data.append('prize', gift.prize);
-            data.append('url', gift.url);
-            data.append('description', gift.description);
-            data.append('mailText', gift.mailText);
-            data.append('image', gift.image);
+            data.append('giftName', gift.giftName || '');
+            data.append('prize', gift.prize || '');
+            data.append('url', gift.url || '');
+            data.append('description', gift.description || '');
+            data.append('mailText', gift.mailText || '');
+            data.append('image', gift.image || '');
             data.append('deleteImage', Boolean(gift.deleteImage));
             if( gift.imageFile ) {
                 data.append('imageFile', gift.imageFile);
@@ -49,7 +96,7 @@
                     } else {
                         Notify.flashMessage({msg: 'Erfolgreich gespeichert'});
                         console.log(this);
-                        updateGifts();
+                        DataProvider.updateGifts();
                     }
                 }.bind(this))
                 .error(function(data, status, headers, config) {
@@ -63,10 +110,10 @@
                 });
         };
 
-        serverClaimGift = function(index) {
-            if( _gifter && index < _gifts.length ) {
+        DataProvider.claimGift = function(index) {
+            if( _gifter && index < DataProvider.gifts.length ) {
                 data = _gifter;
-                data.giftId = _gifts[index].id;
+                data.giftId = DataProvider.gifts[index].id;
 
                 errorMsg = "Beim reservieren des Geschenks ist ein Fehler aufgetreten. Bitte versuchen sie es noch einmal.";
                 claimingMsgId = Notify.showMessage({
@@ -74,7 +121,7 @@
                     type: 'info'
                 });
 
-                $http.post('ajax/claim/' + _gifts[index].id + '/', data)
+                $http.post('ajax/claim/' + DataProvider.gifts[index].id + '/', data)
                     .success(function(data, status, headers, config) {
                         //alert('good status');
                         Notify.hideMessage(claimingMsgId);
@@ -106,12 +153,12 @@
             }
         };
 
-        serverDeleteGift = function(index) {
-            $http.post('ajax/gift/' + _gifts[index].id + '/delete/')
+        DataProvider.deleteGift = function(index) {
+            $http.post('ajax/gift/' + DataProvider.gifts[index].id + '/delete/')
                 .success(function(data, status, headers, config) {
                     Notify.flashMessage({msg: 'Geschenk gelöscht.'});
                     selectedIndex = undefined;
-                    updateGifts.bind(this)();
+                    DataProvider.updateGifts();
                 })
                 .error(function(data, status, headers, config) {
                     Notify.flashMessage({
@@ -124,19 +171,34 @@
                 });
         }
 
-        getGifts = function() {
-            if( _gifts === undefined ) {
-                return updateGifts();
+        DataProvider.retrieveGifts = function() {
+            if( DataProvider.gifts === undefined ) {
+                return $q(function(resolve, reject) {
+                    DataProvider.updateGifts().then(function(data) {
+                    return data;
+                    },
+                    function(data) {
+                        return $q.reject(data);
+                    });
+                });
             } else {
-                return _gifts;
+                return $q(function(resolve, reject) {
+                    resolve(DataProvider.gifts)
+                });
             }
         };
 
-        updateGifts = function() {
-            $http.get('ajax/gifts/')
+        DataProvider.updateGifts = function() {
+            return $http.get('ajax/gifts/')
                 .success(function(data, status, headers, config) {
                     gifts = data.gifts;
-                    _gifts = gifts;
+                    DataProvider.gifts = gifts;
+                    console.log("gifts updated: ");
+                    console.log(DataProvider.gifts);
+                    for(index in _callbacks) {
+                        _callbacks[index]();
+                    }
+                    return DataProvider.gifts;
                 })
                 .error(function(data, status, headers, config) {
                     Notify.flashMessage({
@@ -144,19 +206,12 @@
                         type: 'error',
                         duration: 7000
                     });
+                    return $q.reject(DataProvider.gifts);
                 });
-            console.log(_gifts);
-            return _gifts;
         };
 
-        getGift = function(index, giftData=undefined) {
-            if( giftData !== undefined ) {
-                _gifts[index] = giftData;
-            }
-            return _gifts[index];
-        };
 
-        addGift = function(giftData=undefined) {
+        DataProvider.addGift = function(giftData=undefined) {
             if( !_newGift ) {
                 if( giftData !== undefined ) {
                     _newGift = giftData;
@@ -178,11 +233,11 @@
         };
 
 
-        giftById = function(id) {
+        DataProvider.giftById = function(id) {
             if( id === 'new' && _newGift ) {
                 return _newGift;
             } else {
-                for( gift in _gifts ) {
+                for( gift in DataProvider.gifts ) {
                     if( gift.id === id ) {
                         return gift;
                     }
@@ -191,72 +246,23 @@
             }
         };
 
-        getSelectedGift = function() {
-            if( _selectedIndex === undefined ) {
-                return null;
-            } else if( _selectedIndex === 'new' ) {
-                return _newGift;
-            } else {
-                return _gifts[_selectedIndex];
-            }
+
+        /*Object.defineProperty(DataProvider, 'gifts', {
+            get: function() {
+                return _gifts;
+            },
+            //writable: false
+        });*/
+
+        DataProvider.addListener = function(callback) {
+            _callbacks.push(callback);
         };
 
-        setSelectedGift = function(gift) {
-            if( gift === undefined ) {
-                _selectedIndex = undefined;
-            } else if( gift.id ) {
-                if( _newGift && _newGift.id == gift.id ) {
-                    return _selectedIndex = 'new';
-                }
-
-                for( var i=0; i < _gifts.length; i++ ) {
-                    if( _gifts[i].id = gift.id ) {
-                        _selectedIndex = i;
-                    }
-                }
-            }
-        };
-
-        setSelectedIndex = function(index) {
-            if( index !== undefined && (index === 'new' || index < _gifts.length) ) {
-                _selectedIndex = index;
-            }
-            return _selectedIndex;
-        };
-
-        getSelectedIndex = function() {
-            return _selectedIndex;
-        };
-
-        DataProvider = {
-            get gifts() { 
-                return getGifts();
-            },
-            updateGifts: updateGifts,
-            get selectedGift() {
-                return getSelectedGift();
-            },
-            set selectedGift(gift) {
-                setSelectedGift(gift);
-            },
-            giftById: giftById,
-            addGift: addGift,
-            saveGift: serverSaveGift,
-            claimGift: serverClaimGift,
-            deleteGift: serverDeleteGift,
-            gifter: _gifter,
-            get selectedIndex() {
-                return getSelectedIndex();
-            },
-            set selectedIndex(index) {
-                setSelectedIndex(index);
-            },
-        };
 
         return DataProvider;
     };
 
 
-    angular.module('GiftsApp').factory("DataProvider", ['$http', '$location', 'Dialogs', 'Notify', DataProvider]);
+    angular.module('GiftsApp').factory("DataProvider", ['$q', '$http', '$location', 'Dialogs', 'Notify', DataProvider]);
 })();
 

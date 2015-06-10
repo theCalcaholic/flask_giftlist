@@ -2,6 +2,7 @@
 
 {% extends 'master.htm' %}
 {% block content %}
+<main>
     <form id='login-form' method='post' action='{{ url_for('.login') }}'>
         {{ form.csrf_token }}
         {{ render_field(form.login) }}
@@ -16,5 +17,6 @@
             <input type="SUBMIT" value='Best&auml;tigen'>
         </p>
     </form>
+</main>
 {% endblock %}
 
