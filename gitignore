@@ -1,3 +1,6 @@
 *.pyc
 *.scssc
 /uploads/*
+*_priv.py
+*.swp
+gitignore

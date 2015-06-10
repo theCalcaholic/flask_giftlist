@@ -6,14 +6,14 @@ from flask_wtf.csrf import CsrfProtect
 #import models
 #import forms
 #import os
-import config
+import config_priv
 from .auth import login_manager
 from .giftlist.views import giftlist, mail
 from .users.views import users
 from .data import db
 
 app = Flask(__name__)
-app.config.from_object(config.BaseConfiguration)
+app.config.from_object(config_priv.PrivateConfiguration)
 #CsrfProtect(app)
 
 
