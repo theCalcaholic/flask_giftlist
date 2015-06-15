@@ -210,7 +210,8 @@ dl.gift {
     display: block;
     border-top-style: dashed;
     border-top-width: 1px;
-    border-top-color: white; }
+    border-top-color: white;
+    padding: 10px; }
   @media only screen and (max-device-width: 790px) and (orientation: landscape) {
     dl.gift {
       height: 95%; } }
