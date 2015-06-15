@@ -7,6 +7,8 @@ from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 from .models import Gift, Gifter
 from .forms import GiftForm, ClaimGiftForm
+from urlparse import urlparse
+from pprint import pprint
 import os
 
 giftlist = Blueprint("giftlist", __name__)
@@ -175,6 +177,9 @@ def process_gift_form(form):
         return None
     data = form.data
     data['prize'] = float(data['prize'])
+    print("url is: " + form.image.data)
+    img_url = urlparse(form.image.data, 'http')
+    pprint(dir(img_url))
     if form.deleteImage.data:
         print('deleting image.')
         data['image'] = None
@@ -194,6 +199,9 @@ def process_gift_form(form):
         print( 'Saving image as ' + image_path )
         form.imageFile.data.save(os.path.join(uploads_dir, image_name))
         data['image'] = url_for('static', filename=image_path)
+    elif img_url.scheme == "http":
+        data["image"] = img_url.geturl()
+        print("image_url set to: " + img_url.geturl())
     else:
         print('No image transmitted')
     del data['deleteImage']

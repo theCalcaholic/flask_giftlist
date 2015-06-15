@@ -28,7 +28,7 @@ class GiftForm(Form):
     description = TextField()
     mailText = TextAreaField()
     imageFile = FileField(validators=[FileAllowed(image_extensions, 'Images only!')])
-    image = HiddenInput()
+    image = TextField(widget=HiddenInput())
     deleteImage = BooleanField()
 
     def reset(self):

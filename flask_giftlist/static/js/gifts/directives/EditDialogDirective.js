@@ -51,11 +51,9 @@
         }
 
         this.debug = function() {
-            console.log(this.gift.imageFile);
-            console.log(this.form.image);
-            data = new FormData();
-            data.append("imageFile", this.gift.imageFile);
-            console.log(data);
+            console.log(this.dialog);
+            console.log(this.form);
+            console.log(this.form.imageMethod);
         };
 
         Dialogs.editDialog(this);

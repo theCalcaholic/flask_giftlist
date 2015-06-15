@@ -32,15 +32,50 @@
     {{ ng_render_field( edit_form.url, 
         **{
             'placeholder': "URL",
-            'file-model': "dialog.gift.url"}) }}
+            'ng-model': "dialog.gift.url"}) }}
     <field-errors field="dialog.form.url"></field-errors>
     </p>
     <p>
-    {{ ng_render_field(edit_form.imageFile, 
+        <span class='imageOption'>
+            <input 
+                ng-init="dialog.imageMethod='upload'"
+                class='imageMethodSelector' 
+                type="radio" 
+                ng-model="dialog.imageMethod"
+                value="upload"></input>
+            <input 
+                ng-disabled='dialog.imageMethod=="url"'
+                id="imageFile" 
+                type="file" 
+                placeholder="image" 
+                onchange="angular.element(this).scope().dialog.imageFile = this.files[0]" 
+                name="imageFile">
+            </input>
+        </span>
+        <span class='imageOption'>
+            <input 
+                class="imageMethodSelector"
+                type="radio" 
+                ng-model="dialog.imageMethod" 
+                value="url" 
+                ng-click="dialog.debug()">
+            </input>
+            <input
+                ng-disabled='dialog.imageMethod=="upload"'
+                id="image"
+                type="url"
+                placeholder="Bild-Url"
+                ng-model="dialog.gift.image"
+                name="image">
+            </input>
+            <field-errors field="dialog.form.image"></field-errors>
+
+        </span>
+    {#{ ng_render_field(edit_form.imageFile, 
         **{
             'placeholder': "image",
-            'onchange': "angular.element(this).scope().dialog.gift.imageFile = this.files[0]"}) }}
-        <field-errors field="claimDialog.email_confirm"></field-errors>
+            'onchange': "angular.element(this).scope().dialog.gift.imageFile = this.files[0]"}) }#}
+        <field-errors field="dialog.form.email_confirm"></field-errors>
     </p>
     <p ng-hide="!dialog.gift.image" class='delete-image-checkbox_container'>
     {% set args = { 'label': "Bild löschen", 'ng-model': "dialog.gift.deleteImage" } %}

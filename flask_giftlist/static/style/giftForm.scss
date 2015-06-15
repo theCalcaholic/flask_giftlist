@@ -43,7 +43,7 @@
 
         }
 
-        input:not([type=checkbox]), textarea {
+        input:not([type=checkbox]):not([type=radio]), textarea {
             width: 200px;
         }
 
@@ -61,6 +61,7 @@
                 float:left;
                 margin-right: 6px;
             }
+
 
             label {
                 height: 30px;
@@ -82,6 +83,14 @@
 
         textarea {
             height: 60px;
+        }
+
+        textarea:disabled, input:not([type="file"]):not([type="submit"]):disabled {
+            background-color: #888;
+        }
+
+        .imageOption {
+            display: block;
         }
 
     }

@@ -245,7 +245,7 @@ dl.gift {
       border-bottom-style: dashed;
       border-bottom-color: #050505;
       padding-bottom: 3px; }
-    .gift_form .gift-form_fields input:not([type=checkbox]), .gift_form .gift-form_fields textarea {
+    .gift_form .gift-form_fields input:not([type=checkbox]):not([type=radio]), .gift_form .gift-form_fields textarea {
       width: 200px; }
     .gift_form .gift-form_fields .delete-image-checkbox_container {
       background-color: #BB5555;
@@ -273,6 +273,10 @@ dl.gift {
       line-height: 22px; }
     .gift_form .gift-form_fields textarea {
       height: 60px; }
+    .gift_form .gift-form_fields textarea:disabled, .gift_form .gift-form_fields input:not([type="file"]):not([type="submit"]):disabled {
+      background-color: #888; }
+    .gift_form .gift-form_fields .imageOption {
+      display: block; }
 
 .no-options .gift-form_fields .options {
   display: none; }
