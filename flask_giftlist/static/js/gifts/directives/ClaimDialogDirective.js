@@ -46,10 +46,15 @@
             templateUrl: 'ajax/template/claimDialog.html',
             replace: true,
             transclude: false,
-            controller: ClaimDialogCtrl,
+            controller: [
+                '$location',
+                'DataProvider',
+                'Dialogs',
+                ClaimDialogCtrl
+            ],
             controllerAs: 'dialog',
         };
     };
 
-    angular.module('GiftsApp').directive('claimdialog', ['$location', 'DataProvider', 'Dialogs', ClaimDialogDirective]);
+    angular.module('GiftsApp').directive('claimdialog', ClaimDialogDirective);
 })();
