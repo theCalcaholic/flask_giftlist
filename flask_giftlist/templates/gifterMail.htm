@@ -71,9 +71,9 @@
                 <tr>
                     <td rowspan="5">
                 {% if gift.image  %}
-                            <img src="{{ url_for('static', filename='..'+gift.image, _external=True) }}" width="160px;" 
-                                style="
-                                    margin-left: 6px;">
+                    <img src="{% if not image_is_external %}{{ url_for("index", _external=True)}}{% endif %}{{ gift.image }}"
+                         width="160px;" 
+                         style="1margin-left: 6px;">
                 {% endif %}
                     </td>
                 </tr><tr>

@@ -97,6 +97,9 @@
                         Notify.flashMessage({msg: 'Erfolgreich gespeichert'});
                         console.log(this);
                         DataProvider.updateGifts();
+                        if( index === "new" ) {
+                            _newGift = undefined;
+                        }
                     }
                 }.bind(this))
                 .error(function(data, status, headers, config) {

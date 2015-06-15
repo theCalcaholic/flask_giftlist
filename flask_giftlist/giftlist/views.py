@@ -45,10 +45,6 @@ def claim_gift(gift_id):
                 return jsonify({
                     'errors': ['Der Schenkende konnte nicht angelegt werden']})
             else:
-                gift.update(True, **{
-                    'gifter': gifter})
-                print("gifter is:")
-                print(gift.gifter.surname)
                 msg_title = "Geschenkreservierung zur Hochzeit von Henrike und Tobias (" + gift.giftName + ")"
                 msg = Message("Hochzeitsgeschenk",
                     sender = ("Henrike & Tobias Knöppler", "toberrrt@online.de"),
@@ -58,19 +54,25 @@ def claim_gift(gift_id):
                        surname=gifter.surname,
                        lastname=gifter.lastname)\
                     + gift.mail() + default_mail_end
+                image_is_external = bool(urlparse(gift.image).netloc)
                 msg.html = render_template(
                         "gifterMail.htm",
                         title=msg_title,
                         gifter=gifter,
-                        gift=gift)
+                        gift=gift,
+                        image_is_external=image_is_external)
                 mail.send(msg)
+                gift.update(True, **{
+                    'gifter': gifter})
+                print("gifter is:")
+                print(gift.gifter.surname)
                 return jsonify({'errors':[]})
         else:
             return jsonify({
                 'errors': ['Die angegebenen Daten sind ungültig!'] + form_errors(claim_form)})
     else:
         return jsonify({
-            'errors': ['Das Geschenk konnte nicht reserviert werden.']}), 404
+            'errors': ['Das Geschenk konnte nicht reserviert werden. (No such gift)'] }), 404
     return jsonify({'errors': []})
 
 @giftlist.route('/ajax/gift/new/', methods=['GET', 'POST'])
@@ -209,7 +211,10 @@ def process_gift_form(form):
     return data
 
 def form_errors(form):
-    return [field + ': ' + ';'.join(errors) for field, errors in form.errors.iteritems()]
+    if current_app.debug:
+        return [field + ': ' + ';'.join(errors) for field, errors in form.errors.iteritems()]
+    else:
+        return []
 
 
 
