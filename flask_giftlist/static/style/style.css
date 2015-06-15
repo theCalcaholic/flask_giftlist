@@ -333,6 +333,12 @@ dl.gift {
   max-width: 700px;
   color: #880505; }
 
+.gifts-info {
+  font-size: 0.8em; }
+
+.italic {
+  font-style: italic; }
+
 .claimBy {
   color: white; }
 
@@ -383,6 +389,9 @@ button:disabled {
 #ring2 {
   margin-left: 44px;
   margin-top: 29px; }
+
+a {
+  word-wrap: break-word; }
 
 .notifications-container {
   position: fixed;

@@ -1,4 +1,10 @@
 <ul id='gifts' ng-init="showFull = 'false';">
+    <li>
+        <div class='info gifts-info' ng-show='giftList.gifts'>
+            <p>Die hier angezeigten Geschenkwünsche könnt ihr über den <span class='italic'>reservieren</span>-Button auf euren Namen reservieren, worauf sie keinem weiteren Besucher der Seite mehr angezeigt werden.</p>
+        <p>Die Preisangaben sind jeweils lediglich grobe, unverbindliche Schätzungen von uns. Die Fotos dienen nur zur Illustration.</p>
+        </div>
+    </li>
     <li class='loading-indicator' ng-show='!giftList.gifts'>
         Loading...
     </li>
