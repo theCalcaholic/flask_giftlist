@@ -281,4 +281,28 @@ a {
     word-wrap: break-word;
 }
 
+#fork-me {
+    background-color: #4078C0;
+    opacity: 0.4;
+    display: block;
+    width: 200px;
+    height: 28px;
+    line-height: 28px;
+    color: black;
+    text-decoration: none;
+    font-family: Geneva, sans-serif;
+    font-weight: bold;
+    transform: rotate(-45deg);
+    font-size: 12px;
+    position: absolute;
+    top: 46px;
+    left: -44px;
+    outline-style: none;
+}
+
+#fork-me:hover {
+    color: white;
+    opacity: 1;
+}
+
 @import 'notifications';
