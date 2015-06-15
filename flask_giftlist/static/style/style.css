@@ -364,6 +364,22 @@ button:disabled {
   color: #CCC;
   cursor: initial; }
 
+.wedding-ring {
+  margin-left: 30px;
+  margin-top: 12px;
+  height: 50px;
+  width: 50px;
+  border-color: #CCC;
+  border-width: 5px;
+  border-style: solid;
+  border-radius: 35px;
+  display: inline-block;
+  position: absolute; }
+
+#ring2 {
+  margin-left: 44px;
+  margin-top: 29px; }
+
 .notifications-container {
   position: fixed;
   top: 0;
