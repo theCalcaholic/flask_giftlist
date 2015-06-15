@@ -211,7 +211,7 @@
         };
 
 
-        DataProvider.addGift = function(giftData=undefined) {
+        DataProvider.addGift = function(giftData) {
             if( !_newGift ) {
                 if( giftData !== undefined ) {
                     _newGift = giftData;

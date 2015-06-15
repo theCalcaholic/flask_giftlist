@@ -1,0 +1,117 @@
+{% macro row(label, value) %}
+        <td class="firstRow" 
+            style="
+                text-align: left; 
+                border-bottom-style: dotted; 
+                border-bottom-width: 1px;
+                border-bottom-color: white;
+                padding-right: 2em;">
+            {{ label }}
+        </td>
+        <td class="secondRow" 
+            style="
+                text-align: right; 
+                border-bottom-style: dotted; 
+                border-bottom-width: 1px;
+                border-bottom-color: white;">
+            {{ value }}
+        </td>
+{% endmacro %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+        <style rel="stylesheet">
+            @media only screen and (max-device-width: 750px) {
+                #giftcontainer_inner {
+                    width: 85% !important;
+                    min-width: initial !important;
+                }
+                table {
+                    width: 100% !important;
+                }
+            }
+        </style>
+    </head>
+    <body bgcolor='#202020' 
+          style="
+            text-align:center; 
+            background-color: #202020;
+            font-family: Verdana, Geneva, sans-serif;
+            width: 100%; 
+            margin: 0;
+            padding: 0;
+            color: #CCC;">
+        <font color="#CCC" face="Verdana, Geneva, sans-serif">
+            <p style="margin-top:1em;">
+                Liebe/r {{ gifter.surname }} {{ gifter.lastname }},
+            </p>
+            <p>
+                Vielen Dank für die Reservierung des Geschenks. Hier noch einmal alle relevanten Informationen:
+            </p>
+            <div id="giftcontianer-outer" style="background-color:#999; width: 100%;">
+            <p id="giftcontainer_inner"
+                style="
+                    min-width: 200px;
+                    padding: 20px;
+                    border-radius: 15px;
+                    background-color: #880505;
+                    display: inline-block;">
+            <font color="#FFF">
+            {% if gift.image %}
+            {% endif %}
+            <table 
+                border='0' 
+                border-collapse='collapse' 
+                cellspacing='0'
+                style="
+                    width: 100%;
+                    color: white;
+                    margin: auto;">
+                <tr>
+                    <td rowspan="5">
+                {% if gift.image  %}
+                            <img src="{{ url_for('static', filename='..'+gift.image, _external=True) }}" width="160px;" 
+                                style="
+                                    margin-left: 6px;">
+                {% endif %}
+                    </td>
+                </tr><tr>
+                {{ row("Name:", gift.giftName) }}
+                </tr><tr>
+                {{ row("Preis:", gift.prize) }}
+                </tr><tr>
+                {% if gift.url %}
+                    <tr>
+                    {{ row("Link:", gift.url) }}
+                    </tr>
+                {% endif %}
+                {% if gift.description %}
+                    <tr>
+                    {{ row("Beschreibung:", gift.description) }}
+                    </tr>
+                {% endif %}
+                <tr>
+                {% if gift.mailText %}
+                    <td colspan="3" 
+                        style="
+                            padding-top:2em; 
+                            white-space: pre-wrap; 
+                            text-align: center;"
+                        >{{ gift.mailText }}</td>
+                {% endif %}
+                </tr>
+            </table>
+            </font>
+            <p>
+            </div>
+            <p>
+                Liebe Grüße,
+            </p>
+            <p>
+                Henrike und Tobias
+            </p>
+        </font>
+    </body>
+</html>
+

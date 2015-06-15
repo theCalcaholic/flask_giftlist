@@ -4,7 +4,7 @@
         var _claimDialogCtrl = null;
         var _deleteDialogCtrl = null;
         return {
-            editDialog: function(dialog=undefined) {
+            editDialog: function(dialog) {
                 if(dialog !== undefined) {
                     _editDialogCtrl = dialog;
                 }
@@ -13,7 +13,8 @@
             claimDialog: function(dialog) {
                 _claimDialogCtrl = dialog;
             },
-            deleteDialog: function(dialog=undefined) {
+
+            deleteDialog: function(dialog) {
                 if(dialog !== undefined) {
                     _deleteDialogCtrl = dialog;
                 }
