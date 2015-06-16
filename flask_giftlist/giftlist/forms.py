@@ -30,6 +30,7 @@ class GiftForm(Form):
     imageFile = FileField(validators=[FileAllowed(image_extensions, 'Images only!')])
     image = TextField(widget=HiddenInput())
     deleteImage = BooleanField()
+    collaborative = BooleanField()
 
     def reset(self):
         blankData = MultiDict([('csrf', self.generate_csrf_token())])
@@ -62,5 +63,6 @@ class ClaimGiftForm(Form):
             validators=[
                 validators.Required(error_field_required),
                 validators.EqualTo('email_confirm', message='Die E-Mail-Adressen m&uuml;ssen &uuml;bereinstimmen!')])
+    prize = IntegerField()
     #recaptcha = RecaptchaField()
 

@@ -75,7 +75,6 @@
         **{
             'placeholder': "image",
             'onchange': "angular.element(this).scope().dialog.gift.imageFile = this.files[0]"}) }#}
-        <field-errors field="dialog.form.email_confirm"></field-errors>
     </p>
     <p ng-hide="!dialog.gift.image" class='delete-image-checkbox_container'>
     {% set args = { 'label': "Bild löschen", 'ng-model': "dialog.gift.deleteImage" } %}
@@ -96,11 +95,12 @@
             'ng-model': "dialog.gift.mailText"}) }}
     <field-errors field="dialog.form.mailText"></field-errors>
     </p>
-    {#<p>
-        {% for error in claim_form.recaptcha.errors %}
-            {{ error }}
-        {% endfor %}
-    </p>#}
+    <p>
+    {{ ng_render_field(edit_form.collaborative,
+        **{
+            'ng-model': "dialog.gift.collaborative"}) }}
+        <label for="collaborative">Erlaube Teilbeträge</label>
+    </p>
 {% endblock %}
 {% block form_buttons %}
     <button type='submit'>Ok</button>

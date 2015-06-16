@@ -1,6 +1,7 @@
 #from flask.ext.uploads import UploadSet, IMAGES
 from flask_wtf import Form, RecaptchaField
 from wtforms import TextField, PasswordField, validators, ValidationError
+from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from .models import User
 
 image_extensions = ['jpg', 'gif', 'png', 'bmp', 'svg', 'tiff']

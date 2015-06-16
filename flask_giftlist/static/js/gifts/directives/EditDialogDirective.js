@@ -17,6 +17,7 @@
         }
 
         this.submit = function() {
+
             if( this.form.$valid ) {
                 this.close();
                 /*$http.post('/gift/new/', {
@@ -37,8 +38,10 @@
                 DataProvider.saveGift(DataProvider.selectedIndex);
                 this.form.$setPristine();
             } else {
+                console.log(this.form);
                 this.form.$setDirty();
             }
+            alert('submit');
         
         };
 
@@ -49,12 +52,6 @@
                 return 'invalid';
             }
         }
-
-        this.debug = function() {
-            console.log(this.dialog);
-            console.log(this.form);
-            console.log(this.form.imageMethod);
-        };
 
         Dialogs.editDialog(this);
 

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, Blueprint, redirect, url_for, current_app, jsonify, Response, session
 from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy import func, or_
 from flask.ext.login import current_user, login_required
 from flask.ext.mail import Mail, Message
 from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 from .models import Gift, Gifter
 from .forms import GiftForm, ClaimGiftForm
+from ..data import db
 from urlparse import urlparse
 from pprint import pprint
 import os
@@ -31,55 +33,80 @@ def redirect_claim_gift():
 
 @giftlist.route('/ajax/claim/<int:gift_id>/', methods = ['GET', 'POST'])
 def claim_gift(gift_id):
-    gift = Gift.query.filter(Gift.id==gift_id, Gift.gifter==None).first()
-    
-    if gift:
-        claim_form = ClaimGiftForm(csrf_enabled=False)
-        if claim_form.validate_on_submit():
-            new_data = claim_form.data.copy()
-            del new_data['email_confirm']
-            gifter = Gifter.query.filter(Gifter.email==new_data['email']).first()
-            if not gifter:
-                gifter = Gifter.create(**new_data)
-            if not gifter:
-                return jsonify({
-                    'errors': ['Der Schenkende konnte nicht angelegt werden']})
-            else:
-                msg_title = "Geschenkreservierung zur Hochzeit von Henrike und Tobias (" + gift.giftName + ")"
-                msg = Message("Hochzeitsgeschenk",
-                    sender = ("Henrike & Tobias Knöppler", "toberrrt@online.de"),
-                    recipients = [(gifter.surname + " " + gifter.lastname, 
-                        gifter.email)])
-                msg.body = default_mail_start.format(
-                       surname=gifter.surname,
-                       lastname=gifter.lastname)\
-                    + gift.mail() + default_mail_end
-                image_is_external = bool(urlparse(gift.image).netloc)
-                msg.html = render_template(
-                        "gifterMail.htm",
-                        title=msg_title,
-                        gifter=gifter,
-                        gift=gift,
-                        image_is_external=image_is_external)
-                mail.send(msg)
-                gift.update(True, **{
-                    'gifter': gifter})
-                print("gifter is:")
-                print(gift.gifter.surname)
-                return jsonify({'errors':[]})
-        else:
-            return jsonify({
-                'errors': ['Die angegebenen Daten sind ungültig!'] + form_errors(claim_form)})
-    else:
+    """print("request: ")
+    pprint(request.data)
+    print("FORM:")
+    #pprint(vars(request.form))
+    print(request.form.get('surname'))
+    print(request.form.get('lastname'))
+    print(request.form.get('email'))
+    print(request.form.get('email_confirm'))
+    print(request.form.get('prize'))
+    return 'success'
+    print("til here")"""
+    claim_form = ClaimGiftForm(csrf_enabled=False)
+    if not claim_form.validate_on_submit():
+        return jsonify({
+            'errors': ['Die angegebenen Daten sind ungültig!'] + form_errors(claim_form)})
+    new_data = claim_form.data.copy()
+    del new_data['email_confirm']
+    gift = Gift.query.filter(Gift.id==gift_id).first()
+    if not gift:
         return jsonify({
             'errors': ['Das Geschenk konnte nicht reserviert werden. (No such gift)'] }), 404
-    return jsonify({'errors': []})
+    if not gift.collaborative:
+        gift.remaining_prize = 0;
+        db.session.commit()
+    elif new_data["prize"]:
+        if new_data["prize"] > gift.remaining_prize:
+            return jsonify({
+                'success': False,
+                'errors': ['Der gewählte Betrag darf nicht höher sein als, der Gesamtpreis.', str(new_data["prize"]) + " is greater then " + str(gift.remaining_prize)]})
+        else:
+            gift.remaining_prize = gift.remaining_prize - new_data['prize']
+            db.session.commit();
+    del new_data["prize"]
+    gifter = Gifter.create(**new_data)
+    if not gifter:
+        return jsonify({
+            'errors': ['Der Schenkende konnte nicht angelegt werden']})
+
+    if( len(gift.gifters) == 0 
+        or (gift.collaborative 
+            and not gifter in gift.gifters) ):
+        msg_title = "Geschenkreservierung zur Hochzeit von Henrike und Tobias (" + gift.giftName + ")"
+        msg = Message("Hochzeitsgeschenk",
+            sender = ("Henrike & Tobias Knöppler", "toberrrt@online.de"),
+            recipients = [(gifter.surname + " " + gifter.lastname, 
+                gifter.email)])
+        msg.body = default_mail_start.format(
+               surname=gifter.surname,
+               lastname=gifter.lastname)\
+            + gift.mail() + default_mail_end
+        image_is_external = bool(urlparse(gift.image).netloc)
+        msg.html = render_template(
+                "gifterMail.htm",
+                title=msg_title,
+                gifter=gifter,
+                gift=gift,
+                image_is_external=image_is_external)
+        mail.send(msg)
+        gift.gifters.append(gifter)
+        db.session.commit()
+        print("gifter is:")
+        print(gift.gifters[0].surname)
+        return jsonify({'errors':[]})
+    else:
+        return jsonify({
+                'success': False,
+                'errors': ['Das Geschenk konnte nicht reserviert werden.']})
 
 @giftlist.route('/ajax/gift/new/', methods=['GET', 'POST'])
 @login_required
 def add_gift():
     gift_form = GiftForm(csrf_enabled=False)
     new_data = process_gift_form(gift_form)
+    new_data["remaining_prize"] = new_data["prize"]
     if request.method == 'POST' and new_data:
         gift = Gift.create(**new_data)
         if gift:
@@ -100,7 +127,7 @@ def edit_gift(gift_id):
     new_data = process_gift_form(gift_form)
     if new_data:
         if not gift:
-            return jsonif({
+            return jsonify({
                 'success': False,
                 'errors': ["Das Geschenk konnte nicht gefunden werden."]}), 404
         gift.update(**new_data)
@@ -123,18 +150,22 @@ def delete_gift(gift_id):
 @giftlist.route('/ajax/gifts/')
 def gifts_as_json():
     if current_user.is_anonymous():
-        gifts = [ gift.dict() for gift in Gift.query.filter(Gift.gifter==None) ]
+        gifts = [ gift.dict() for gift in Gift.query\
+                .outerjoin(Gift.gifters)\
+                .group_by(Gift.id)\
+                .having(or_(func.count(Gifter.id)==0, Gift.remaining_prize>0)).all()
+                ]
     else:
         gifts = [ gift.dict() for gift in Gift.query.all() ]
-    for gift in Gift.query.filter(Gift.gifter==None):
-        print("gifter is:")
-        if gift.gifter:
-            print(gift.gifter.surname)
-        else:
-            print("None")
     return jsonify(success = True,
             loggedIn = True,
             gifts = gifts)
+
+@giftlist.route('/ajax/gifters/')
+@login_required
+def gifters_as_json():
+    gifters = Gifter.query.all()
+    return render_template('ajax/giftersList.html', gifters=gifters)
 
 @giftlist.route('/ajax/template/<path:template_path>')
 def get_template(template_path):

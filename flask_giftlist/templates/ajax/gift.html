@@ -35,8 +35,15 @@
             {% endif %}
         </div>
 
-        <p class='gift-prize'>
-            Preis (ca.): {{ "{{" }} gift.prize {{ "}}" }}&euro;
+        <p class='gift-prize' ng-show="gift.collaborative">
+            Preis: 10&euro; - {{"{{"}}gift.remaining_prize{{"}}"}}&euro;
+            <span class='prize-slider_container' ng-show='claimView'>
+                <input class='prize-slider' ng-model='gift.prize' type='range' min='10' max='{{"{{"}} gift.remaining_prize {{"}}"}}' ng-init="$(this).val(gift.remaining_prize); gift.prize=gift.remaining_prize;">
+                <div c;ass='prize-slider_tag'>
+                    ({{"{{"}}gift.prize{{"}}"}}&euro;)
+                </div>
+        </p><p class='gift-prize' ng-show="!gift.collaborative">
+            Preis (ca.): {{ "{{" }} gift.remaining_prize {{ "}}" }}&euro;
         </p>
         <p class='gift-description' ng-show='gift.description'>
             {{ "{{" }} gift.description {{ "}}" }}
@@ -49,7 +56,7 @@
         </p>
     </dd>
     </div>
-    <p class='gift-mail-text' ng-show="gift.mailText && showMailText">
+    <p class='gift-mail-text' ng-show="gift.mailText && claimView">
         {{ "{{" }} gift.mailText {{ "}}" }}
     </p>
 </div>

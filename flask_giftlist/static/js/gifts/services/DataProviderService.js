@@ -5,7 +5,8 @@
         var _gifter = {
             surname: null,
             name: null,
-            email: null
+            email: null,
+            email_confirm: null
         };
         var _newGift = null;
         var _selectedIndex = undefined;
@@ -68,7 +69,7 @@
                 Notify.flashMessage("Internal error: No such gift!");
                 return
             }
-            data = new FormData();
+            var data = new FormData();
             data.append('giftName', gift.giftName || '');
             data.append('prize', gift.prize || '');
             data.append('url', gift.url || '');
@@ -76,6 +77,7 @@
             data.append('mailText', gift.mailText || '');
             data.append('image', gift.image || '');
             data.append('deleteImage', Boolean(gift.deleteImage));
+            data.append('collaborative', Boolean(gift.collaborative));
             if( gift.imageFile ) {
                 data.append('imageFile', gift.imageFile);
             }
@@ -103,10 +105,13 @@
                     }
                 }.bind(this))
                 .error(function(data, status, headers, config) {
+                    if(data) {
+                        errors = data.errors;
+                    }
                     Notify.flashMessage({
                         msg: 'Speichern fehlgeschlagen.', 
                         type:'error', 
-                        subMsgs:data.errors
+                        subMsgs:errors
                     });
                     _selectedIndex = index;
                     Dialogs.showEditDialog();
@@ -115,8 +120,16 @@
 
         DataProvider.claimGift = function(index) {
             if( _gifter && index < DataProvider.gifts.length ) {
-                data = _gifter;
-                data.giftId = DataProvider.gifts[index].id;
+                console.log("gifter:");
+                console.log(_gifter);
+                var data = new FormData();
+                data.append('surname', _gifter.surname);
+                data.append('lastname', _gifter.lastname);
+                data.append('email', _gifter.email);
+                data.append('email_confirm', _gifter.email_confirm);
+                data.append('prize', DataProvider.gifts[index].prize);
+                console.log("data:");
+                console.log(data);
 
                 errorMsg = "Beim reservieren des Geschenks ist ein Fehler aufgetreten. Bitte versuchen sie es noch einmal.";
                 claimingMsgId = Notify.showMessage({
@@ -124,8 +137,11 @@
                     type: 'info'
                 });
 
-                $http.post('ajax/claim/' + DataProvider.gifts[index].id + '/', data)
-                    .success(function(data, status, headers, config) {
+                $http.post('ajax/claim/' + DataProvider.gifts[index].id + '/', data, {
+                    withCredentials: true,
+                    headers: {'Content-Type': undefined},
+                    transformRequest: angular.identity
+                }).success(function(data, status, headers, config) {
                         //alert('good status');
                         Notify.hideMessage(claimingMsgId);
                         if(data.errors.length) {
@@ -145,6 +161,7 @@
                     })
                     .error(function(data, status, headers, config) {
                         //alert('bad status!');
+                        errors = data.errors || [];
                         Notify.hideMessage(claimingMsgId);
                         Notify.flashMessage({
                             msg: errorMsg,
@@ -227,7 +244,8 @@
                         description: undefined,
                         mailText: undefined,
                         image: undefined,
-                        imageFile: undefined
+                        imageFile: undefined,
+                        collaborative: false
                     };
                 }
                 return _newGift;

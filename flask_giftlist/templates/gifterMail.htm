@@ -71,7 +71,7 @@
                 <tr>
                     <td rowspan="5">
                 {% if gift.image  %}
-                    <img src="{% if not image_is_external %}{{ url_for("index", _external=True)}}{% endif %}{{ gift.image }}"
+                    <img src="{% if not image_is_external %}{{ url_for(".index", _external=True)}}{% endif %}{{ gift.image }}"
                          width="160px;" 
                          style="1margin-left: 6px;">
                 {% endif %}

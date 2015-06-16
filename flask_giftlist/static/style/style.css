@@ -282,6 +282,18 @@ dl.gift {
 .no-options .gift-form_fields .options {
   display: none; }
 
+.prize-slider_container {
+  display: block;
+  margin-left: 0;
+  margin-top: 8px;
+  padding: 0; }
+
+.prize-slider {
+  float: left; }
+
+.prize-slider.ng-valid, .prize-slider.ng-invalid {
+  box-shadow: none; }
+
 #gift-preview-full .gift-options {
   display: none; }
 
