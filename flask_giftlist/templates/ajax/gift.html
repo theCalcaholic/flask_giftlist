@@ -27,7 +27,14 @@
                 <a class='delete-gift_link' 
                     ng-click='giftList.deleteGift($index)'>
                 <span>
-                <svg class='delete-gift' xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" version="1.1" height="32" width="32">
+                <svg 
+                    class='delete-gift' 
+                    xmlns:svg="http://www.w3.org/2000/svg" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 32 32" 
+                    version="1.1" 
+                    height="32" 
+                    width="32">
                    {% include 'giftlist/trashbin.svg' %}
                 </svg>
                 </span>
@@ -37,11 +44,20 @@
 
         <p class='gift-prize' ng-show="gift.collaborative">
             Preis: 10&euro; - {{"{{"}}gift.remaining_prize{{"}}"}}&euro;
-            <span class='prize-slider_container' ng-show='claimView'>
-                <input class='prize-slider' ng-model='gift.prize' type='range' min='10' max='{{"{{"}} gift.remaining_prize {{"}}"}}' ng-init="$(this).val(gift.remaining_prize); gift.prize=gift.remaining_prize;">
-                <div c;ass='prize-slider_tag'>
+            <span 
+                class='prize-slider_container' 
+                ng-show='claimView'>
+                <input 
+                    class='prize-slider' 
+                    ng-model='gift.prize' 
+                    type='range' 
+                    step='10' 
+                    min='10' 
+                    max='{{"{{"}} gift.remaining_prize {{"}}"}}'>
+                <span class='prize-slider_tag'>
                     ({{"{{"}}gift.prize{{"}}"}}&euro;)
-                </div>
+                </span>
+            </span>
         </p><p class='gift-prize' ng-show="!gift.collaborative">
             Preis (ca.): {{ "{{" }} gift.remaining_prize {{ "}}" }}&euro;
         </p>

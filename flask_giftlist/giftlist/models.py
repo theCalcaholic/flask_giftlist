@@ -79,6 +79,7 @@ class Gifter(db.Model, CRUDMixin):
     lastname = db.Column(db.String)
     surname = db.Column(db.String)
     email = db.Column(db.String)
+    chosen_prize = db.Column(db.Integer)
     gift_id = db.Column(db.Integer, db.ForeignKey('gift.id'))
 
 

@@ -60,11 +60,11 @@
 
         DataProvider.saveGift = function(index) {
             if( index && index === 'new' ) {
-                gift = _newGift;
-                url = 'ajax/gift/' + gift.id + '/';
+                var gift = _newGift;
+                var url = 'ajax/gift/' + gift.id + '/';
             } else if( index < DataProvider.gifts.length ) {
-                gift = DataProvider.gifts[index];
-                url = 'ajax/gift/' + gift.id + '/save/';
+                var gift = DataProvider.gifts[index];
+                var url = 'ajax/gift/' + gift.id + '/save/';
             } else {
                 Notify.flashMessage("Internal error: No such gift!");
                 return
@@ -127,17 +127,16 @@
                 data.append('lastname', _gifter.lastname);
                 data.append('email', _gifter.email);
                 data.append('email_confirm', _gifter.email_confirm);
-                data.append('prize', DataProvider.gifts[index].prize);
-                console.log("data:");
-                console.log(data);
+                data.append('chosen_prize', DataProvider.gifts[index].prize);
 
-                errorMsg = "Beim reservieren des Geschenks ist ein Fehler aufgetreten. Bitte versuchen sie es noch einmal.";
-                claimingMsgId = Notify.showMessage({
+                var errorMsg = "Beim reservieren des Geschenks ist ein Fehler aufgetreten. Bitte versuchen sie es noch einmal.";
+                var claimingMsgId = Notify.showMessage({
                     msg: 'Das Geschenk wird reserviert. Bitte warten...',
                     type: 'info'
                 });
+                var url = 'ajax/claim/' + DataProvider.gifts[index].id + '/';
 
-                $http.post('ajax/claim/' + DataProvider.gifts[index].id + '/', data, {
+                $http.post(url, data, {
                     withCredentials: true,
                     headers: {'Content-Type': undefined},
                     transformRequest: angular.identity

@@ -57,15 +57,15 @@ def claim_gift(gift_id):
     if not gift.collaborative:
         gift.remaining_prize = 0;
         db.session.commit()
-    elif new_data["prize"]:
-        if new_data["prize"] > gift.remaining_prize:
+    elif "chosen_prize" in new_data:
+        if new_data["chosen_prize"] > gift.remaining_prize:
             return jsonify({
                 'success': False,
                 'errors': ['Der gewählte Betrag darf nicht höher sein als, der Gesamtpreis.', str(new_data["prize"]) + " is greater then " + str(gift.remaining_prize)]})
         else:
-            gift.remaining_prize = gift.remaining_prize - new_data['prize']
+            gift.remaining_prize = gift.remaining_prize - new_data['chosen_prize']
             db.session.commit();
-    del new_data["prize"]
+    pprint(new_data)
     gifter = Gifter.create(**new_data)
     if not gifter:
         return jsonify({
@@ -130,7 +130,11 @@ def edit_gift(gift_id):
             return jsonify({
                 'success': False,
                 'errors': ["Das Geschenk konnte nicht gefunden werden."]}), 404
-        gift.update(**new_data)
+        if new_data['prize'] != gift.prize:
+            new_data['remaining_prize'] = new_data['prize']
+        print("request data:")
+        pprint(new_data)
+        gift.update(True, **new_data)
         return jsonify({'success': True, 'errors': []})
     else:
         return jsonify({
@@ -210,9 +214,9 @@ def process_gift_form(form):
         return None
     data = form.data
     data['prize'] = float(data['prize'])
-    print("url is: " + form.image.data)
+    print("url is: <" + form.image.data + ">")
     img_url = urlparse(form.image.data, 'http')
-    pprint(dir(img_url))
+    pprint(img_url)
     if form.deleteImage.data:
         print('deleting image.')
         data['image'] = None
@@ -232,7 +236,7 @@ def process_gift_form(form):
         print( 'Saving image as ' + image_path )
         form.imageFile.data.save(os.path.join(uploads_dir, image_name))
         data['image'] = url_for('static', filename=image_path)
-    elif img_url.scheme == "http":
+    elif img_url.scheme == "http" and data['image']:
         data["image"] = img_url.geturl()
         print("image_url set to: " + img_url.geturl())
     else:

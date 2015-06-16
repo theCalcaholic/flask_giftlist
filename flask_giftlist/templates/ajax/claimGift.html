@@ -4,7 +4,7 @@
             Loading...
         </li>
         <li>
-            <dl ng-init='gift = vm.gift' class='gift' id='gift-preview-full'>
+            <dl ng-init='gift = vm.gift; gift.prize=gift.remaining_prize;' class='gift' id='gift-preview-full'>
                 <gift></gift>
             </dl>
         </li>

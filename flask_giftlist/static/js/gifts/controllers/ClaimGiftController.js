@@ -1,5 +1,5 @@
 (function() {
-    ClaimGiftCtrl = function(DataProvider) {
+    ClaimGiftCtrl = function($scope, $timeout, DataProvider) {
         this.gift = DataProvider.selectedGift;
         this.gifter = DataProvider.gifter;
         this.claimView = true;
@@ -8,7 +8,14 @@
             DataProvider.selectedGift = this.gift;
             DataProvider.claimGift( DataProvider.selectedIndex );
         };
+
+        $timeout((function() {
+            console.log(this);
+            $scope.$apply(this.gift.prize = 10);
+            $scope.$appy(this.gift.prize=this.gift.remaining_prize);
+        }).bind(this), 200);
+        console.log(this.gift);
     };
 
-    angular.module('GiftsApp').controller('ClaimGiftCtrl', ['DataProvider', ClaimGiftCtrl]);
+    angular.module('GiftsApp').controller('ClaimGiftCtrl', ['$scope', '$timeout', 'DataProvider', ClaimGiftCtrl]);
 })();

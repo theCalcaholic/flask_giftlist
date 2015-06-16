@@ -63,6 +63,6 @@ class ClaimGiftForm(Form):
             validators=[
                 validators.Required(error_field_required),
                 validators.EqualTo('email_confirm', message='Die E-Mail-Adressen m&uuml;ssen &uuml;bereinstimmen!')])
-    prize = IntegerField()
+    chosen_prize = IntegerField()
     #recaptcha = RecaptchaField()
 
