@@ -43,7 +43,7 @@
     ClaimDialogDirective = function() {
         return {
             restrict: 'EA',
-            templateUrl: 'ajax/template/claimDialog.html',
+            templateUrl: 'template/claimDialog.html',
             replace: true,
             transclude: false,
             controller: [

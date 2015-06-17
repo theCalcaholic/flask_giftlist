@@ -5,7 +5,7 @@
             scope: {
                 field: "=field",
             },
-            templateUrl: 'ajax/template/fieldErrorMsgs.html',
+            templateUrl: 'template/fieldErrorMsgs.html',
             replace: true
         };
     };

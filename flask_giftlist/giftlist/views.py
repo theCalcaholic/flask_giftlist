@@ -22,7 +22,7 @@ default_mail_end = u"\n\rLiebe Grüße, Henrike und Tobias"
 @giftlist.route('/', methods = ['GET', 'POST'])
 def index():
     return render_template(
-        'giftlist/index.htm', 
+        'index.htm', 
         logged_in=(not current_user.is_anonymous()))
 
 @giftlist.route('/claim/')
@@ -33,17 +33,6 @@ def redirect_claim_gift():
 
 @giftlist.route('/ajax/claim/<int:gift_id>/', methods = ['GET', 'POST'])
 def claim_gift(gift_id):
-    """print("request: ")
-    pprint(request.data)
-    print("FORM:")
-    #pprint(vars(request.form))
-    print(request.form.get('surname'))
-    print(request.form.get('lastname'))
-    print(request.form.get('email'))
-    print(request.form.get('email_confirm'))
-    print(request.form.get('prize'))
-    return 'success'
-    print("til here")"""
     claim_form = ClaimGiftForm(csrf_enabled=False)
     if not claim_form.validate_on_submit():
         return jsonify({
@@ -171,41 +160,22 @@ def gifters_as_json():
     gifters = Gifter.query.all()
     return render_template('ajax/giftersList.html', gifters=gifters)
 
-@giftlist.route('/ajax/template/<path:template_path>')
+@giftlist.route('/template/<path:template_path>')
 def get_template(template_path):
     base_path = os.path.join(current_app.root_path, current_app.template_folder)
-    if os.path.isfile(os.path.join(base_path, 'ajax', template_path)):
-        return render_template(os.path.join('ajax', template_path), logged_in=(not current_user.is_anonymous()))
+    if os.path.isfile(os.path.join(base_path, 'ng-template', template_path)):
+        return render_template(os.path.join('ng-template', template_path), logged_in=(not current_user.is_anonymous()))
     return render_template('error/404.html'), 404
 
-@giftlist.route('/ajax/template/claimDialog.html')
+@giftlist.route('/template/claimDialog.html')
 def get_claimdialog_template():
     claim_form = ClaimGiftForm()
-    return render_template('ajax/claimDialog.html', claim_form=claim_form)
+    return render_template('ng-templates/claimDialog.html', claim_form=claim_form)
 
-@giftlist.route('/ajax/template/editDialog.html')
+@giftlist.route('/template/editDialog.html')
 def get_editdialog_template():
     edit_form = GiftForm()
-    """return jsonify({
-        'urlField': edit_form.url(),
-        'requiredFlag': edit_form.url.flags.required,
-        'optionalFlag': edit_form.url.flags.optional}), 200"""
-    return render_template('ajax/editDialog.html', edit_form = edit_form)
-
-@giftlist.route('/testmail/')
-def test_mail():
-    if request.args.get('giftid'):
-        gift = Gift.query.filter(Gift.id==request.args.get('giftid')).first()
-        if not gift:
-            return 'gift does not exist!'
-    else:
-        gift = Gift.query.first()
-    if not gift.gifter:
-        return 'gift not claimed yet!'
-    else:
-        gifter = gift.gifter
-        return render_template("gifterMail.htm", gifter=gifter, gift=gift)
-
+    return render_template('ng-templates/editDialog.html', edit_form = edit_form)
 
 
 def process_gift_form(form):
@@ -246,12 +216,10 @@ def process_gift_form(form):
     return data
 
 def form_errors(form):
-    if current_app.debug:
+    if current_app.debug or True:
         return [field + ': ' + ';'.join(errors) for field, errors in form.errors.iteritems()]
     else:
         return []
-
-
 
 #giftlist.wsgi_app = ProxyFix(giftlist.wsgi_app)
 	

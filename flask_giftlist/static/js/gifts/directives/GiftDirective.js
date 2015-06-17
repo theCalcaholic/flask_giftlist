@@ -2,7 +2,7 @@
     GiftDirective = function() {
         return {
             restrict: 'EA',
-            templateUrl: 'ajax/template/gift.html',
+            templateUrl: 'template/gift.html',
         };
     };
 

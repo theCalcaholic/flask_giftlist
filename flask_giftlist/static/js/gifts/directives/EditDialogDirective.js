@@ -59,7 +59,7 @@
     EditDialogDirective = function() {
         return {
             restrict: 'E',
-            templateUrl: 'ajax/template/editDialog.html',
+            templateUrl: 'template/editDialog.html',
             replace: true,
             scope:{},
             controller: [

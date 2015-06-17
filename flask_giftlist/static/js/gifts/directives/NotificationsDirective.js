@@ -14,7 +14,7 @@
     NotificationsDirective = function() {
         return {
             restrict: 'E',
-            templateUrl: 'ajax/template/notifications.html',
+            templateUrl: 'template/notifications.html',
             replace: true,
             transclude: false,
             controller: ['$scope', 'Notify', NotificationsCtrl]
