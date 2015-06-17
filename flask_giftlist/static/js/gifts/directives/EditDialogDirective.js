@@ -41,7 +41,6 @@
                 console.log(this.form);
                 this.form.$setDirty();
             }
-            alert('submit');
         
         };
 
