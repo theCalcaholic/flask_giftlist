@@ -13,6 +13,8 @@ from urlparse import urlparse
 from pprint import pprint
 import os
 
+### These are the routes for all views related to managing the gift lists
+
 giftlist = Blueprint("giftlist", __name__)
 mail = Mail()
 
@@ -25,54 +27,71 @@ def index():
         'index.htm', 
         logged_in=(not current_user.is_anonymous()))
 
+# Redirect for preventing manual url manipulation (should only be set by the Client App)
+# TODO: Save state of Single Page Application in session/cookie and load it if available
 @giftlist.route('/claim/')
 def redirect_claim_gift():
-    if 'selected_gift' in session:
-        return redirect('/#/claim/');
     return redirect('/');
 
+# Route for claiming gift of id @gift_id
 @giftlist.route('/ajax/claim/<int:gift_id>/', methods = ['GET', 'POST'])
 def claim_gift(gift_id):
+    # TODO: enable csrf
     claim_form = ClaimGiftForm(csrf_enabled=False)
     if not claim_form.validate_on_submit():
         return jsonify({
+            'success': False,
             'errors': ['Die angegebenen Daten sind ungültig!'] + form_errors(claim_form)})
     new_data = claim_form.data.copy()
+    # TODO: Don't even transmit email_confirm
     del new_data['email_confirm']
     gift = Gift.query.filter(Gift.id==gift_id).first()
     if not gift:
+        # TODO: Rethink use of http return values for asynchronous requests.
         return jsonify({
+            'success': False,
             'errors': ['Das Geschenk konnte nicht reserviert werden. (No such gift)'] }), 404
+    # If gift can not be claimed collaboratively, claim it totally (so that no prize remains for further gifters)
     if not gift.collaborative:
         gift.remaining_prize = 0;
         db.session.commit()
-    elif "chosen_prize" in new_data:
-        if new_data["chosen_prize"] > gift.remaining_prize:
+    # Else check if the selected prize is valid
+    else: 
+        err = None
+        if (not "chosen_prize" in new_data):
+            err = 'Es muss ein Betrag ausgewählt werden'
+        elif new_data["chosen_prize"] > gift.remaining_prize:
+            err = 'Der gewählte Betrag darf nicht höher sein als der Gesamtpreis.'
+        if err:
             return jsonify({
                 'success': False,
-                'errors': ['Der gewählte Betrag darf nicht höher sein als, der Gesamtpreis.', str(new_data["prize"]) + " is greater then " + str(gift.remaining_prize)]})
+                'errors': [err, str(new_data["prize"]) + " is greater then " + str(gift.remaining_prize)]})
+        # If no errors were found, calculate new remaining prize and save changes.
         else:
             gift.remaining_prize = gift.remaining_prize - new_data['chosen_prize']
             db.session.commit();
-    pprint(new_data)
+    # If everything went well so far, create gifter
     gifter = Gifter.create(**new_data)
     if not gifter:
         return jsonify({
             'errors': ['Der Schenkende konnte nicht angelegt werden']})
-
+    # If the gift has no gifter yet or can be claimed collaboratively (and is not already claimed by the newly created gifter)
     if( len(gift.gifters) == 0 
         or (gift.collaborative 
-            and not gifter in gift.gifters) ):
+            and not gifter.email in [g.email for g in gift.gifters]) ):
+        # create message from gifter credentials
         msg_title = "Geschenkreservierung zur Hochzeit von Henrike und Tobias (" + gift.giftName + ")"
         msg = Message("Hochzeitsgeschenk",
             sender = ("Henrike & Tobias Knöppler", "toberrrt@online.de"),
             recipients = [(gifter.surname + " " + gifter.lastname, 
                 gifter.email)])
+        # create txt mail body
         msg.body = default_mail_start.format(
                surname=gifter.surname,
                lastname=gifter.lastname)\
             + gift.mail() + default_mail_end
         image_is_external = bool(urlparse(gift.image).netloc)
+        # create html mail body
         msg.html = render_template(
                 "gifterMail.htm",
                 title=msg_title,
@@ -82,9 +101,9 @@ def claim_gift(gift_id):
         mail.send(msg)
         gift.gifters.append(gifter)
         db.session.commit()
-        print("gifter is:")
-        print(gift.gifters[0].surname)
-        return jsonify({'errors':[]})
+        return jsonify({
+            'success': True,
+            'errors':[]})
     else:
         return jsonify({
                 'success': False,
