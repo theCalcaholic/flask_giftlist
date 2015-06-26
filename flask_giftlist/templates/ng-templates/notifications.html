@@ -1,0 +1,13 @@
+<div class='notifications-container'>
+    <ul ng-show='notifications.length' class='notifications-list'>
+        <li ng-repeat="notification in notifications" class='notification' ng-class="notification.type" ng-show='notification.text'>
+            {{"{{"}} notification.text {{"}}"}}
+            <ul ng-show='notification.subNotifications.length' class='sub-notifications'>
+                <li ng-repeat='subNot in notification.subNotifications'>
+                    {{"{{"}} subNot {{"}}"}}
+                </li>
+            </ul>
+            <div class='close-button' title='schließen' ng-click='hideMessage(notification.id)'></div>
+        </li>
+    </ul>
+</div>
