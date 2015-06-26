@@ -65,7 +65,7 @@ def claim_gift(gift_id):
         if err:
             return jsonify({
                 'success': False,
-                'errors': [err, str(new_data["prize"]) + " is greater then " + str(gift.remaining_prize)]})
+                'errors': [err, str(new_data["chosen_prize"]) + " is greater then " + str(gift.remaining_prize)]})
         # If no errors were found, calculate new remaining prize and save changes.
         else:
             gift.remaining_prize = gift.remaining_prize - new_data['chosen_prize']
@@ -76,9 +76,7 @@ def claim_gift(gift_id):
         return jsonify({
             'errors': ['Der Schenkende konnte nicht angelegt werden']})
     # If the gift has no gifter yet or can be claimed collaboratively (and is not already claimed by the newly created gifter)
-    if( len(gift.gifters) == 0 
-        or (gift.collaborative 
-            and not gifter.email in [g.email for g in gift.gifters]) ):
+    if len(gift.gifters) == 0 or gift.collaborative:
         # create message from gifter credentials
         msg_title = "Geschenkreservierung zur Hochzeit von Henrike und Tobias (" + gift.giftName + ")"
         msg = Message("Hochzeitsgeschenk",
@@ -107,7 +105,7 @@ def claim_gift(gift_id):
     else:
         return jsonify({
                 'success': False,
-                'errors': ['Das Geschenk konnte nicht reserviert werden.']})
+                'errors': ['Ein Fehler ist augetreten.']})
 
 @giftlist.route('/ajax/gift/new/', methods=['GET', 'POST'])
 @login_required
@@ -182,8 +180,9 @@ def gifters_as_json():
 @giftlist.route('/template/<path:template_path>')
 def get_template(template_path):
     base_path = os.path.join(current_app.root_path, current_app.template_folder)
-    if os.path.isfile(os.path.join(base_path, 'ng-template', template_path)):
-        return render_template(os.path.join('ng-template', template_path), logged_in=(not current_user.is_anonymous()))
+    print( 'Looking for template: ' + os.path.join(base_path, 'ng-templates', template_path) );
+    if os.path.isfile(os.path.join(base_path, 'ng-templates', template_path)):
+        return render_template(os.path.join('ng-templates', template_path), logged_in=(not current_user.is_anonymous()))
     return render_template('error/404.html'), 404
 
 @giftlist.route('/template/claimDialog.html')

@@ -12,7 +12,7 @@
         $timeout((function() {
             console.log(this);
             $scope.$apply(this.gift.prize = 10);
-            $scope.$appy(this.gift.prize=this.gift.remaining_prize);
+            $scope.$apply(this.gift.prize=this.gift.remaining_prize);
         }).bind(this), 200);
         console.log(this.gift);
     };
