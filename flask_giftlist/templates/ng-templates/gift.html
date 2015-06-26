@@ -26,18 +26,32 @@
             {% if logged_in %}
                 <a class='delete-gift_link' 
                     ng-click='giftList.deleteGift($index)'>
-                <span>
-                <svg 
-                    class='delete-gift' 
-                    xmlns:svg="http://www.w3.org/2000/svg" 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 32 32" 
-                    version="1.1" 
-                    height="32" 
-                    width="32">
-                   {% include 'svg/trashbin.svg' %}
-                </svg>
-                </span>
+                    <span>
+                        <svg 
+                            class='delete-gift' 
+                            xmlns:svg="http://www.w3.org/2000/svg" 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 32 32" 
+                            version="1.1" 
+                            height="32" 
+                            width="32">
+                           {% include 'svg/trashbin.svg' %}
+                        </svg>
+                    </span>
+                </a>
+                <a class='duplicate-gift_link'
+                    ng-click='giftList.duplicateGift($index)'>
+                    <span>
+                        <svg
+                            class='duplicate-gift'
+                            xmlns:svg="http://www.w3.org/2000/svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 32 32"
+                            version="1.1"
+                            height="32"
+                            width="32">
+                            {% include 'svg/duplicate.svg' %}
+                    </span>
                 </a>
             {% endif %}
         </div>

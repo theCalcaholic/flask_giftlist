@@ -165,14 +165,14 @@ dl.gift {
         width: 100%;
         text-align: right;
         margin-bottom: 4px; }
-        dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link {
+        dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link, dl.gift div.gift-content_container dd div.gift-options a.duplicate-gift_link {
           float: right;
           width: 24px;
           height: 24px;
           box-sizing: content-box;
           display: block;
           margin-right: 6px; }
-          dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.delete-gift {
+          dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.delete-gift, dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.duplicate-gift, dl.gift div.gift-content_container dd div.gift-options a.duplicate-gift_link svg.delete-gift, dl.gift div.gift-content_container dd div.gift-options a.duplicate-gift_link svg.duplicate-gift {
             width: 28px;
             height: 28px;
             box-sizing: border-box;
@@ -183,7 +183,7 @@ dl.gift {
             background-color: #CCCCCC;
             fill: #880505;
             stroke: #880505; }
-          dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.delete-gift:hover {
+          dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.delete-gift:hover, dl.gift div.gift-content_container dd div.gift-options a.delete-gift_link svg.duplicate-gift:hover, dl.gift div.gift-content_container dd div.gift-options a.duplicate-gift_link svg.delete-gift:hover, dl.gift div.gift-content_container dd div.gift-options a.duplicate-gift_link svg.duplicate-gift:hover {
             background-color: #AAAAAA;
             border-color: #880505;
             cursor: pointer; }

@@ -90,7 +90,7 @@ dl.gift {
                 text-align: right;
                 margin-bottom: 4px;
 
-                a.delete-gift_link {
+                a.delete-gift_link, a.duplicate-gift_link {
                     float: right;
                     width: 24px;
                     height: 24px;
@@ -98,7 +98,7 @@ dl.gift {
                     display: block;
                     margin-right: 6px;
 
-                    svg.delete-gift {
+                    svg.delete-gift, svg.duplicate-gift {
                         width: 28px;
                         height: 28px;
                         box-sizing: border-box;
@@ -111,7 +111,7 @@ dl.gift {
                         stroke: #880505;
                     }
 
-                    svg.delete-gift:hover {
+                    svg.delete-gift:hover, svg.duplicate-gift:hover {
                         background-color: #AAAAAA;
                         border-color: #880505;
                         cursor: pointer;

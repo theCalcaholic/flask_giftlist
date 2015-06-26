@@ -9,7 +9,7 @@
             DataProvider.selectedIndex = index;
             Dialogs.showClaimDialog();
             //dataProvider.claim(dataProvider.selected());
-        };
+        }
 
         this.editGift = function(index) {
             if( index !== undefined ) {
@@ -20,13 +20,17 @@
             }
             Dialogs.showEditDialog();
             //giftActions.editSelected();
-        };
+        }
 
         this.deleteGift = function(index) {
             DataProvider.selectedIndex = index;
             Dialogs.showDeleteDialog();
             //giftActions.deleteSelected();
-        };
+        }
+
+        this.duplicateGift = function(index) {
+            DataProvider.duplicateGift(index);
+        }
 
         this.closeDialog = function() {
             this.showForm = null;
@@ -58,11 +62,11 @@
 
         this.resolve = function() {
             DataProvider.updateGifts();
-        };
+        }
 
         this.notify = function() {
             Notify.flashMessage({msg:"Some random message."});
-        };
+        }
         
 
         /*DataProvider.retrieveGifts().then((function(gifts) {
@@ -91,7 +95,7 @@
         console.log("testFunc6");
         TestService.testFunc6();*/
 
-    };
+    }
 
     angular.module('GiftsApp').controller('GiftListCtrl', 
         ['$scope', 'DataProvider', 'Dialogs', 'Notify', GiftListCtrl]);

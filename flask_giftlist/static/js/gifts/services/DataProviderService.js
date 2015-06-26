@@ -172,6 +172,24 @@
             }
         };
 
+        DataProvider.duplicateGift = function(index) {
+            if( index < DataProvider.gifts.length ) {
+                $http.post('ajax/gift/' + DataProvider.gifts[index].id + '/duplicate/')
+                    .success(function(data, status, headers, config) {
+                        Notify.flashMessage({msg: 'Geschenk dupliziert.'});
+                        DataProvider.updateGifts();
+                    })
+                    .error(function(data, status, headers, config) {
+                        Notify.flashMessage({
+                            msg: 'Duplizieren fehlgeschlagen.',
+                            type: 'error',
+                            duration: 5000,
+                            subMsgs: data.errors
+                        });
+                    });
+            }
+        }
+
         DataProvider.deleteGift = function(index) {
             $http.post('ajax/gift/' + DataProvider.gifts[index].id + '/delete/')
                 .success(function(data, status, headers, config) {

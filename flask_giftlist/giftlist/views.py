@@ -148,14 +148,34 @@ def edit_gift(gift_id):
             'errors': ['Die angegebenen Geschenk-Daten sind ungültig.']})
     return render_template('giftlist/editGift.htm', edit_gift_form=gift_form)
 
+@giftlist.route('/ajax/gift/<int:gift_id>/duplicate/', methods=['POST'])
+@login_required
+def duplicate_gift(gift_id):
+    gift = Gift.query.filter(Gift.id==gift_id).first()
+    if not gift:
+        return jsonify({
+            'success': False,
+            'errors': ['Geschenk nicht gefunden.']})
+    else:
+        gift_data = gift.dict()
+        del gift_data['id']
+        Gift.create(True, **gift_data)
+        return jsonify({
+            'success': True,
+            'errors': []})
+
 @giftlist.route('/ajax/gift/<int:gift_id>/delete/', methods=['POST'])
 @login_required
 def delete_gift(gift_id):
     gift = Gift.query.filter(Gift.id==gift_id).first()
     if gift:
         gift.delete()
-        return jsonify({'errors': {}});
-    return jsonify({'errors': ["Geschenk nicht gefunden."]}), 404
+        return jsonify({
+            'success': True,
+            'errors': {}});
+    return jsonify({
+        'success': False,
+        'errors': ["Geschenk nicht gefunden."]}), 404
 
 @giftlist.route('/ajax/gifts/')
 def gifts_as_json():
@@ -201,7 +221,7 @@ def process_gift_form(form):
         print(form.errors)
         return None
     data = form.data
-    data['prize'] = float(data['prize'])
+    data['prize'] = float(data['prize'].replace(',', '.'))
     print("url is: <" + form.image.data + ">")
     img_url = urlparse(form.image.data, 'http')
     pprint(img_url)
