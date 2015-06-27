@@ -282,8 +282,7 @@ a {
 }
 
 #fork-me {
-    background-color: #4078C0;
-    opacity: 0.4;
+    background-color: rgba(60, 113, 180, 0.4);
     display: block;
     width: 200px;
     height: 28px;
@@ -302,7 +301,7 @@ a {
 
 #fork-me:hover {
     color: white;
-    opacity: 1;
+    background-color: rgba(60, 113, 180, 1);
 }
 
 @import 'notifications';
