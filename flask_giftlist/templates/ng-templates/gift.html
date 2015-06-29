@@ -57,7 +57,9 @@
         </div>
 
         <p class='gift-prize' ng-show="gift.collaborative">
-            Preis: 10&euro; - {{"{{"}}gift.remaining_prize{{"}}"}}&euro;
+            Preis: 10&euro; - {{
+                                "{{"}}giftList.loggedIn ? gift.prize : gift.remaining_prize{{"}}"
+                              }}&euro;
             <span 
                 class='prize-slider_container' 
                 ng-show='claimView'>

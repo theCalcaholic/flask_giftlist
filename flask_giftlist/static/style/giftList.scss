@@ -80,7 +80,12 @@ dl.gift {
             }
             p.gift-url {
                 a {
-                    word-wrap: wrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: inline-block;
+                    max-width: 300px;
+                    height: 1em;
                 }
             }
 

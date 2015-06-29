@@ -228,8 +228,8 @@
         DataProvider.updateGifts = function() {
             return $http.get('ajax/gifts/')
                 .success(function(data, status, headers, config) {
-                    gifts = data.gifts;
-                    DataProvider.gifts = gifts;
+                    DataProvider.gifts = data.gifts;
+                    DataProvider.loggedIn = data.loggedIn;
                     console.log("gifts updated: ");
                     console.log(DataProvider.gifts);
                     for(index in _callbacks) {

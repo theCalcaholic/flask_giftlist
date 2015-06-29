@@ -2,6 +2,7 @@
     ClaimGiftCtrl = function($scope, $timeout, DataProvider) {
         this.gift = DataProvider.selectedGift;
         this.gifter = DataProvider.gifter;
+        this.loggedIn = DataProvider.loggedIn;
         this.claimView = true;
 
         this.submitClaim = function() {
