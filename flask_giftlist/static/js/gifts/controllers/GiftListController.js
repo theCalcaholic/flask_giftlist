@@ -49,6 +49,10 @@
             DataProvider.updateGifts();
         }*/
 
+        DataProvider.addListener((function() {
+            this.gifts = DataProvider.gifts;
+        }).bind(this));
+
         this.update();
 
     }
