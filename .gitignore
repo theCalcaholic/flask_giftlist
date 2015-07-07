@@ -4,4 +4,5 @@
 *_priv.py
 *.swp
 *.db
-gitignore
+.gitignore
+*.min.js

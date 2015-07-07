@@ -134,6 +134,7 @@
                   'lastname': _gifter.lastname,
                   'email': _gifter.email,
                   'email_confirm': _gifter.email_confirm,
+                  'gift': DataProvider.gifts[index],
                   'chosen_prize': DataProvider.gifts[index].prize,
                 });
 
