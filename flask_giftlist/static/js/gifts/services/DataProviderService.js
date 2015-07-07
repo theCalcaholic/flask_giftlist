@@ -128,8 +128,14 @@
                 data.append('email', _gifter.email);
                 data.append('email_confirm', _gifter.email_confirm);
                 data.append('chosen_prize', DataProvider.gifts[index].prize);
-		console.log("data to send:");
-		console.log(data);
+                console.log("data to send:");
+                console.log({
+                  'surname': _gifter.surname,
+                  'lastname': _gifter.lastname,
+                  'email': _gifter.email,
+                  'email_confirm': _gifter.email_confirm,
+                  'chosen_prize': DataProvider.gifts[index].prize,
+                });
 
                 var errorMsg = "Beim reservieren des Geschenks ist ein Fehler aufgetreten. Bitte versuchen sie es noch einmal.";
                 var claimingMsgId = Notify.showMessage({
