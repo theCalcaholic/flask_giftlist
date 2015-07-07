@@ -4,10 +4,16 @@
         this.gifter = DataProvider.gifter;
         this.loggedIn = DataProvider.loggedIn;
         this.claimView = true;
+        console.log('selected gift:');
+        console.log(DataProvider.selectedGift);
+        console.log('gift with selected index:');
+        console.log(DataProvider.gifts[DataProvider.selectedIndex]);
 
         this.submitClaim = function() {
+            
             DataProvider.selectedGift = this.gift;
             DataProvider.claimGift( DataProvider.selectedIndex );
+
         };
 
         $timeout((function() {
