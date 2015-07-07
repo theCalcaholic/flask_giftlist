@@ -10,10 +10,8 @@
         console.log(DataProvider.gifts[DataProvider.selectedIndex]);
 
         this.submitClaim = function() {
-            
             DataProvider.selectedGift = this.gift;
             DataProvider.claimGift( DataProvider.selectedIndex );
-
         };
 
         $timeout((function() {

@@ -1,7 +1,0 @@
-*.pyc
-*.scssc
-/uploads/*
-*_priv.py
-*.swp
-*.db
-gitignore

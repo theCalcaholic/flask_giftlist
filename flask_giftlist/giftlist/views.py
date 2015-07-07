@@ -185,6 +185,7 @@ def gifts_as_json():
                 .group_by(Gift.id)\
                 .having(or_(func.count(Gifter.id)==0, Gift.remaining_prize>0)).all()
                 ]
+        pprint(gifts)
     else:
         gifts = [ gift.dict() for gift in Gift.query.all() ]
     return jsonify(success = True,

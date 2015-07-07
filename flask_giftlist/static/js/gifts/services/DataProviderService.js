@@ -36,7 +36,7 @@
                     }
 
                     for( var i=0; i < DataProvider.gifts.length; i++ ) {
-                        if( DataProvider.gifts[i].id = gift.id ) {
+                        if( DataProvider.gifts[i].id == gift.id ) {
                             _selectedIndex = i;
                         }
                     }
